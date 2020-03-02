@@ -1,0 +1,7 @@
+const UPDATE_DISPLAY = 'UPDATE_DISPLAY';
+const UPDATE_PAD_STYLE = 'UPDATE_PAD_STYLE';
+
+export default {
+    UPDATE_DISPLAY,
+    UPDATE_PAD_STYLE
+};
