@@ -1,5 +1,4 @@
-import React from 'react';
-import BoardComponent from './BoardComponent';
+import GameComponent from './GameComponent';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
@@ -12,5 +11,5 @@ const mapDispatchToProps = (dispatch) => {
 
 }
 
-const BoardContainer = connect(mapStateToProps, mapDispatchToProps)(BoardComponent);
-export default BoardContainer;
+const GameContainer = connect(mapStateToProps, mapDispatchToProps)(GameComponent);
+export default GameContainer;

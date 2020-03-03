@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import homeReducer from './app/home/duck';
-import boardReducer from './app/board/duck';
+import gameReducer from './app/game/duck';
 
 const rootReducer = combineReducers({
     home: homeReducer,
-    board: boardReducer
+    game: gameReducer
 });
 
 export default rootReducer;

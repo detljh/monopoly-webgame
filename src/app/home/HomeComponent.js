@@ -18,7 +18,7 @@ const HomeComponent = (props) => {
                 )}
             </div>
             <br></br>
-            <Link to={'./board'}>
+            <Link to={'./game'}>
                 <button onClick={props.startGame}>Start</button>
             </Link>
         </div>

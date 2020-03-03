@@ -9,16 +9,6 @@ html, body, #root, .App {
   -moz-osx-font-smoothing: grayscale;
 }
 
-html {
-  overflow-y: hidden;
-}
-
-@media (max-height: 400px) {
-    html {
-      overflow-y: scroll;
-    }
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

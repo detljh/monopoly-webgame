@@ -1,0 +1,119 @@
+#board {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 7em repeat(9, minmax(0, 1fr)) 7em;
+    grid-template-rows: 7em repeat(9, minmax(0, 1fr)) 7em;
+}
+
+.property {
+    border: 1px solid black;
+    display: flex;
+}
+
+.square-name {
+    flex-basis: 60%;
+    overflow: hidden;
+    text-align: center;
+    font-size: 0.7em;
+}
+
+.square-top {
+    flex-direction: column;
+}
+
+.square-bottom {
+    flex-direction: column-reverse;
+}
+
+.square-right {
+    flex-direction: row-reverse;
+}
+
+.square-right p {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);   
+}
+
+.square-left p {
+    writing-mode: vertical-rl;
+}
+
+.red {
+    flex-basis: 25%;
+    background-color: red;
+    height: 25%;
+    width: 100%;
+    margin-top: auto;
+    border-top: 1px solid black;
+}
+
+.orange {
+    flex-basis: 25%;
+    background-color: orange;
+    width: 25%;
+    height: 100%;
+    margin-left: auto;
+    border-left: 1px solid black;
+}
+
+.green {
+    background-color: green;
+    width: 25%;
+    height: 100%;
+    margin-right: auto;
+    border-right: 1px solid black;
+}
+
+.yellow {
+    background-color: yellow;
+    width: 100%;
+    height: 25%;
+    margin-top: auto;
+    border-top: 1px solid black;
+}
+
+.purple {
+    background-color: purple;
+    width: 25%;
+    height: 100%;
+    margin-left: auto;
+    border-left: 1px solid black;
+}
+
+.blue {
+    background-color: blue;
+    width: 25%;
+    height: 100%;
+    margin-right: auto;
+    border-right: 1px solid black;
+}
+
+.light-blue {
+    background-color: lightblue;
+    width: 100%;
+    height: 25%;
+    margin-bottom: auto;
+    border-bottom: 1px solid black;
+}
+
+.brown {
+    background-color: brown;
+    width: 100%;
+    height: 25%;
+    margin-bottom: auto;
+    border-bottom: 1px solid black;
+}
+
+.special {
+    border: 1px solid black;
+}
+
+.corner {
+    border: 1px solid black;
+}
+
+.middle {
+    grid-column: 2 / 11;
+    grid-row: 2 / 11;
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Home } from './home';
-import { Board } from './board';
+import { Game } from './game';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
       <div className="App">
         <Route exact path='/' component={Home} />
         <Route path='/home'   component={Home}/>
-        <Route path='/board'   component={Board}/>
+        <Route path='/game'   component={Game}/>
       </div>
     </BrowserRouter>
   );
