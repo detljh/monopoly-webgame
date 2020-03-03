@@ -1,4 +1,4 @@
-import homeReducer from './reducers';
-export { default as homeOperations} from './operations';
-export { default as homeTypes } from './types';
-export default homeReducer; 
+import boardReducer from './reducers';
+export { default as boardOperations} from './operations';
+export { default as boardTypes } from './types';
+export default boardReducer; 

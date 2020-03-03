@@ -1,16 +1,18 @@
 import Creators from './actions.js';
 
-const updateDisplay = Creators.updateDisplay;
-const updatePadStyle = (keyButton) => {
+const startGame = Creators.startGame;
+const addPlayer = (id) => {
     return (dispatch, getState) => {
-        dispatch(Creators.updatePadStyle(keyButton + '-active', keyButton));
-        setTimeout(() => {
-            dispatch(Creators.updatePadStyle(keyButton));
-        }, 100)
+        const currentPlayers = getState().home.currentPlayers;
+        if (currentPlayers.includes(id)) {
+            dispatch(Creators.removePlayer(id));
+        } else {
+            dispatch(Creators.addPlayer(id));
+        }
     }
-}
+};
 
 export default {
-    updateDisplay,
-    updatePadStyle
+    addPlayer,
+    startGame
 };

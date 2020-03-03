@@ -1,22 +1,24 @@
 import types from './types.js';
 
-
-const data = require('../audio.json');
-const INITIAL_STATE = {
-    audioData: data
+const INITIAL_STATE = { 
+    players: [],
+    currentPlayers: []
 };
 
 const homeReducer = (state=INITIAL_STATE, action) => {
     switch (action.type) {
-        case types.UPDATE_DISPLAY:
+        case types.ADD_PLAYER: 
             return Object.assign({}, state, {
-                currentDisplay: action.currentDisplay
+                currentPlayers: [...state.currentPlayers, action.player]
             });
-        case types.UPDATE_PAD_STYLE:
+        case types.REMOVE_PLAYER:
             return Object.assign({}, state, {
-                padStyle: action.padStyle,
-                activePad: action.activePad
-            });
+                currentPlayers: state.currentPlayers.filter(player => player != action.player)
+            })
+        case types.START_GAME:
+            return Object.assign({}, state, {
+                players: state.currentPlayers
+            })
         default:       
             return state;
     };
