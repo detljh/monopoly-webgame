@@ -5,14 +5,17 @@ import { gameOperations } from './duck';
 const mapStateToProps = (state) => {
     return {
         players: state.game.players,
-        currentPlayer: state.game.players[state.game.currentPlayerIndex].name
+        currentPlayer: state.game.currentPlayer
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
     return {
+        newGame: () => {
+            dispatch(gameOperations.newGame(ownProps));
+        },
         endTurn: () => {
-            dispatch(gameOperations.endTurn());
+            dispatch(gameOperations.endTurn(ownProps));
         },
         subtractMoney: (money) => {
             dispatch(gameOperations.subtractMoney(money));

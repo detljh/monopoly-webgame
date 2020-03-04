@@ -14,6 +14,7 @@ const GameComponent = (props) => {
 
             <button onClick={props.endTurn}>End turn</button>
             <button onClick={() => {props.subtractMoney(100)}}>Buy</button>
+            <button onClick={props.newGame}>New Game</button>
             <div id="game-board">
                 <Board />
             </div>

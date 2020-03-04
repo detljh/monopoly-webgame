@@ -13,6 +13,12 @@ const startGame = (players) => {
     }
 }
 
+const newGame = () => {
+    return {
+        type: types.NEW_GAME,
+    }
+}
+
 const subtractMoney = (players) => {
     return {
         type: types.SUBTRACT_MONEY,
@@ -23,5 +29,6 @@ const subtractMoney = (players) => {
 export default { 
     endTurn,
     startGame,
-    subtractMoney
+    subtractMoney,
+    newGame
 };
