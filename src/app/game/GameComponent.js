@@ -1,5 +1,6 @@
 import React from 'react';
 import './game.scss';
+import '../player/player.scss';
 import Board from './BoardComponent';
 import PlayerInfo from '../player/PlayerInfoComponent';
 
@@ -16,7 +17,7 @@ const GameComponent = (props) => {
             <button onClick={() => {props.subtractMoney(100)}}>Buy</button>
             <button onClick={props.newGame}>New Game</button>
             <div id="game-board">
-                <Board />
+                <Board rollDice={props.rollDice} gameState={props.gameState} currentDice={props.currentDice} players={props.players} />
             </div>
         </div>
     );

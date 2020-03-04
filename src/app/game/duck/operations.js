@@ -18,9 +18,18 @@ const subtractMoney = (money) => {
     }
 }
 
+const rollDice = () => {
+    return (dispatch) => {
+        const dice1 = Math.floor(Math.random() * 6) + 1;
+        const dice2 = Math.floor(Math.random() * 6) + 1;
+        dispatch(Creators.rollDice([dice1, dice2]));
+    }
+}
+
 export default {
     endTurn,
     startGame,
     subtractMoney,
-    newGame
+    newGame,
+    rollDice
 };

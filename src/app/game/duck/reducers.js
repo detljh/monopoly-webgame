@@ -1,11 +1,12 @@
 import types from './types.js';
-import gameStates from '../utilities/gameStates';
+import gameState from '../utilities/gameState';
 
 const INITIAL_STATE = {
-    gameState: gameStates.CHOOSE_ACTION,
+    gameState: gameState.CHOOSING_ACTION,
     currentPlayerIndex: 0,
     players: [],
-    currentPlayer: ''
+    currentPlayer: '',
+    currentDice: []
 };
 
 const gameReducer = (state=INITIAL_STATE, action) => {
@@ -27,6 +28,11 @@ const gameReducer = (state=INITIAL_STATE, action) => {
             return Object.assign({}, state, {
                 currentPlayerIndex: (state.currentPlayerIndex + 1) % state.players.length,
                 currentPlayer: state.players[(state.currentPlayerIndex + 1) % state.players.length].name 
+            })
+        case types.ROLL_DICE:
+            return Object.assign({}, state, {
+                currentDice: action.dice,
+                gameState: gameState.ROLLING_DICE
             })
         case types.SUBTRACT_MONEY:
             return Object.assign({}, state, {

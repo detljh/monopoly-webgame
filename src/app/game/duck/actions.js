@@ -19,6 +19,13 @@ const newGame = () => {
     }
 }
 
+const rollDice = (dice) => {
+    return {
+        type: types.ROLL_DICE,
+        dice: dice
+    }
+}
+
 const subtractMoney = (players) => {
     return {
         type: types.SUBTRACT_MONEY,
@@ -30,5 +37,6 @@ export default {
     endTurn,
     startGame,
     subtractMoney,
-    newGame
+    newGame,
+    rollDice
 };

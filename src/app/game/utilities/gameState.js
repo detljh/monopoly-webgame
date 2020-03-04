@@ -1,0 +1,9 @@
+const CHOOSING_ACTION = "CHOOSING_ACTION";
+const ROLLING_DICE = "ROLLING_DICE";
+const TRADING = "TRADING";
+
+export default {
+    CHOOSING_ACTION,
+    ROLLING_DICE,
+    TRADING
+}
