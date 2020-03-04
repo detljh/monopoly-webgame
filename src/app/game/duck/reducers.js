@@ -18,7 +18,8 @@ const gameReducer = (state=INITIAL_STATE, action) => {
                     return {
                         name: player,
                         money: 1500,
-                        properties: []
+                        properties: [],
+                        position: 0
                     } 
                 })
             })
@@ -27,13 +28,18 @@ const gameReducer = (state=INITIAL_STATE, action) => {
         case types.END_TURN:
             return Object.assign({}, state, {
                 currentPlayerIndex: (state.currentPlayerIndex + 1) % state.players.length,
-                currentPlayer: state.players[(state.currentPlayerIndex + 1) % state.players.length].name 
+                currentPlayer: state.players[(state.currentPlayerIndex + 1) % state.players.length].name,
+                gameState: gameState.CHOOSING_ACTION 
             })
         case types.ROLL_DICE:
             return Object.assign({}, state, {
                 currentDice: action.dice,
                 gameState: gameState.ROLLING_DICE
             })
+        case types.MOVE_PLAYER:
+            return Object.assign({}, state, {
+                players: action.players
+            });
         case types.SUBTRACT_MONEY:
             return Object.assign({}, state, {
                 players: action.players

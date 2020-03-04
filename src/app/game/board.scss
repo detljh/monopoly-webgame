@@ -137,3 +137,13 @@
     margin-bottom: auto;
     border-bottom: 1px solid black;
 }
+
+#player-on-square-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.player-on-square {
+    margin: 5px;
+}
