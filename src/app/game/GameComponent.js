@@ -1,13 +1,21 @@
 import React from 'react';
 import './game.scss';
-import BoardComponent from './BoardComponent';
+import Board from './BoardComponent';
+import PlayerInfo from '../player/PlayerInfoComponent';
 
 const GameComponent = (props) => {
     return (
         <div>
-            {props.players}
+            <div className="player-info-bar">
+                {props.players.map((element, index) => 
+                    <PlayerInfo key={element.name} name={index + 1} id={element.name} currentPlayer={element.name == props.currentPlayer ? true : false } money={element.money}/>
+                )}
+            </div>
+
+            <button onClick={props.endTurn}>End turn</button>
+            <button onClick={() => {props.subtractMoney(100)}}>Buy</button>
             <div id="game-board">
-                <BoardComponent />
+                <Board />
             </div>
         </div>
     );

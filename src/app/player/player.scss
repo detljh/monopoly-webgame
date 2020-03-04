@@ -1,0 +1,47 @@
+.player {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    margin: 10px;
+    outline: none;
+}
+
+#player-one {
+    background-color: red;
+}
+
+#player-two {
+    background-color: blue;
+}
+
+#player-three {
+    background-color: green;
+}
+
+#player-four {
+    background-color: yellow;
+}
+
+.player-info {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+}
+
+.player-info-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px;
+}
+
+.player-icon {
+    width: 10px;
+    height: 10px;
+    margin-left: auto;
+}
+
+.active-player {
+    box-shadow: 0 0 3px 3px;
+}
+

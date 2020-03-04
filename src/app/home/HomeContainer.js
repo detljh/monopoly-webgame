@@ -1,6 +1,7 @@
 import HomeComponent from './HomeComponent';
 import { connect } from 'react-redux';
 import { homeOperations } from './duck';
+import { gameOperations } from '../game/duck';
 
 const mapStateToProps = (state) => {
     return {
@@ -13,8 +14,8 @@ const mapDispatchToProps = (dispatch) => {
         addPlayer: (id) => {
             dispatch(homeOperations.addPlayer(id));
         },
-        startGame: () => {
-            dispatch(homeOperations.startGame());
+        startGame: (players) => {
+            dispatch(gameOperations.startGame(players));
         }
     }
 }

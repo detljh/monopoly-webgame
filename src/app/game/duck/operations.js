@@ -1,16 +1,19 @@
 import Creators from './actions.js';
 
-const updateDisplay = Creators.updateDisplay;
-const updatePadStyle = (keyButton) => {
+const endTurn = Creators.endTurn;
+const startGame = Creators.startGame;
+
+const subtractMoney = (money) => {
     return (dispatch, getState) => {
-        dispatch(Creators.updatePadStyle(keyButton + '-active', keyButton));
-        setTimeout(() => {
-            dispatch(Creators.updatePadStyle(keyButton));
-        }, 100)
+        const players = [...getState().game.players];
+        let updatePlayer = players[getState().game.currentPlayerIndex];
+        updatePlayer.money = updatePlayer.money - money;
+        dispatch(Creators.subtractMoney(players));  
     }
 }
 
 export default {
-    updateDisplay,
-    updatePadStyle
+    endTurn,
+    startGame,
+    subtractMoney
 };

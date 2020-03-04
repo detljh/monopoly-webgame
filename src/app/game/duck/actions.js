@@ -1,21 +1,27 @@
 import types from './types.js';
 
-const updateDisplay = (name) => {
+const endTurn = () => {
     return {
-        type: types.UPDATE_DISPLAY,
-        currentDisplay: name
-    };
+        type: types.END_TURN
+    }
 }
 
-const updatePadStyle = (id, keyButton=id) => {
+const startGame = (players) => {
     return {
-        type: types.UPDATE_PAD_STYLE,
-        padStyle: id,
-        activePad: keyButton
-    };
+        type: types.START_GAME,
+        players: players
+    }
+}
+
+const subtractMoney = (players) => {
+    return {
+        type: types.SUBTRACT_MONEY,
+        players: players
+    }
 }
 
 export default { 
-    updateDisplay,
-    updatePadStyle
+    endTurn,
+    startGame,
+    subtractMoney
 };

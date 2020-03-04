@@ -1,5 +1,11 @@
 #game-board {
-    width: 900px;
-    height: 900px;
+    width: 1020px;
+    height: 1020px;
     margin: auto;
+}
+
+.player-info-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
