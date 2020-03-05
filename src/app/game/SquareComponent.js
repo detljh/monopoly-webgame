@@ -6,7 +6,7 @@ const SquareComponent = (props) => {
             <div id="player-on-square-container">
                 {
                     props.playersOnSquare.map(player => 
-                        <div className="player-on-square player-icon" id={player}></div>
+                        <div key={player} className="player-on-square player-icon" id={player}></div>
                     )
                 }
             </div>

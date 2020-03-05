@@ -34,17 +34,18 @@ const rollDice = (dice) => {
     }
 }
 
-const movePlayer = (players, currentPosition) => {
+const movePlayer = (players, currentPosition, currentSquare) => {
     return {
         type: types.MOVE_PLAYER,
         players: players,
-        currentPosition: currentPosition
+        currentPosition: currentPosition,
+        currentSquare: currentSquare
     }
 }
 
-const subtractMoney = (players) => {
+const buyProperty = (players) => {
     return {
-        type: types.SUBTRACT_MONEY,
+        type: types.BUY_PROPERTY,
         players: players
     }
 }
@@ -53,7 +54,7 @@ export default {
     changeGameState,
     endTurn,
     startGame,
-    subtractMoney,
+    buyProperty,
     newGame,
     rollDice,
     movePlayer

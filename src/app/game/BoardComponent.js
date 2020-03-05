@@ -1,7 +1,7 @@
 import React from 'react';
 import './board.scss';
 import SquareComponent from './SquareComponent';
-import squares from './utilities/boardSquareData.js';
+import squares from './utilities/boardSquareData';
 import gameState from './utilities/gameState';
 import exitCondition from './utilities/exitCondition';
 
@@ -27,31 +27,44 @@ class BoardComponent extends React.Component {
                 
                 return <SquareComponent key={element[0]} id={element[0]} type={element[1].type} subtype={element[1].subtype} text={element[1].text} cost={element[1].cost} rent={element[1].rent} house={element[1].house} hotel={element[1].hotel} playersOnSquare={playersOnSquare} />
             } else {
-                return (<div id={element[0]}>
-                    {
-                        this.props.gameState == gameState.CHOOSING_ACTION &&
-                        <button onClick={this.props.rollDice}>Roll Dice</button>
-                    }
-
+                return (<div key="middle" id={element[0]}>
                     {
                         this.props.gameState != gameState.CHOOSING_ACTION &&
                         [
-                            <p><b>Dice 1:</b> {this.props.currentDice[0]}</p>,
-                            <p><b>Dice 2:</b> {this.props.currentDice[1]}</p>
+                            <p key="dice-1"><b>Dice 1:</b> {this.props.currentDice[0]}</p>,
+                            <p key="dice-2"><b>Dice 2:</b> {this.props.currentDice[1]}</p>
                         ]
                     } 
 
-                    {
-                        this.props.gameState == gameState.DICE_ROLLED && 
-                        <button onClick={() => {this.props.subtractMoney(currentCost)}}>Buy</button>
-                    }
-                    <button onClick={this.props.endTurn}>End turn</button>
+                    { this.props.exitConditions.map((condition, index) => 
+                        [condition === exitCondition.ROLL_DICE &&
+                        <button key={condition} onClick={this.props.rollDice}>Roll Dice</button>, 
+
+                        condition === exitCondition.TRADE &&
+                        <button key={condition}>Trade</button>, 
+                        
+                        condition === exitCondition.BUY_PROPERTY && 
+                        <button key={condition} onClick={this.props.buyProperty}>Buy</button>,
+
+                        condition === exitCondition.PAY_RENT &&
+                        <button key={condition}>Pay Rent</button>,
+
+                        condition === exitCondition.PAY_TAX &&
+                        <button key={condition}>Pay Tax</button>,
+
+                        condition === exitCondition.PICK_CARD &&
+                        <button key={condition}>Pick up Card</button>,
+
+                        condition === exitCondition.END_TURN &&
+                        <button key={condition} onClick={this.props.endTurn}>End turn</button>
+                        ]
+                    )}
                     </div>  
                 )}
         });
 
         return (
-            <div id="board">
+            <div key="board" id="board">
                 {board}
             </div>
         );

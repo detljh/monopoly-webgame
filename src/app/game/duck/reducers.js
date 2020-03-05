@@ -1,9 +1,10 @@
 import types from './types.js';
 import gameState from '../utilities/gameState';
+import exitCondition from '../utilities/exitCondition.js';
 
 const INITIAL_STATE = {
     gameState: gameState.CHOOSING_ACTION,
-    exitConditions: [],
+    exitConditions: [exitCondition.ROLL_DICE, exitCondition.TRADE],
     currentPlayerIndex: 0,
     players: [],
     currentPlayer: '',
@@ -13,7 +14,6 @@ const INITIAL_STATE = {
 };
 
 const gameReducer = (state=INITIAL_STATE, action) => {
-    console.log(state);
     switch (action.type) {
         case types.START_GAME:
             return Object.assign({}, state, {
@@ -31,20 +31,18 @@ const gameReducer = (state=INITIAL_STATE, action) => {
             return Object.assign({}, state, {
                 currentPlayerIndex: (state.currentPlayerIndex + 1) % state.players.length,
                 currentPlayer: state.players[(state.currentPlayerIndex + 1) % state.players.length],
-                gameState: gameState.CHOOSING_ACTION 
             })
         case types.ROLL_DICE:
             return Object.assign({}, state, {
                 currentDice: action.dice,
-                gameState: gameState.ROLLING_DICE
             })
         case types.MOVE_PLAYER:
             return Object.assign({}, state, {
                 players: action.players,
-                gameState: gameState.DICE_ROLLED,
-                currentPosition: action.currentPosition
+                currentPosition: action.currentPosition,
+                currentSquare: action.currentSquare
             });
-        case types.SUBTRACT_MONEY:
+        case types.BUY_PROPERTY:
             return Object.assign({}, state, {
                 players: action.players
             })
