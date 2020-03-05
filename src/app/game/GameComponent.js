@@ -1,26 +1,30 @@
 import React from 'react';
 import './game.scss';
 import '../player/player.scss';
-import Board from './BoardComponent';
+import Board from './BoardContainer';
 import PlayerInfo from '../player/PlayerInfoComponent';
 
-const GameComponent = (props) => {
-    return (
-        <div>
-            <div className="player-info-bar">
-                {props.players.map((element, index) => 
-                    <PlayerInfo key={element.name} name={index + 1} id={element.name} currentPlayer={element.name == props.currentPlayer ? true : false } money={element.money}/>
-                )}
-            </div>
+class GameComponent extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
-            <button onClick={props.endTurn}>End turn</button>
-            <button onClick={() => {props.subtractMoney(100)}}>Buy</button>
-            <button onClick={props.newGame}>New Game</button>
-            <div id="game-board">
-                <Board rollDice={props.rollDice} gameState={props.gameState} currentDice={props.currentDice} players={props.players} />
+    render() {
+        return (
+            <div>
+                <div className="player-info-bar">
+                    {this.props.players.map((element, index) => 
+                        <PlayerInfo key={element.name} name={index + 1} id={element.name} currentPlayer={element.name == this.props.currentPlayer.name ? true : false} money={element.money}/>
+                    )}
+                </div>
+    
+                <button onClick={this.props.newGame}>New Game</button>
+                <div id="game-board">
+                    <Board />
+                </div>
             </div>
-        </div>
-    );
+        );
+    }   
 }
 
 export default GameComponent;

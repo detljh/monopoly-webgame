@@ -6,6 +6,14 @@ const endTurn = () => {
     }
 }
 
+const changeGameState = (gameState, exitConditions) => {
+    return {
+        type: types.CHANGE_GAME_STATE,
+        gameState: gameState,
+        exitConditions: exitConditions
+    }
+}
+
 const startGame = (players) => {
     return {
         type: types.START_GAME,
@@ -26,10 +34,11 @@ const rollDice = (dice) => {
     }
 }
 
-const movePlayer = (players) => {
+const movePlayer = (players, currentPosition) => {
     return {
         type: types.MOVE_PLAYER,
-        players: players
+        players: players,
+        currentPosition: currentPosition
     }
 }
 
@@ -41,6 +50,7 @@ const subtractMoney = (players) => {
 }
 
 export default { 
+    changeGameState,
     endTurn,
     startGame,
     subtractMoney,

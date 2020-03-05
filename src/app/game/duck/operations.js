@@ -3,7 +3,20 @@ import Creators from './actions.js';
 const NUMBER_POSITIONS = 40;
 
 const endTurn = Creators.endTurn;
-const startGame = Creators.startGame;
+const startGame = (players) => {
+    return (dispatch) => {
+        players = players.map(player => {
+            return {
+                name: player,
+                money: 1500,
+                properties: [],
+                position: 0
+            } 
+        });
+        dispatch(Creators.startGame(players));
+    }
+} 
+
 const newGame = (ownProps) => {
     return (dispatch) => {
         dispatch(Creators.newGame());
@@ -29,7 +42,7 @@ const rollDice = () => {
             const players = [...getState().game.players];
             let updatePlayer = players[getState().game.currentPlayerIndex];
             updatePlayer.position = (updatePlayer.position + dice1 + dice2) % NUMBER_POSITIONS;
-            dispatch(Creators.movePlayer(players));
+            dispatch(Creators.movePlayer(players, updatePlayer.position));
         }, 1000);
     }
 }
