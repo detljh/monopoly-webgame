@@ -7,6 +7,7 @@ const ON_FREE_PROPERTY = "ON_FREE_PROPERTY";
 const ON_CHANCE = "ON_CHANCE";
 const ON_CHEST = "ON_CHEST";
 const ON_TAX = "ON_TAX";
+const END_OF_TURN = "END_OF_TURN";
 
 export default {
     CHOOSING_ACTION,
@@ -17,5 +18,6 @@ export default {
     ON_FREE_PROPERTY,
     ON_OWNED_PROPERTY,
     ON_OWN_PROPERTY,
-    ON_TAX
+    ON_TAX,
+    END_OF_TURN
 }

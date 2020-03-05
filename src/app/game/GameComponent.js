@@ -19,9 +19,7 @@ class GameComponent extends React.Component {
                 </div>
     
                 <button onClick={this.props.newGame}>New Game</button>
-                <div id="game-board">
-                    <Board />
-                </div>
+                <Board />
             </div>
         );
     }   

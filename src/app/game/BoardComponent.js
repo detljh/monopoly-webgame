@@ -47,13 +47,19 @@ class BoardComponent extends React.Component {
                         <button key={condition} onClick={this.props.buyProperty}>Buy</button>,
 
                         condition === exitCondition.PAY_RENT &&
-                        <button key={condition}>Pay Rent</button>,
+                        <button key={condition} onClick={this.props.payRent}>Pay Rent</button>,
 
                         condition === exitCondition.PAY_TAX &&
-                        <button key={condition}>Pay Tax</button>,
+                        <button key={condition} onClick={this.props.payTax}>Pay Tax</button>,
 
-                        condition === exitCondition.PICK_CARD &&
-                        <button key={condition}>Pick up Card</button>,
+                        condition === exitCondition.DRAW_CHANCE &&
+                        <button key={condition} onClick={this.props.drawCard}>Draw chance card</button>,
+
+                        condition === exitCondition.DRAW_CHEST &&
+                        <button key={condition} onClick={this.props.drawCard}>Draw community chest card</button>,
+
+                        condition === exitCondition.BUY_HOUSE &&
+                        <button key={condition}>Buy houses</button>,
 
                         condition === exitCondition.END_TURN &&
                         <button key={condition} onClick={this.props.endTurn}>End turn</button>

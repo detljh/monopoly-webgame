@@ -34,7 +34,7 @@ const gameReducer = (state=INITIAL_STATE, action) => {
             })
         case types.ROLL_DICE:
             return Object.assign({}, state, {
-                currentDice: action.dice,
+                currentDice: [...action.dice],
             })
         case types.MOVE_PLAYER:
             return Object.assign({}, state, {
@@ -42,10 +42,12 @@ const gameReducer = (state=INITIAL_STATE, action) => {
                 currentPosition: action.currentPosition,
                 currentSquare: action.currentSquare
             });
-        case types.BUY_PROPERTY:
+        case types.UPDATE_PLAYERS:
             return Object.assign({}, state, {
-                players: action.players
+                players: [...action.players]
             })
+        case types.DRAW_CARD:
+            return state;
         default:       
             return state;
     };

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { gameOperations } from './duck';
 
 const mapStateToProps = (state) => {
-    console.log(state.game.currentPlayer);
     return {
         players: state.game.players,
         currentPlayer: state.game.currentPlayer,
@@ -24,6 +23,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         buyProperty: () => {
             dispatch(gameOperations.buyProperty());
+        },
+        drawCard: () => {
+            dispatch(gameOperations.drawCard());
+        },
+        payRent: () => {
+            dispatch(gameOperations.payRent());
+        },
+        payTax: () => {
+            dispatch(gameOperations.payTax());
         }
     }
 }

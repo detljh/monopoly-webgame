@@ -43,10 +43,16 @@ const movePlayer = (players, currentPosition, currentSquare) => {
     }
 }
 
-const buyProperty = (players) => {
+const updatePlayers = (players) => {
     return {
-        type: types.BUY_PROPERTY,
+        type: types.UPDATE_PLAYERS,
         players: players
+    }
+}
+
+const drawCard = () => {
+    return {
+        type: types.DRAW_CARD
     }
 }
 
@@ -54,8 +60,9 @@ export default {
     changeGameState,
     endTurn,
     startGame,
-    buyProperty,
     newGame,
     rollDice,
-    movePlayer
+    movePlayer,
+    updatePlayers,
+    drawCard
 };
