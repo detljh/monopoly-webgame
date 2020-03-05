@@ -1,7 +1,6 @@
 import Creators from './actions.js';
 import gameState from '../utilities/gameState.js';
 import exitCondition from '../utilities/exitCondition.js';
-import squares from '../utilities/boardSquareData';
 
 const NUMBER_POSITIONS = 40;
 const stateExitMap = {
@@ -49,10 +48,15 @@ const newGame = (ownProps) => {
 const buyProperty = () => {
     return (dispatch, getState) => {
         const players = getState().game.players;
-        let updatePlayer = players[getState().game.currentPlayerIndex];
+        let currentPlayerIndex = getState().game.currentPlayerIndex
+        let updatePlayer = players[currentPlayerIndex];
         updatePlayer.money -= getState().game.currentSquare.cost;
-        updatePlayer.properties.push(getState().game.currentPosition);
-        dispatch(Creators.updatePlayers(players));  
+        let currentPosition = getState().game.currentPosition;
+        updatePlayer.properties.push(currentPosition);
+        let squares = getState().game.squares;
+        squares[currentPosition].owned = `Player ${currentPlayerIndex + 1}`;
+        
+        dispatch(Creators.buyProperty(players, squares));
         dispatch(Creators.changeGameState(gameState.ON_OWN_PROPERTY, stateExitMap[gameState.ON_OWN_PROPERTY]));
     }
 }
@@ -89,7 +93,7 @@ const payRent = () => {
 
 const getStartMoney = (players, updatePlayer) => {
     return (dispatch, getState) => {
-        updatePlayer.money += squares[0].cost;
+        updatePlayer.money += getState().game.squares[0].cost;
         dispatch(Creators.updatePlayers(players));
     }
 }
@@ -114,7 +118,7 @@ const rollDice = () => {
             let prevPosition = updatePlayer.position;
             let currentPosition = (updatePlayer.position + dice1 + dice2) % NUMBER_POSITIONS;
             updatePlayer.position = currentPosition
-            let currentSquare = squares[currentPosition];
+            let currentSquare = getState().game.squares[currentPosition];
             dispatch(Creators.movePlayer(players, currentPosition, currentSquare));
             
             if (currentPosition < prevPosition) {

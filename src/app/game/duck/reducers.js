@@ -1,8 +1,10 @@
 import types from './types.js';
 import gameState from '../utilities/gameState';
 import exitCondition from '../utilities/exitCondition.js';
+import squares from '../utilities/boardSquareData';
 
 const INITIAL_STATE = {
+    squares: squares,
     gameState: gameState.CHOOSING_ACTION,
     exitConditions: [exitCondition.ROLL_DICE, exitCondition.TRADE],
     currentPlayerIndex: 0,
@@ -45,6 +47,11 @@ const gameReducer = (state=INITIAL_STATE, action) => {
         case types.UPDATE_PLAYERS:
             return Object.assign({}, state, {
                 players: [...action.players]
+            })
+        case types.BUY_PROPERTY:
+            return Object.assign({}, state, {
+                players: [...action.players],
+                squares: {...action.squares}
             })
         case types.DRAW_CARD:
             return state;

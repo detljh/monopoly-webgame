@@ -1,10 +1,15 @@
 #board {
     display: grid;
     margin: auto;
-    width: 95%;
-    height: 100%;
+    width: 1020px;
+    height: 1020px;
     grid-template-columns: 7em repeat(9, minmax(0, 1fr)) 7em;
     grid-template-rows: 7em repeat(9, minmax(0, 1fr)) 7em;
+
+    .square {
+        position: relative;
+        border: 1px solid black;
+    }
 
     #square-0 {
         grid-column: 11 / 12;
@@ -206,102 +211,6 @@
         grid-row: 10 / 11;
     }
 
-    .special {
-        border: 1px solid black;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .corner {
-        border: 1px solid black;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    #middle {
-        grid-column: 2 / 11;
-        grid-row: 2 / 11;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .property {
-        border: 1px solid black;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .red {
-            flex-basis: 25%;
-            background-color: red;
-            height: 25%;
-            width: 100%;
-            margin-top: auto;
-            border-top: 1px solid black;
-        }
-        
-        .orange {
-            flex-basis: 25%;
-            background-color: orange;
-            width: 25%;
-            height: 100%;
-            margin-left: auto;
-            border-left: 1px solid black;
-        }
-        
-        .green {
-            background-color: green;
-            width: 25%;
-            height: 100%;
-            margin-right: auto;
-            border-right: 1px solid black;
-        }
-        
-        .yellow {
-            background-color: yellow;
-            width: 100%;
-            height: 25%;
-            margin-top: auto;
-            border-top: 1px solid black;
-        }
-        
-        .purple {
-            background-color: purple;
-            width: 25%;
-            height: 100%;
-            margin-left: auto;
-            border-left: 1px solid black;
-        }
-        
-        .blue {
-            background-color: blue;
-            width: 25%;
-            height: 100%;
-            margin-right: auto;
-            border-right: 1px solid black;
-        }
-        
-        .light-blue {
-            background-color: lightblue;
-            width: 100%;
-            height: 25%;
-            margin-bottom: auto;
-            border-bottom: 1px solid black;
-        }
-        
-        .brown {
-            background-color: brown;
-            width: 100%;
-            height: 25%;
-            margin-bottom: auto;
-            border-bottom: 1px solid black;
-        }
-    }
-
     .square-name {
         overflow: hidden;
         font-size: 0.7em;
@@ -338,17 +247,125 @@
     .square-left p {
         writing-mode: vertical-rl;
     }
+}
+
+#player-on-square-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    position: absolute;
+    z-index: 100;
     
-    #player-on-square-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        position: absolute;
-        z-index: 100;
-        
-        .player-on-square {
-            margin: 5px
-        }
+    .player-on-square {
+        margin: 5px
+    }
+}
+
+.special {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.corner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#middle {
+    grid-column: 2 / 11;
+    grid-row: 2 / 11;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.owned-property {
+    background-color: grey;
+    opacity: 0.9;
+    z-index: 10;    
+}
+
+.property {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    .red {
+        flex-basis: 25%;
+        background-color: red;
+        height: 25%;
+        width: 100%;
+        margin-top: auto;
+        border-top: 1px solid black;
+    }
+    
+    .orange {
+        flex-basis: 25%;
+        background-color: orange;
+        width: 25%;
+        height: 100%;
+        margin-left: auto;
+        border-left: 1px solid black;
+    }
+    
+    .green {
+        background-color: green;
+        width: 25%;
+        height: 100%;
+        margin-right: auto;
+        border-right: 1px solid black;
+    }
+    
+    .yellow {
+        background-color: yellow;
+        width: 100%;
+        height: 25%;
+        margin-top: auto;
+        border-top: 1px solid black;
+    }
+    
+    .purple {
+        background-color: purple;
+        width: 25%;
+        height: 100%;
+        margin-left: auto;
+        border-left: 1px solid black;
+    }
+    
+    .blue {
+        background-color: blue;
+        width: 25%;
+        height: 100%;
+        margin-right: auto;
+        border-right: 1px solid black;
+    }
+    
+    .light-blue {
+        background-color: lightblue;
+        width: 100%;
+        height: 25%;
+        margin-bottom: auto;
+        border-bottom: 1px solid black;
+    }
+    
+    .brown {
+        background-color: brown;
+        width: 100%;
+        height: 25%;
+        margin-bottom: auto;
+        border-bottom: 1px solid black;
     }
 }
 

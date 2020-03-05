@@ -1,7 +1,6 @@
 import React from 'react';
 import './board.scss';
 import SquareComponent from './SquareComponent';
-import squares from './utilities/boardSquareData';
 import gameState from './utilities/gameState';
 import exitCondition from './utilities/exitCondition';
 
@@ -11,8 +10,7 @@ class BoardComponent extends React.Component {
     }
 
     render() {
-        let currentCost = 0;
-        let board = Object.entries(squares).map((element) => {
+        let board = Object.entries(this.props.squares).map((element) => {
             if (element[1].type != 'middle') {
                 let playersOnSquare = [];
                 this.props.players.forEach(player => {
@@ -20,12 +18,8 @@ class BoardComponent extends React.Component {
                         playersOnSquare.push(player.name);
                     }
                 });
-
-                if (this.props.currentPosition == element[0]) {
-                    currentCost = element[1].cost;
-                }
-                
-                return <SquareComponent key={element[0]} id={element[0]} type={element[1].type} subtype={element[1].subtype} text={element[1].text} cost={element[1].cost} rent={element[1].rent} house={element[1].house} hotel={element[1].hotel} playersOnSquare={playersOnSquare} />
+                console.log(element);
+                return <SquareComponent key={element[0]} id={element[0]} type={element[1].type} subtype={element[1].subtype} text={element[1].text} cost={element[1].cost} rent={element[1].rent} house={element[1].house} hotel={element[1].hotel} playersOnSquare={playersOnSquare} owned={element[1].owned} />
             } else {
                 return (<div key="middle" id={element[0]}>
                     {
