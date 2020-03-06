@@ -11,13 +11,14 @@ const mapStateToProps = (state) => {
         currentDice: state.game.currentDice,
         currentPosition: state.game.currentPosition,
         exitConditions: state.game.exitConditions,
+        card: state.game.card
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         endTurn: () => {
-            dispatch(gameOperations.endTurn(ownProps));
+            dispatch(gameOperations.endTurn());
         },
         rollDice: () => {
             dispatch(gameOperations.rollDice());
@@ -25,8 +26,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         buyProperty: () => {
             dispatch(gameOperations.buyProperty());
         },
-        drawCard: () => {
-            dispatch(gameOperations.drawCard());
+        drawCard: (type) => {
+            dispatch(gameOperations.drawCard(type));
         },
         payRent: () => {
             dispatch(gameOperations.payRent());

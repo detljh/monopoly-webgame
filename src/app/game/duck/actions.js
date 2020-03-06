@@ -58,9 +58,10 @@ const buyProperty = (players, squares) => {
     }
 }
 
-const drawCard = () => {
+const updateCard = (card) => {
     return {
-        type: types.DRAW_CARD
+        type: types.UPDATE_CARD,
+        card: card
     }
 }
 
@@ -72,6 +73,6 @@ export default {
     rollDice,
     movePlayer,
     updatePlayers,
-    drawCard,
+    updateCard,
     buyProperty
 };

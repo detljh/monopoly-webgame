@@ -5,7 +5,7 @@ const SquareComponent = (props) => {
         <div className="square" id={`square-${props.id}`}>
             {
                 props.owned &&
-                <div className={`${props.type} owned-property`}>
+                <div className={`${props.type} owned-property`} id={props.playerOwned}>
                     <p>OWNED BY {props.owned}</p>
                 </div> 
             }

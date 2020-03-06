@@ -257,7 +257,9 @@
     z-index: 100;
     
     .player-on-square {
-        margin: 5px
+        margin: 5px;
+        z-index: 100;
+        box-shadow: 0 0 2px 2px;
     }
 }
 
@@ -291,7 +293,7 @@
 .owned-property {
     background-color: grey;
     opacity: 0.9;
-    z-index: 10;    
+    z-index: 5;    
 }
 
 .property {

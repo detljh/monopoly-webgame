@@ -1,8 +1,9 @@
 import React from 'react';
 import './board.scss';
-import SquareComponent from './SquareComponent';
+import Square from './SquareComponent';
 import gameState from './utilities/gameState';
 import exitCondition from './utilities/exitCondition';
+import Card from './CardContainer';
 
 class BoardComponent extends React.Component {
     constructor(props) {
@@ -19,7 +20,7 @@ class BoardComponent extends React.Component {
                     }
                 });
                 console.log(element);
-                return <SquareComponent key={element[0]} id={element[0]} type={element[1].type} subtype={element[1].subtype} text={element[1].text} cost={element[1].cost} rent={element[1].rent} house={element[1].house} hotel={element[1].hotel} playersOnSquare={playersOnSquare} owned={element[1].owned} />
+                return <Square key={element[0]} id={element[0]} type={element[1].type} subtype={element[1].subtype} text={element[1].text} cost={element[1].cost} rent={element[1].rent} house={element[1].house} hotel={element[1].hotel} playersOnSquare={playersOnSquare} owned={element[1].owned} playerOwned={element[1].playerOwned} />
             } else {
                 return (<div key="middle" id={element[0]}>
                     {
@@ -47,10 +48,10 @@ class BoardComponent extends React.Component {
                         <button key={condition} onClick={this.props.payTax}>Pay Tax</button>,
 
                         condition === exitCondition.DRAW_CHANCE &&
-                        <button key={condition} onClick={this.props.drawCard}>Draw chance card</button>,
+                        <button key={condition} onClick={() => this.props.drawCard(condition)}>Draw chance card</button>,
 
                         condition === exitCondition.DRAW_CHEST &&
-                        <button key={condition} onClick={this.props.drawCard}>Draw community chest card</button>,
+                        <button key={condition} onClick={() => this.props.drawCard(condition)}>Draw community chest card</button>,
 
                         condition === exitCondition.BUY_HOUSE &&
                         <button key={condition}>Buy houses</button>,
@@ -59,6 +60,10 @@ class BoardComponent extends React.Component {
                         <button key={condition} onClick={this.props.endTurn}>End turn</button>
                         ]
                     )}
+                    {
+                        this.props.card.type.length > 0 &&
+                        <Card />
+                    }
                     </div>  
                 )}
         });

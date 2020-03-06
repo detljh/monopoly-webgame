@@ -1,6 +1,7 @@
 import Creators from './actions.js';
 import gameState from '../utilities/gameState.js';
 import exitCondition from '../utilities/exitCondition.js';
+import cardData from '../utilities/cardData';
 
 const NUMBER_POSITIONS = 40;
 const stateExitMap = {
@@ -14,6 +15,7 @@ const stateExitMap = {
     [gameState.ON_OWN_PROPERTY]: [exitCondition.BUY_HOUSE, exitCondition.END_TURN],
     [gameState.ON_TAX]: [exitCondition.PAY_TAX],
     [gameState.END_OF_TURN]: [exitCondition.BUY_HOUSE, exitCondition.END_TURN],
+    [gameState.IN_JAIL]: [exitCondition.END_TURN],
 };
 
 const endTurn = () => {
@@ -31,7 +33,8 @@ const startGame = (players) => {
                 name: player,
                 money: 1500,
                 properties: [],
-                position: 0
+                position: 0,
+                jailTurns: 0
             } 
         });
         dispatch(Creators.startGame(players));
@@ -50,11 +53,19 @@ const buyProperty = () => {
         const players = getState().game.players;
         let currentPlayerIndex = getState().game.currentPlayerIndex
         let updatePlayer = players[currentPlayerIndex];
-        updatePlayer.money -= getState().game.currentSquare.cost;
+        let cost = getState().game.currentSquare.cost;
+
+        if (updatePlayer.money - cost < 0) {
+            return;
+        }
+
+        updatePlayer.money -= cost;
         let currentPosition = getState().game.currentPosition;
         updatePlayer.properties.push(currentPosition);
+
         let squares = getState().game.squares;
         squares[currentPosition].owned = `Player ${currentPlayerIndex + 1}`;
+        squares[currentPosition].playerOwned = updatePlayer.name;
         
         dispatch(Creators.buyProperty(players, squares));
         dispatch(Creators.changeGameState(gameState.ON_OWN_PROPERTY, stateExitMap[gameState.ON_OWN_PROPERTY]));
@@ -98,10 +109,37 @@ const getStartMoney = (players, updatePlayer) => {
     }
 }
 
-const drawCard = () => {
+const drawCard = (type) => {
     return (dispatch) => {
-        dispatch(Creators.drawCard());
+        let card = {
+            type: '',
+            text: ''
+        }
+        if (type === exitCondition.DRAW_CHANCE) {
+            card.text = cardData.chance[Math.floor(Math.random() * cardData.chance.length)];
+            card.type = 'Chance';
+        } else {
+            card.text = cardData.chest[Math.floor(Math.random() * cardData.chest.length)];
+            card.type = 'Community Chest';
+        }
+
+        dispatch(Creators.updateCard(card));
         dispatch(Creators.changeGameState(gameState.END_OF_TURN, stateExitMap[gameState.END_OF_TURN]));
+    }
+}
+
+const completedCard = () => {
+    return (dispatch) => {
+        dispatch(Creators.updateCard({type: '', text: ''}));
+    }
+}
+
+const goJail = (players, updatePlayer) => {
+    return (dispatch, getState) => {
+        updatePlayer.jailTurns += 1;
+        updatePlayer.position = 10;
+        dispatch(Creators.movePlayer(players, 10, getState().game.squares[10]));
+        dispatch(Creators.changeGameState(gameState.IN_JAIL, stateExitMap[gameState.IN_JAIL]));
     }
 }
 
@@ -116,7 +154,7 @@ const rollDice = () => {
             const players = getState().game.players;
             let updatePlayer = players[getState().game.currentPlayerIndex];
             let prevPosition = updatePlayer.position;
-            let currentPosition = (updatePlayer.position + dice1 + dice2) % NUMBER_POSITIONS;
+            let currentPosition = (prevPosition + dice1 + dice2) % NUMBER_POSITIONS;
             updatePlayer.position = currentPosition
             let currentSquare = getState().game.squares[currentPosition];
             dispatch(Creators.movePlayer(players, currentPosition, currentSquare));
@@ -135,7 +173,9 @@ const rollDice = () => {
             } else if (currentSquare.subtype === 'free-park') {
                 dispatch(Creators.changeGameState(gameState.END_OF_TURN, stateExitMap[gameState.END_OF_TURN]));
             } else if (currentSquare.subtype === 'go-jail') {
-                dispatch(Creators.changeGameState(gameState.END_OF_TURN, stateExitMap[gameState.END_OF_TURN]));
+                setTimeout(() => {
+                    dispatch(goJail(players, updatePlayer));
+                }, 1500);
             } else if (currentSquare.subtype === 'jail') {
                 dispatch(Creators.changeGameState(gameState.END_OF_TURN, stateExitMap[gameState.END_OF_TURN]));
             } else if (currentSquare.subtype === 'start') {
@@ -169,5 +209,6 @@ export default {
     rollDice,
     payTax,
     drawCard,
-    payRent
+    payRent,
+    completedCard
 };
