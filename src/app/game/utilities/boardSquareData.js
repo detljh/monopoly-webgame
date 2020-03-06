@@ -238,7 +238,7 @@ let squares = {
     10: {
         type: 'corner square-bottom',
         subtype: 'jail',
-        text: 'IN JAIL',
+        text: 'IN JAIL/JUST VISITING',
         cost: 50,
     }, 
     9: {

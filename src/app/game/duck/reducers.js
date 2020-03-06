@@ -17,7 +17,8 @@ const INITIAL_STATE = {
         type: '',
         text: ''
     },
-    doubleDice: 0
+    doubleDice: 0,
+    display: ''
 };
 
 const gameReducer = (state=INITIAL_STATE, action) => {
@@ -33,6 +34,10 @@ const gameReducer = (state=INITIAL_STATE, action) => {
             return Object.assign({}, state, {
                 gameState: action.gameState,
                 exitConditions: action.exitConditions
+            })
+        case types.UPDATE_DISPLAY:
+            return Object.assign({}, state, {
+                display: action.display
             })
         case types.END_TURN:
             return Object.assign({}, state, {
@@ -61,6 +66,14 @@ const gameReducer = (state=INITIAL_STATE, action) => {
         case types.UPDATE_CARD:
             return Object.assign({}, state, {
                 card: action.card
+            })
+        case types.DOUBLE_DICE:
+            return Object.assign({}, state, {
+                doubleDice: state.doubleDice + 1
+            })
+        case types.RESET_DOUBLE_DICE:
+            return Object.assign({}, state, {
+                doubleDice: 0
             })
         default:       
             return state;

@@ -34,6 +34,18 @@ const rollDice = (dice) => {
     }
 }
 
+const doubleDice = () => {
+    return {
+        type: types.DOUBLE_DICE
+    }
+}
+
+const resetDoubleDice = () => {
+    return {
+        type: types.RESET_DOUBLE_DICE
+    }
+}
+
 const movePlayer = (players, currentPosition, currentSquare) => {
     return {
         type: types.MOVE_PLAYER,
@@ -65,6 +77,13 @@ const updateCard = (card) => {
     }
 }
 
+const updateDisplay = (display) => {
+    return {
+        type: types.UPDATE_DISPLAY,
+        display: display
+    }
+}
+
 export default { 
     changeGameState,
     endTurn,
@@ -74,5 +93,8 @@ export default {
     movePlayer,
     updatePlayers,
     updateCard,
-    buyProperty
+    buyProperty,
+    doubleDice,
+    resetDoubleDice,
+    updateDisplay
 };

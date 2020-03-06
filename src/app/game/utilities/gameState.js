@@ -8,7 +8,8 @@ const ON_CHANCE = "ON_CHANCE";
 const ON_CHEST = "ON_CHEST";
 const ON_TAX = "ON_TAX";
 const END_OF_TURN = "END_OF_TURN";
-const IN_JAIL = "IN_JAIL";
+const IN_JAIL_FIRST_TURN = "IN_JAIL_FIRST_TURN";
+const IN_JAIL_BAIL_TURN = "IN_JAIL_BAIL_TURN";
 
 export default {
     CHOOSING_ACTION,
@@ -21,5 +22,6 @@ export default {
     ON_OWN_PROPERTY,
     ON_TAX,
     END_OF_TURN,
-    IN_JAIL
+    IN_JAIL_FIRST_TURN,
+    IN_JAIL_BAIL_TURN
 }

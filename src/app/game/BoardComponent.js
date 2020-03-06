@@ -24,45 +24,53 @@ class BoardComponent extends React.Component {
             } else {
                 return (<div key="middle" id={element[0]}>
                     {
-                        this.props.gameState != gameState.CHOOSING_ACTION &&
-                        [
-                            <p key="dice-1"><b>Dice 1:</b> {this.props.currentDice[0]}</p>,
-                            <p key="dice-2"><b>Dice 2:</b> {this.props.currentDice[1]}</p>
-                        ]
-                    } 
+                        this.props.display.length > 0 ? <h2>{this.props.display}</h2>
 
-                    { this.props.exitConditions.map((condition, index) => 
-                        [condition === exitCondition.ROLL_DICE &&
-                        <button key={condition} onClick={this.props.rollDice}>Roll Dice</button>, 
-
-                        condition === exitCondition.TRADE &&
-                        <button key={condition}>Trade</button>, 
+                        : [
                         
-                        condition === exitCondition.BUY_PROPERTY && 
-                        <button key={condition} onClick={this.props.buyProperty}>Buy</button>,
+                            this.props.gameState != gameState.CHOOSING_ACTION &&
+                            [
+                                <p key="dice-1"><b>Dice 1:</b> {this.props.currentDice[0]}</p>,
+                                <p key="dice-2"><b>Dice 2:</b> {this.props.currentDice[1]}</p>
+                            ],
+                        
 
-                        condition === exitCondition.PAY_RENT &&
-                        <button key={condition} onClick={this.props.payRent}>Pay Rent</button>,
+                            this.props.exitConditions.map((condition, index) => 
+                                [condition === exitCondition.ROLL_DICE &&
+                                <button key={condition} onClick={this.props.rollDice}>Roll Dice</button>, 
 
-                        condition === exitCondition.PAY_TAX &&
-                        <button key={condition} onClick={this.props.payTax}>Pay Tax</button>,
+                                condition === exitCondition.TRADE &&
+                                <button key={condition}>Trade</button>, 
+                                
+                                condition === exitCondition.BUY_PROPERTY && 
+                                <button key={condition} onClick={this.props.buyProperty}>Buy</button>,
 
-                        condition === exitCondition.DRAW_CHANCE &&
-                        <button key={condition} onClick={() => this.props.drawCard(condition)}>Draw chance card</button>,
+                                condition === exitCondition.PAY_RENT &&
+                                <button key={condition} onClick={this.props.payRent}>Pay Rent</button>,
 
-                        condition === exitCondition.DRAW_CHEST &&
-                        <button key={condition} onClick={() => this.props.drawCard(condition)}>Draw community chest card</button>,
+                                condition === exitCondition.PAY_TAX &&
+                                <button key={condition} onClick={this.props.payTax}>Pay Tax</button>,
 
-                        condition === exitCondition.BUY_HOUSE &&
-                        <button key={condition}>Buy houses</button>,
+                                condition === exitCondition.DRAW_CHANCE &&
+                                <button key={condition} onClick={() => this.props.drawCard(condition)}>Draw chance card</button>,
 
-                        condition === exitCondition.END_TURN &&
-                        <button key={condition} onClick={this.props.endTurn}>End turn</button>
+                                condition === exitCondition.DRAW_CHEST &&
+                                <button key={condition} onClick={() => this.props.drawCard(condition)}>Draw community chest card</button>,
+
+                                condition === exitCondition.BUY_HOUSE &&
+                                <button key={condition}>Buy houses</button>,
+
+                                condition === exitCondition.PAY_BAIL &&
+                                <button key={condition} onClick={this.props.payBail}>PAY BAIL</button>,
+
+                                condition === exitCondition.END_TURN &&
+                                <button key={condition} onClick={this.props.endTurn}>End turn</button>
+                                ]
+                            ),
+                        
+                            this.props.card.type.length > 0 &&
+                            <Card />
                         ]
-                    )}
-                    {
-                        this.props.card.type.length > 0 &&
-                        <Card />
                     }
                     </div>  
                 )}

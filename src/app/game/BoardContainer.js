@@ -11,7 +11,8 @@ const mapStateToProps = (state) => {
         currentDice: state.game.currentDice,
         currentPosition: state.game.currentPosition,
         exitConditions: state.game.exitConditions,
-        card: state.game.card
+        card: state.game.card,
+        display: state.game.display
     }
 }
 
@@ -34,6 +35,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         payTax: () => {
             dispatch(gameOperations.payTax());
+        },
+        payBail: () => {
+            dispatch(gameOperations.payBail());
         }
     }
 }
