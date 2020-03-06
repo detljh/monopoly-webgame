@@ -84,6 +84,12 @@ const updateDisplay = (display) => {
     }
 }
 
+const resetDice = () => {
+    return {
+        type: types.RESET_DICE
+    }
+}
+
 export default { 
     changeGameState,
     endTurn,
@@ -96,5 +102,6 @@ export default {
     buyProperty,
     doubleDice,
     resetDoubleDice,
-    updateDisplay
+    updateDisplay,
+    resetDice
 };

@@ -24,17 +24,17 @@ class BoardComponent extends React.Component {
             } else {
                 return (<div key="middle" id={element[0]}>
                     {
-                        this.props.display.length > 0 ? <h2>{this.props.display}</h2>
-
-                        : [
-                        
-                            this.props.gameState != gameState.CHOOSING_ACTION &&
+                        this.props.currentDice.length > 0 &&
                             [
                                 <p key="dice-1"><b>Dice 1:</b> {this.props.currentDice[0]}</p>,
                                 <p key="dice-2"><b>Dice 2:</b> {this.props.currentDice[1]}</p>
-                            ],
-                        
+                            ]
+                    }
 
+                    {
+                        this.props.display.length > 0 ? <h2>{this.props.display}</h2>
+
+                        : [
                             this.props.exitConditions.map((condition, index) => 
                                 [condition === exitCondition.ROLL_DICE &&
                                 <button key={condition} onClick={this.props.rollDice}>Roll Dice</button>, 

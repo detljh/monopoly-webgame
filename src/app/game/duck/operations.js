@@ -16,7 +16,7 @@ const stateExitMap = {
     [gameState.ON_TAX]: [exitCondition.PAY_TAX],
     [gameState.END_OF_TURN]: [exitCondition.BUY_HOUSE, exitCondition.END_TURN],
     [gameState.IN_JAIL_FIRST_TURN]: [exitCondition.END_TURN],
-    [gameState.IN_JAIL_BAIL_TURN]: [exitCondition.PAY_BAIL, exitCondition.END_TURN]
+    [gameState.IN_JAIL_BAIL_TURN]: [exitCondition.ROLL_DICE, exitCondition.PAY_BAIL, exitCondition.END_TURN]
 };
 
 const endTurn = () => {
@@ -33,18 +33,40 @@ const endTurn = () => {
             dispatch(Creators.updatePlayers(players));
             dispatch(Creators.changeGameState(gameState.IN_JAIL_BAIL_TURN, stateExitMap[gameState.IN_JAIL_BAIL_TURN]));
         } else if (currentPlayer.jailTurns >= 4) {
-            currentPlayer.jailTurns = 0;
-            dispatch(Creators.updatePlayers(players));
-            dispatch(Creators.changeGameState(gameState.CHOOSING_ACTION, stateExitMap[gameState.CHOOSING_ACTION]));
+            dispatch(jailEscape());
         } else {
             dispatch(Creators.changeGameState(gameState.CHOOSING_ACTION, stateExitMap[gameState.CHOOSING_ACTION]));
         }
+
+        dispatch(Creators.resetDice());
     }
 };
 
+const jailEscape = (cost=0) => {
+    return (dispatch, getState) => {
+        dispatch(updateDisplay("You've escaped the jail!"));
+        let players = getState().game.players;
+        let currentPlayerIndex = getState().game.currentPlayerIndex;
+        let currentPlayer = players[currentPlayerIndex];
+
+        currentPlayer.jailTurns = 0;
+        currentPlayer.money -= cost;
+        dispatch(Creators.updatePlayers(players));
+        dispatch(Creators.changeGameState(gameState.CHOOSING_ACTION, stateExitMap[gameState.CHOOSING_ACTION]));
+    }
+}
+
 const updateDisplay = (display) => {
-    return (dispatch) => {
-        dispatch(Creators.updateDisplay(display));
+    return (dispatch, getState) => {
+        let currentDisplay = getState().game.display;
+        if (currentDisplay.length > 0) {
+            setTimeout(() => {
+                dispatch(Creators.updateDisplay(display));
+            }, 1000);
+        } else {
+            dispatch(Creators.updateDisplay(display));
+        }
+        
         setTimeout(() => {
             dispatch(Creators.updateDisplay(''));
         }, 2000);
@@ -90,17 +112,26 @@ const newGame = (ownProps) => {
 const endOfTurn = () => {
     return (dispatch, getState) => {
         const doubleDice = getState().game.doubleDice;
-        if (doubleDice >= 3) {
-            dispatch(updateDisplay("Three in a row Doubles! Moving to Jail!"));
-            dispatch(Creators.resetDoubleDice());
-            let players = getState().game.players;
-            let updatePlayer = players[getState().game.currentPlayerIndex];
-            dispatch(goJail(players, updatePlayer));
-        } else if (doubleDice > 0) {
-            dispatch(Creators.changeGameState(gameState.CHOOSING_ACTION, stateExitMap[gameState.CHOOSING_ACTION]));
+        let players = getState().game.players;
+        let updatePlayer = players[getState().game.currentPlayerIndex];
+
+        if (updatePlayer.jailTurns > 0) {
+            if (doubleDice) {
+                dispatch(jailEscape());
+            } else {
+                dispatch(Creators.changeGameState(gameState.END_OF_TURN, stateExitMap[gameState.END_OF_TURN]));
+            }
         } else {
-            dispatch(Creators.resetDoubleDice());
-            dispatch(Creators.changeGameState(gameState.END_OF_TURN, stateExitMap[gameState.END_OF_TURN]));
+            if (doubleDice >= 3) {
+                dispatch(updateDisplay("Three in a row Doubles! Moving to Jail!"));
+                dispatch(Creators.resetDoubleDice());
+                dispatch(goJail(players, updatePlayer));
+            } else if (doubleDice > 0) {
+                dispatch(Creators.changeGameState(gameState.CHOOSING_ACTION, stateExitMap[gameState.CHOOSING_ACTION]));
+            } else {
+                dispatch(Creators.resetDoubleDice());
+                dispatch(Creators.changeGameState(gameState.END_OF_TURN, stateExitMap[gameState.END_OF_TURN]));
+            }
         }
     }
 }
@@ -142,12 +173,7 @@ const payTax = () => {
 
 const payBail = () => {
     return (dispatch, getState) => {
-        const players = getState().game.players;
-        let updatePlayer = players[getState().game.currentPlayerIndex];
-        updatePlayer.money -= 50;
-        updatePlayer.jailTurns = 0;
-        dispatch(Creators.updatePlayers(players));  
-        dispatch(Creators.changeGameState(gameState.CHOOSING_ACTION, stateExitMap[gameState.CHOOSING_ACTION]));
+        dispatch(jailEscape(50));
     }
 }
 
@@ -262,24 +288,27 @@ const playerTurn = (dice1, dice2) => {
 }
 
 const rollDice = () => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         const dice1 = Math.floor(Math.random() * 6) + 1;
         const dice2 = Math.floor(Math.random() * 6) + 1;
         dispatch(Creators.rollDice([dice1, dice2]));
         dispatch(Creators.changeGameState(gameState.ROLLING_DICE, stateExitMap[gameState.ROLLING_DICE]));
 
+        let currentPlayer = getState().game.currentPlayer;
         if (dice1 == dice2) {
-            dispatch(Creators.doubleDice());
-            setTimeout(() => {
+                dispatch(Creators.doubleDice());
                 dispatch(updateDisplay("Doubles!"));
-            }, 1000);
         } else {
             dispatch(Creators.resetDoubleDice());
         }
-
-        setTimeout(() => {
-            dispatch(playerTurn(dice1, dice2));
-        }, 1500);
+        
+        if (currentPlayer.jailTurns == 0) {
+            setTimeout(() => {
+                dispatch(playerTurn(dice1, dice2));
+            }, 1500);
+        } else {
+            dispatch(endOfTurn());
+        }
     }
 }
 

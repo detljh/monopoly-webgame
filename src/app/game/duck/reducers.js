@@ -75,6 +75,10 @@ const gameReducer = (state=INITIAL_STATE, action) => {
             return Object.assign({}, state, {
                 doubleDice: 0
             })
+        case types.RESET_DICE:
+            return Object.assign({}, state, {
+                currentDice: []
+            })
         default:       
             return state;
     };
