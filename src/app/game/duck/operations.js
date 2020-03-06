@@ -2,6 +2,7 @@ import Creators from './actions.js';
 import gameState from '../utilities/gameState.js';
 import exitCondition from '../utilities/exitCondition.js';
 import cardData from '../utilities/cardData';
+import { propertyInfo } from '../utilities/boardSquareData';
 
 const NUMBER_POSITIONS = 40;
 const stateExitMap = {
@@ -82,11 +83,12 @@ const startGame = (players) => {
                 properties: [],
                 position: 0,
                 jailTurns: 0,
-                rounds: 0,
-                propertyStages: {
-                    stations: 0,
-                    utilities: 0,
-                    browns: 0,
+                // change to 0 in production
+                rounds: 1,
+                propertyNumbers: {
+                    station: 0,
+                    utility: 0,
+                    brown: 0,
                     lightBlue: 0,
                     purple: 0,
                     orange: 0,
@@ -141,7 +143,8 @@ const buyProperty = () => {
         const players = getState().game.players;
         let currentPlayerIndex = getState().game.currentPlayerIndex
         let updatePlayer = players[currentPlayerIndex];
-        let cost = getState().game.currentSquare.cost;
+        let currentSquare = getState().game.currentSquare;
+        let cost = currentSquare.cost;
 
         if (updatePlayer.money - cost < 0) {
             return;
@@ -155,6 +158,8 @@ const buyProperty = () => {
         squares[currentPosition].owned = `Player ${currentPlayerIndex + 1}`;
         squares[currentPosition].ownedIndex = currentPlayerIndex;
         squares[currentPosition].playerOwned = updatePlayer.name;
+
+        updatePlayer.propertyNumbers[currentSquare.subtype] += 1;
         
         dispatch(Creators.buyProperty(players, squares));
         dispatch(endOfTurn());
@@ -183,9 +188,25 @@ const payRent = () => {
         let currentSquare = getState().game.currentSquare;
         let fromPlayer = players[getState().game.currentPlayerIndex];
         let toPlayer = players[currentSquare.ownedIndex];
-        
-        fromPlayer.money -= currentSquare.rent[0];
-        toPlayer.money += currentSquare.rent[0];
+        let subType = currentSquare.subtype;
+
+        let rentStage = 0;
+        let rent = 0;
+        if (subType == 'utility') {
+            rentStage = toPlayer.propertyNumbers[subType] - 1;
+            let currentDice = getState().game.currentDice;
+            rent = currentSquare.rent[rentStage] * (currentDice[0] + currentDice[1]);
+        } else if (subType == 'station') {
+            rentStage = toPlayer.propertyNumbers[subType] - 1;
+            rent = currentSquare.rent[rentStage];
+        } else {
+            rentStage = toPlayer.propertyNumbers[subType] - propertyInfo[subType] + 1;
+            rentStage = rentStage < 0 ? 0 : rentStage;
+            rent = currentSquare.rent[rentStage];
+        } 
+
+        fromPlayer.money -= rent;
+        toPlayer.money += rent;
         dispatch(Creators.updatePlayers(players));  
         dispatch(endOfTurn());
     }
@@ -287,6 +308,10 @@ const playerTurn = (dice1, dice2) => {
     }
 }
 
+const buyHouse = () => {
+    // save prev game state, change game state to buying house, show menu with available properties to buy house/hotel, have back button which reverts to prev game state, have buy button
+}
+
 const rollDice = () => {
     return (dispatch, getState) => {
         const dice1 = Math.floor(Math.random() * 6) + 1;
@@ -322,5 +347,6 @@ export default {
     drawCard,
     payRent,
     completedCard,
-    payBail
+    payBail,
+    buyHouse
 };

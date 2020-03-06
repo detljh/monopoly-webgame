@@ -243,7 +243,7 @@ let squares = {
     }, 
     9: {
         type: 'property square-bottom',
-        subtype: 'light-blue',
+        subtype: 'lightBlue',
         text: 'Pentonville Road',
         cost: 120,
         rent: [8, 16, 40, 100, 300, 450, 600],
@@ -252,7 +252,7 @@ let squares = {
     }, 
     8: {
         type: 'property square-bottom',
-        subtype: 'light-blue',
+        subtype: 'lightBlue',
         text: 'Euston Road',
         cost: 100,
         rent: [6, 12, 30, 90, 270, 400, 550],
@@ -267,7 +267,7 @@ let squares = {
     },  
     6: {
         type: 'property square-bottom',
-        subtype: 'light-blue',
+        subtype: 'lightBlue',
         text: 'The Angel, Islington',
         cost: 100,
         rent: [6, 12, 30, 90, 270, 400, 550],
@@ -319,4 +319,20 @@ let squares = {
     }
 }
 
-export default squares;
+let propertyInfo = {
+    red: 3,
+    brown: 2,
+    lightBlue: 3,
+    purple: 3,
+    orange: 3,
+    yellow: 3,
+    green: 3,
+    blue: 2,
+    station: 4,
+    utility: 2
+}
+
+export {
+    squares,
+    propertyInfo
+};

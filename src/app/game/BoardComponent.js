@@ -19,7 +19,7 @@ class BoardComponent extends React.Component {
                         playersOnSquare.push(player.name);
                     }
                 });
-                console.log(element);
+
                 return <Square key={element[0]} id={element[0]} type={element[1].type} subtype={element[1].subtype} text={element[1].text} cost={element[1].cost} rent={element[1].rent} house={element[1].house} hotel={element[1].hotel} playersOnSquare={playersOnSquare} owned={element[1].owned} playerOwned={element[1].playerOwned} />
             } else {
                 return (<div key="middle" id={element[0]}>
@@ -69,7 +69,7 @@ class BoardComponent extends React.Component {
                             ),
                         
                             this.props.card.type.length > 0 &&
-                            <Card />
+                            <Card key={this.props.card.text}/>
                         ]
                     }
                     </div>  

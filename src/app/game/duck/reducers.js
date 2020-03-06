@@ -1,7 +1,7 @@
 import types from './types.js';
 import gameState from '../utilities/gameState';
 import exitCondition from '../utilities/exitCondition.js';
-import squares from '../utilities/boardSquareData';
+import { squares } from '../utilities/boardSquareData';
 
 const INITIAL_STATE = {
     squares: squares,
