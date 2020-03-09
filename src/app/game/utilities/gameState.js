@@ -9,6 +9,7 @@ const ON_TAX = "ON_TAX";
 const END_OF_TURN = "END_OF_TURN";
 const IN_JAIL_FIRST_TURN = "IN_JAIL_FIRST_TURN";
 const IN_JAIL_BAIL_TURN = "IN_JAIL_BAIL_TURN";
+const BUYING_HOUSE = "BUYING_HOUSE";
 
 export default {
     CHOOSING_ACTION,
@@ -21,5 +22,6 @@ export default {
     ON_TAX,
     END_OF_TURN,
     IN_JAIL_FIRST_TURN,
-    IN_JAIL_BAIL_TURN
+    IN_JAIL_BAIL_TURN,
+    BUYING_HOUSE
 }

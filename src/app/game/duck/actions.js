@@ -62,9 +62,9 @@ const updatePlayers = (players) => {
     }
 }
 
-const buyProperty = (players, squares) => {
+const buy = (players, squares) => {
     return {
-        type: types.BUY_PROPERTY,
+        type: types.BUY,
         players: players,
         squares: squares
     }
@@ -90,6 +90,13 @@ const resetDice = () => {
     }
 }
 
+const updateBuyingHouseMenu = (fullStreetProperties) => {
+    return {
+        type: types.UPDATE_BUYING_HOUSE_MENU,
+        fullStreetProperties: fullStreetProperties
+    }
+}
+
 export default { 
     changeGameState,
     endTurn,
@@ -99,9 +106,10 @@ export default {
     movePlayer,
     updatePlayers,
     updateCard,
-    buyProperty,
+    buy,
     doubleDice,
     resetDoubleDice,
     updateDisplay,
-    resetDice
+    resetDice,
+    updateBuyingHouseMenu
 };

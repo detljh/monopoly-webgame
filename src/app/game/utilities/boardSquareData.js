@@ -3,7 +3,7 @@ let squares = {
         type: 'corner square-top',
         subtype: 'free-park',
         text: 'Free Parking',
-        cost: 0,
+        cost: 0
     }, 
     21: {
         type: 'property square-top',
@@ -11,14 +11,14 @@ let squares = {
         text: 'Strand',
         cost: 220,
         rent: [18, 36, 90, 250, 700, 875, 1050],
-        house: 150,
-        hotel: 150,
+        houseCost: 150,
+        houses: 0
     }, 
     22: {
         type: 'special square-top',
         subtype: 'chance',
         text: 'CHANCE',
-        cost: 0,
+        cost: 0
     }, 
     23: {
         type: 'property square-top',
@@ -26,8 +26,8 @@ let squares = {
         text: 'Fleet Street',
         cost: 220,
         rent: [18, 36, 90, 250, 700, 875, 1050],
-        house: 150,
-        hotel: 150,
+        houseCost: 150,
+        houses: 0
     }, 
     24: {
         type: 'property square-top',
@@ -35,8 +35,8 @@ let squares = {
         text: 'Trafalgar Sqaure',
         cost: 240,
         rent: [20, 40, 100, 300, 750, 925, 1100],
-        house: 150,
-        hotel: 150,
+        houseCost: 150,
+        houses: 0
     }, 
     25: {
         type: 'special square-top',
@@ -51,8 +51,8 @@ let squares = {
         text: 'Leicester Square',
         cost: 260,
         rent: [22, 44, 110, 330, 800, 975, 1150],
-        house: 150,
-        hotel: 150,
+        houseCost: 150,
+        houses: 0
     }, 
     27: {
         type: 'property square-top',
@@ -60,8 +60,8 @@ let squares = {
         text: 'Coventry Street',
         cost: 260,
         rent: [22, 44, 110, 330, 800, 975, 1150],
-        house: 150,
-        hotel: 150,
+        houseCost: 150,
+        houses: 0
     }, 
     28: {
         type: 'special square-top',
@@ -76,8 +76,8 @@ let squares = {
         text: 'Piccadilly',
         cost: 280,
         rent: [24, 48, 120, 360, 850, 1025, 1200],
-        house: 150,
-        hotel: 150,
+        houseCost: 150,
+        houses: 0
     }, 
     30: {
         type: 'corner square-top',
@@ -91,8 +91,8 @@ let squares = {
         text: 'Vine Street',
         cost: 200,
         rent: [16, 32, 80, 220, 600, 800, 1000],
-        house: 100,
-        hotel: 100,
+        houseCost: 100,
+        houses: 0
     }, 
     'middle': {
         type: 'middle'
@@ -104,8 +104,8 @@ let squares = {
         text: 'Regent Street',
         cost: 300,
         rent: [26, 52, 130, 390, 900, 1100, 1275],
-        house: 200,
-        hotel: 200,
+        houseCost: 200,
+        houses: 0
     }, 
     18: {
         type: 'property square-left',
@@ -114,8 +114,8 @@ let squares = {
         text: 'Great Malborough Street',
         cost: 180,
         rent: [14, 28, 70, 200, 550, 8750, 950],
-        house: 100,
-        hotel: 100,
+        houseCost: 100,
+        houses: 0
     }, 
     32: {
         type: 'property square-right',
@@ -124,8 +124,8 @@ let squares = {
         text: 'Oxford Street',
         cost: 300,
         rent: [26, 52, 130, 390, 900, 1100, 1275],
-        house: 200,
-        hotel: 200,
+        houseCost: 200,
+        houses: 0
     }, 
     17: {
         type: 'special square-left',
@@ -145,8 +145,8 @@ let squares = {
         text: 'Bow Street',
         cost: 180,
         rent: [14, 28, 70, 200, 550, 8750, 950],
-        house: 100,
-        hotel: 100,
+        houseCost: 100,
+        houses: 0
     }, 
     34: {
         type: 'property square-right',
@@ -154,8 +154,8 @@ let squares = {
         text: 'Bond Street',
         cost: 320,
         rent: [28, 56, 150, 450, 1000, 1200, 1400],
-        house: 200,
-        hotel: 200,
+        houseCost: 200,
+        houses: 0
     }, 
     15: {
         type: 'special square-left',
@@ -177,8 +177,8 @@ let squares = {
         text: 'Northumberland Avenue',
         cost: 160,
         rent: [12, 24, 60, 180, 500, 700, 900],
-        house: 100,
-        hotel: 100,
+        houseCost: 100,
+        houses: 0
     }, 
     36: {
         type: 'special square-right',
@@ -192,8 +192,8 @@ let squares = {
         text: 'Whitehall',
         cost: 140,
         rent: [10, 20, 50, 150, 450, 625, 750],
-        house: 100,
-        hotel: 100,
+        houseCost: 100,
+        houses: 0
     }, 
     37: {
         type: 'property square-right',
@@ -201,8 +201,8 @@ let squares = {
         text: 'Park Lane',
         cost: 350,
         rent: [35, 70, 175, 500, 1100, 1300, 1500],
-        house: 200,
-        hotel: 200,
+        houseCost: 200,
+        houses: 0
     },
     12: {
         type: 'special square-left',
@@ -223,8 +223,8 @@ let squares = {
         text: 'Pall Mall',
         cost: 140,
         rent: [10, 20, 50, 150, 450, 625, 750],
-        house: 100,
-        hotel: 100,
+        houseCost: 100,
+        houses: 0
     }, 
     39: {
         type: 'property square-right',
@@ -232,8 +232,8 @@ let squares = {
         text: 'Mayfair',
         cost: 400,
         rent: [50, 100, 200, 600, 1400, 1700, 2000],
-        house: 200,
-        hotel: 200,
+        houseCost: 200,
+        houses: 0
     }, 
     10: {
         type: 'corner square-bottom',
@@ -247,8 +247,8 @@ let squares = {
         text: 'Pentonville Road',
         cost: 120,
         rent: [8, 16, 40, 100, 300, 450, 600],
-        house: 50,
-        hotel: 50,
+        houseCost: 50,
+        houses: 0
     }, 
     8: {
         type: 'property square-bottom',
@@ -256,8 +256,8 @@ let squares = {
         text: 'Euston Road',
         cost: 100,
         rent: [6, 12, 30, 90, 270, 400, 550],
-        house: 50,
-        hotel: 50,
+        houseCost: 50,
+        houses: 0
     }, 
     7: {
         type: 'special square-bottom',
@@ -271,8 +271,8 @@ let squares = {
         text: 'The Angel, Islington',
         cost: 100,
         rent: [6, 12, 30, 90, 270, 400, 550],
-        house: 50,
-        hotel: 50,
+        houseCost: 50,
+        houses: 0
     }, 
     5: {
         type: 'special square-bottom',
@@ -293,8 +293,8 @@ let squares = {
         text: 'Whitechapel Road',
         cost: 60,
         rent: [4, 8, 20, 60, 180, 320, 450],
-        house: 50,
-        hotel: 50,
+        houseCost: 50,
+        houses: 0
     }, 
     2: {
         type: 'special square-bottom',
@@ -308,14 +308,14 @@ let squares = {
         text: 'Old Kent Road',
         cost: 60,
         rent: [2, 4, 10, 30, 90, 160, 250],
-        house: 50,
-        hotel: 50,
+        houseCost: 50,
+        houses: 0
     }, 
     0: {
         type: 'corner square-bottom',
         subtype: 'start',
         text: 'COLLECT $200 SALARY AS YOU PASS GO',
-        cost: 200,
+        cost: 200
     }
 }
 

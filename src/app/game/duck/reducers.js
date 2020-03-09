@@ -6,7 +6,8 @@ import { squares } from '../utilities/boardSquareData';
 const INITIAL_STATE = {
     squares: squares,
     gameState: gameState.CHOOSING_ACTION,
-    exitConditions: [exitCondition.ROLL_DICE, exitCondition.TRADE],
+    prevGameState: gameState.CHOOSING_ACTION,
+    exitConditions: [exitCondition.ROLL_DICE],
     currentPlayerIndex: 0,
     players: [],
     currentPlayer: '',
@@ -18,7 +19,8 @@ const INITIAL_STATE = {
         text: ''
     },
     doubleDice: 0,
-    display: ''
+    display: '',
+    fullStreetProperties: []
 };
 
 const gameReducer = (state=INITIAL_STATE, action) => {
@@ -33,7 +35,8 @@ const gameReducer = (state=INITIAL_STATE, action) => {
         case types.CHANGE_GAME_STATE:
             return Object.assign({}, state, {
                 gameState: action.gameState,
-                exitConditions: action.exitConditions
+                exitConditions: action.exitConditions,
+                prevGameState: state.gameState
             })
         case types.UPDATE_DISPLAY:
             return Object.assign({}, state, {
@@ -58,10 +61,10 @@ const gameReducer = (state=INITIAL_STATE, action) => {
             return Object.assign({}, state, {
                 players: [...action.players]
             })
-        case types.BUY_PROPERTY:
+        case types.BUY:
             return Object.assign({}, state, {
                 players: [...action.players],
-                squares: {...action.squares}
+                squares: action.squares
             })
         case types.UPDATE_CARD:
             return Object.assign({}, state, {
@@ -78,6 +81,10 @@ const gameReducer = (state=INITIAL_STATE, action) => {
         case types.RESET_DICE:
             return Object.assign({}, state, {
                 currentDice: []
+            })
+        case types.UPDATE_BUYING_HOUSE_MENU:
+            return Object.assign({}, state, {
+                fullStreetProperties: action.fullStreetProperties
             })
         default:       
             return state;

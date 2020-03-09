@@ -4,12 +4,21 @@ const SquareComponent = (props) => {
     return (
         <div className="square" id={`square-${props.id}`}>
             {
-                props.owned &&
-                <div className={`${props.type} owned-property`} id={props.playerOwned}>
-                    <p>OWNED BY {props.owned}</p>
+                props.square.owned &&
+                <div className={`${props.square.type} owned-property`} id={props.square.playerOwned}>
+                    <p>OWNED BY {props.square.owned}</p> 
+                    
+                    {
+                        props.square.houses >= 0 &&
+                        (props.square.houses < 5 ? <p>Houses: {props.square.houses}</p>
+                        : <p>Hotel</p>)
+
+                    }
+                    
+                    
                 </div> 
             }
-            <div className={props.type}>
+            <div className={props.square.type}>
                 <div id="player-on-square-container">
                     {
                         props.playersOnSquare.map(player => 
@@ -18,9 +27,9 @@ const SquareComponent = (props) => {
                     }
                 </div>
 
-                <p className="square-cost">{(props.type.includes("property") || ["tax", "station", "utility"].some(e => props.subtype.includes(e))) && `$${props.cost}`}</p>
-                <p className="square-name">{props.text}</p>
-                <div className={props.subtype}></div>
+                <p className="square-cost">{(props.square.type.includes("property") || ["tax", "station", "utility"].some(e => props.square.subtype.includes(e))) && `$${props.square.cost}`}</p>
+                <p className="square-name">{props.square.text}</p>
+                <div className={props.square.subtype}></div>
             </div>
         </div>
     );

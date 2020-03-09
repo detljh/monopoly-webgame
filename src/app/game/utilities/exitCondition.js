@@ -8,6 +8,7 @@ const PAY_RENT = "PAY_RENT";
 const END_TURN = "END_TURN";
 const BUY_HOUSE = "BUY_HOUSE";
 const PAY_BAIL = "PAY_BAIL";
+const BUY_HOUSE_MENU = "BUY_HOUSE_MENU";
 
 export default {
     ROLL_DICE,
@@ -19,5 +20,6 @@ export default {
     PAY_RENT,
     END_TURN,
     BUY_HOUSE,
-    PAY_BAIL
+    PAY_BAIL,
+    BUY_HOUSE_MENU
 }
