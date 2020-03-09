@@ -99,51 +99,46 @@ const playerTurn = (dice1, dice2) => {
         updatePlayer.position = currentPosition
         let currentSquare = getState().game.squares[currentPosition];
         dispatch(Creators.movePlayer(players, currentPosition, currentSquare));
-        let timeout = 0;
         
         if (currentPosition < prevPosition) {
             dispatch(getStartMoney(players, updatePlayer));
-            timeout = 1000;
         }
-        
-        setTimeout(() => {
-            let currentPlayer = getState().game.currentPlayer;
-            if (currentSquare.subtype === 'tax') {
-                dispatch(Creators.changeGameState(gameState.ON_TAX, stateExitMap[gameState.ON_TAX]));
-            } else if (currentSquare.subtype === 'chest') {
-                dispatch(Creators.changeGameState(gameState.ON_CHEST, stateExitMap[gameState.ON_CHEST]));
-            } else if (currentSquare.subtype === 'chance') {
-                dispatch(Creators.changeGameState(gameState.ON_CHANCE, stateExitMap[gameState.ON_CHANCE]));
-            } else if (currentSquare.subtype === 'free-park') {
-                dispatch(endOfTurn());
-            } else if (currentSquare.subtype === 'go-jail') {
-                dispatch(updateDisplay("Moving to Jail!"));
-                setTimeout(() => {
-                    dispatch(goJail(players, updatePlayer));
-                }, 1500);
-            } else if (currentSquare.subtype === 'jail' || currentSquare.subtype === 'start') {
+        let currentPlayer = getState().game.currentPlayer;
+        if (currentSquare.subtype === 'tax') {
+            dispatch(Creators.changeGameState(gameState.ON_TAX, stateExitMap[gameState.ON_TAX]));
+        } else if (currentSquare.subtype === 'chest') {
+            dispatch(Creators.changeGameState(gameState.ON_CHEST, stateExitMap[gameState.ON_CHEST]));
+        } else if (currentSquare.subtype === 'chance') {
+            dispatch(Creators.changeGameState(gameState.ON_CHANCE, stateExitMap[gameState.ON_CHANCE]));
+        } else if (currentSquare.subtype === 'free-park') {
+            dispatch(getFreeParking(players, updatePlayer));
+        } else if (currentSquare.subtype === 'go-jail') {
+            dispatch(updateDisplay("Moving to Jail!"));
+            setTimeout(() => {
+                dispatch(goJail(players, updatePlayer));
+            }, 1500);
+        } else if (currentSquare.subtype === 'jail' || currentSquare.subtype === 'start') {
+            dispatch(endOfTurn());
+        } else {
+            if (currentPlayer.rounds < 1) {
                 dispatch(endOfTurn());
             } else {
-                if (currentPlayer.rounds < 1) {
-                    dispatch(endOfTurn());
-                } else {
-                    if (currentSquare.owned) {
-                        let owner = players[currentSquare.ownedIndex];
-                        if (owner.name == currentPlayer.name) {
+                if (currentSquare.owned) {
+                    let owner = players[currentSquare.ownedIndex];
+                    if (owner.name == currentPlayer.name) {
+                        dispatch(endOfTurn());
+                    } else {
+                        if (owner.jailTurns > 0) {
                             dispatch(endOfTurn());
                         } else {
-                            if (owner.jailTurns > 0) {
-                                dispatch(endOfTurn());
-                            } else {
-                                dispatch(Creators.changeGameState(gameState.ON_OWNED_PROPERTY, stateExitMap[gameState.ON_OWNED_PROPERTY]));
-                            }
+                            dispatch(Creators.changeGameState(gameState.ON_OWNED_PROPERTY, stateExitMap[gameState.ON_OWNED_PROPERTY]));
                         }
-                    } else {
-                        dispatch(Creators.changeGameState(gameState.ON_FREE_PROPERTY, stateExitMap[gameState.ON_FREE_PROPERTY]));
                     }
+                } else {
+                    dispatch(Creators.changeGameState(gameState.ON_FREE_PROPERTY, stateExitMap[gameState.ON_FREE_PROPERTY]));
                 }
             }
-        }, timeout);
+        }
     }
 }
 
@@ -169,6 +164,29 @@ const endTurn = () => {
         dispatch(Creators.resetDice());
     }
 };
+
+const getStartMoney = (players, updatePlayer) => {
+    return (dispatch, getState) => {
+        dispatch(updateDisplay("Passing Go +$200!"));
+        updatePlayer.rounds += 1;
+        updatePlayer.money += getState().game.squares[0].cost;
+        dispatch(Creators.updatePlayers(players));
+    }
+}
+
+const getFreeParking = (players, updatePlayer) => {
+    return (dispatch, getState) => {
+        let freeParking = getState().game.freeParking;
+        if (freeParking > 0) {
+            dispatch(updateDisplay(`Free parking +${freeParking}!`));
+            updatePlayer.money += freeParking;
+            dispatch(Creators.updatePlayers(players));
+            dispatch(Creators.updateFreeParking(0));
+        }
+        
+        dispatch(endOfTurn());
+    }
+}
 
 /**
  * OTHER HELPER FUNCTIONS
@@ -222,15 +240,6 @@ const endOfTurn = () => {
                 dispatch(Creators.changeGameState(gameState.END_OF_TURN, stateExitMap[gameState.END_OF_TURN]));
             }
         }
-    }
-}
-
-const getStartMoney = (players, updatePlayer) => {
-    return (dispatch, getState) => {
-        dispatch(updateDisplay("Passing Go +$200!"));
-        updatePlayer.rounds += 1;
-        updatePlayer.money += getState().game.squares[0].cost;
-        dispatch(Creators.updatePlayers(players));
     }
 }
 
@@ -398,8 +407,11 @@ const payTax = () => {
     return (dispatch, getState) => {
         const players = getState().game.players;
         let updatePlayer = players[getState().game.currentPlayerIndex];
-        updatePlayer.money -= getState().game.currentSquare.cost;
+        let cost = getState().game.currentSquare.cost;
+        let freeParking = getState().game.freeParking + cost;
+        updatePlayer.money -= cost;
         dispatch(Creators.updatePlayers(players));  
+        dispatch(Creators.updateFreeParking(freeParking));
         dispatch(endOfTurn());
     }
 }

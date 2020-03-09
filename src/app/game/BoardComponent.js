@@ -17,8 +17,13 @@ class BoardComponent extends React.Component {
                         playersOnSquare.push(player.name);
                     }
                 });
+
+                let freeParking = -1
+                if (element[1].subtype === 'free-park') {
+                    freeParking = this.props.freeParking;
+                }
  
-                return <Square key={element[0]} id={element[0]} playersOnSquare={playersOnSquare} square={element[1]} />
+                return <Square key={element[0]} id={element[0]} playersOnSquare={playersOnSquare} square={element[1]} freeParking={freeParking}/>
             } else {
                 return (<div key="middle" id={element[0]}>
                     {

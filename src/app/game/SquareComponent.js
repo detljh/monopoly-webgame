@@ -28,6 +28,7 @@ const SquareComponent = (props) => {
                 </div>
 
                 <p className="square-cost">{(props.square.type.includes("property") || ["tax", "station", "utility"].some(e => props.square.subtype.includes(e))) && `$${props.square.cost}`}</p>
+                {props.freeParking > -1 && <p className="square-cost"><b>Amount:</b> {props.freeParking}</p>}
                 <p className="square-name">{props.square.text}</p>
                 <div className={props.square.subtype}></div>
             </div>

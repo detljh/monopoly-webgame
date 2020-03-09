@@ -20,7 +20,8 @@ const INITIAL_STATE = {
     },
     doubleDice: 0,
     display: '',
-    fullStreetProperties: []
+    fullStreetProperties: [],
+    freeParking: 0
 };
 
 const gameReducer = (state=INITIAL_STATE, action) => {
@@ -85,6 +86,10 @@ const gameReducer = (state=INITIAL_STATE, action) => {
         case types.UPDATE_BUYING_HOUSE_MENU:
             return Object.assign({}, state, {
                 fullStreetProperties: action.fullStreetProperties
+            })
+        case types.UPDATE_FREE_PARKING:
+            return Object.assign({}, state, {
+                freeParking: action.money
             })
         default:       
             return state;

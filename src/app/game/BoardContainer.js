@@ -12,7 +12,8 @@ const mapStateToProps = (state) => {
         currentPosition: state.game.currentPosition,
         exitConditions: state.game.exitConditions,
         card: state.game.card,
-        display: state.game.display
+        display: state.game.display,
+        freeParking: state.game.freeParking
     }
 }
 

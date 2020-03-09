@@ -97,6 +97,13 @@ const updateBuyingHouseMenu = (fullStreetProperties) => {
     }
 }
 
+const updateFreeParking = (money) => {
+    return {
+        type: types.UPDATE_FREE_PARKING,
+        money: money
+    }
+}
+
 export default { 
     changeGameState,
     endTurn,
@@ -111,5 +118,6 @@ export default {
     resetDoubleDice,
     updateDisplay,
     resetDice,
-    updateBuyingHouseMenu
+    updateBuyingHouseMenu,
+    updateFreeParking
 };
