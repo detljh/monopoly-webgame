@@ -51,6 +51,9 @@ class PlayerMoversComponent extends React.Component {
                     condition === exitCondition.BUY_HOUSE &&
                     <button key={condition} onClick={this.props.buyHouseMenu}>Buy houses</button>,
 
+                    condition === exitCondition.USE_JAIL_CARD &&
+                    <button key={condition} onClick={this.props.useJailCard}>Use Jail Card</button>,
+
                     condition === exitCondition.PAY_BAIL &&
                     <button key={condition} onClick={this.props.payBail}>PAY BAIL</button>,
 

@@ -46,12 +46,11 @@ const resetDoubleDice = () => {
     }
 }
 
-const movePlayer = (players, currentPosition, currentSquare) => {
+const movePlayer = (players, currentPosition) => {
     return {
         type: types.MOVE_PLAYER,
         players: players,
-        currentPosition: currentPosition,
-        currentSquare: currentSquare
+        currentPosition: currentPosition
     }
 }
 

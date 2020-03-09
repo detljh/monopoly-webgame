@@ -41,6 +41,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         buyHouse: (property) => {
             dispatch(gameOperations.buyHouse(property));
+        },
+        useJailCard: () => {
+            dispatch(gameOperations.useJailCard());
         }
     }
 }

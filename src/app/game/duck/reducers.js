@@ -15,8 +15,7 @@ const INITIAL_STATE = {
     currentPosition: 0,
     currentSquare: '',
     card: {
-        type: '',
-        text: ''
+        type: ''
     },
     doubleDice: 0,
     display: '',
@@ -56,7 +55,7 @@ const gameReducer = (state=INITIAL_STATE, action) => {
             return Object.assign({}, state, {
                 players: action.players,
                 currentPosition: action.currentPosition,
-                currentSquare: action.currentSquare
+                currentSquare: state.squares[action.currentPosition]
             });
         case types.UPDATE_PLAYERS:
             return Object.assign({}, state, {

@@ -10,8 +10,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        completedCard: () => {
-            dispatch(gameOperations.completedCard());
+        completeCard: () => {
+            dispatch(gameOperations.completeCard());
         }
     }
 }

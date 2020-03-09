@@ -5,7 +5,7 @@ const CardComponent = (props) => {
         <div className="card">
             <h3>{props.card.type}</h3>
             <p>{props.card.text}</p>
-            <button onClick={props.completedCard}>OK</button>
+            <button onClick={props.completeCard}>OK</button>
         </div>
     )
 }

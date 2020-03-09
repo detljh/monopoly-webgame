@@ -17,7 +17,8 @@ const stateExitMap = {
     [gameState.ON_TAX]: [exitCondition.PAY_TAX],
     [gameState.END_OF_TURN]: [exitCondition.BUY_HOUSE, exitCondition.END_TURN],
     [gameState.IN_JAIL_FIRST_TURN]: [exitCondition.END_TURN],
-    [gameState.IN_JAIL_BAIL_TURN]: [exitCondition.ROLL_DICE, exitCondition.PAY_BAIL, exitCondition.END_TURN],
+    [gameState.IN_JAIL_BAIL_TURN]: [exitCondition.ROLL_DICE, exitCondition.PAY_BAIL],
+    [gameState.IN_JAIL_BAIL_TURN_CARD]: [exitCondition.ROLL_DICE, exitCondition.USE_JAIL_CARD, exitCondition.PAY_BAIL],
     [gameState.BUYING_HOUSE]: [exitCondition.BUY_HOUSE_MENU]
 };
 
@@ -43,7 +44,8 @@ const startGame = (players) => {
                     yellow: 0,
                     green: 0,
                     blue: 0
-                }
+                },
+                jailCard: 0
             } 
         });
         dispatch(Creators.startGame(players));
@@ -67,8 +69,8 @@ const rollDice = () => {
     return (dispatch, getState) => {
         // const dice1 = Math.floor(Math.random() * 6) + 1;
         // const dice2 = Math.floor(Math.random() * 6) + 1;
-        const dice1 = 16;
-        const dice2 = 0;
+        const dice1 = 1
+        const dice2 = 1
         dispatch(Creators.rollDice([dice1, dice2]));
         dispatch(Creators.changeGameState(gameState.ROLLING_DICE, stateExitMap[gameState.ROLLING_DICE]));
 
@@ -79,11 +81,17 @@ const rollDice = () => {
         } else {
             dispatch(Creators.resetDoubleDice());
         }
-        
-        if (currentPlayer.jailTurns == 0) {
+
+        let doubleDice = getState().game.doubleDice;
+
+        if (doubleDice >= 3) {
+            dispatch(updateDisplay("Three in a row Doubles! Moving to Jail!"));
+            dispatch(Creators.resetDoubleDice());
+            dispatch(goJail(getState().game.players, currentPlayer));
+        } else if (currentPlayer.jailTurns == 0) {
             setTimeout(() => {
                 dispatch(playerTurn(dice1, dice2));
-            }, 1500);
+            }, 1000);
         } else {
             dispatch(endOfTurn());
         }
@@ -95,50 +103,18 @@ const playerTurn = (dice1, dice2) => {
         const players = getState().game.players;
         let updatePlayer = players[getState().game.currentPlayerIndex];
         let prevPosition = updatePlayer.position;
-        let currentPosition = (prevPosition + dice1 + dice2) % NUMBER_POSITIONS;
+        // let currentPosition = (prevPosition + dice1 + dice2) % NUMBER_POSITIONS;
+        let currentPosition = 2;
         updatePlayer.position = currentPosition
         let currentSquare = getState().game.squares[currentPosition];
-        dispatch(Creators.movePlayer(players, currentPosition, currentSquare));
+        dispatch(Creators.movePlayer(players, currentPosition));
         
         if (currentPosition < prevPosition) {
             dispatch(getStartMoney(players, updatePlayer));
         }
-        let currentPlayer = getState().game.currentPlayer;
-        if (currentSquare.subtype === 'tax') {
-            dispatch(Creators.changeGameState(gameState.ON_TAX, stateExitMap[gameState.ON_TAX]));
-        } else if (currentSquare.subtype === 'chest') {
-            dispatch(Creators.changeGameState(gameState.ON_CHEST, stateExitMap[gameState.ON_CHEST]));
-        } else if (currentSquare.subtype === 'chance') {
-            dispatch(Creators.changeGameState(gameState.ON_CHANCE, stateExitMap[gameState.ON_CHANCE]));
-        } else if (currentSquare.subtype === 'free-park') {
-            dispatch(getFreeParking(players, updatePlayer));
-        } else if (currentSquare.subtype === 'go-jail') {
-            dispatch(updateDisplay("Moving to Jail!"));
-            setTimeout(() => {
-                dispatch(goJail(players, updatePlayer));
-            }, 1500);
-        } else if (currentSquare.subtype === 'jail' || currentSquare.subtype === 'start') {
-            dispatch(endOfTurn());
-        } else {
-            if (currentPlayer.rounds < 1) {
-                dispatch(endOfTurn());
-            } else {
-                if (currentSquare.owned) {
-                    let owner = players[currentSquare.ownedIndex];
-                    if (owner.name == currentPlayer.name) {
-                        dispatch(endOfTurn());
-                    } else {
-                        if (owner.jailTurns > 0) {
-                            dispatch(endOfTurn());
-                        } else {
-                            dispatch(Creators.changeGameState(gameState.ON_OWNED_PROPERTY, stateExitMap[gameState.ON_OWNED_PROPERTY]));
-                        }
-                    }
-                } else {
-                    dispatch(Creators.changeGameState(gameState.ON_FREE_PROPERTY, stateExitMap[gameState.ON_FREE_PROPERTY]));
-                }
-            }
-        }
+
+        dispatch(checkProperty(currentSquare, players, updatePlayer));
+        
     }
 }
 
@@ -154,8 +130,15 @@ const endTurn = () => {
         if (currentPlayer.jailTurns > 0 && currentPlayer.jailTurns < 4) {
             currentPlayer.jailTurns += 1;
             dispatch(Creators.updatePlayers(players));
-            dispatch(Creators.changeGameState(gameState.IN_JAIL_BAIL_TURN, stateExitMap[gameState.IN_JAIL_BAIL_TURN]));
+            console.log(currentPlayer.jailTurns);
+            
+            if (currentPlayer.jailCard > 0) {
+                dispatch(Creators.changeGameState(gameState.IN_JAIL_BAIL_TURN, stateExitMap[gameState.IN_JAIL_BAIL_TURN_CARD]));
+            } else {
+                dispatch(Creators.changeGameState(gameState.IN_JAIL_BAIL_TURN, stateExitMap[gameState.IN_JAIL_BAIL_TURN]));
+            }
         } else if (currentPlayer.jailTurns >= 4) {
+            console.log(currentPlayer.jailTurns);
             dispatch(jailEscape());
         } else {
             dispatch(Creators.changeGameState(gameState.CHOOSING_ACTION, stateExitMap[gameState.CHOOSING_ACTION]));
@@ -192,6 +175,45 @@ const getFreeParking = (players, updatePlayer) => {
  * OTHER HELPER FUNCTIONS
  */
 
+const checkProperty = (currentSquare, players, updatePlayer) => {
+    return (dispatch) => {
+        if (currentSquare.subtype === 'tax') {
+            dispatch(Creators.changeGameState(gameState.ON_TAX, stateExitMap[gameState.ON_TAX]));
+        } else if (currentSquare.subtype === 'chest') {
+            dispatch(Creators.changeGameState(gameState.ON_CHEST, stateExitMap[gameState.ON_CHEST]));
+        } else if (currentSquare.subtype === 'chance') {
+            dispatch(Creators.changeGameState(gameState.ON_CHANCE, stateExitMap[gameState.ON_CHANCE]));
+        } else if (currentSquare.subtype === 'free-park') {
+            dispatch(getFreeParking(players, updatePlayer));
+        } else if (currentSquare.subtype === 'go-jail') {
+            dispatch(updateDisplay("Moving to Jail!"));
+            setTimeout(() => {
+                dispatch(goJail(players, updatePlayer));
+            }, 1500);
+        } else if (currentSquare.subtype === 'jail' || currentSquare.subtype === 'start') {
+            dispatch(endOfTurn());
+        } else {
+            if (updatePlayer.rounds < 1) {
+                dispatch(endOfTurn());
+            } else {
+                if (currentSquare.owned) {
+                    let owner = players[currentSquare.ownedIndex];
+                    if (owner.name == updatePlayer.name) {
+                        dispatch(endOfTurn());
+                    } else {
+                        if (owner.jailTurns > 0) {
+                            dispatch(endOfTurn());
+                        } else {
+                            dispatch(Creators.changeGameState(gameState.ON_OWNED_PROPERTY, stateExitMap[gameState.ON_OWNED_PROPERTY]));
+                        }
+                    }
+                } else {
+                    dispatch(Creators.changeGameState(gameState.ON_FREE_PROPERTY, stateExitMap[gameState.ON_FREE_PROPERTY]));
+                }
+            }
+        }
+    }
+}
 const goPrevGameState = () => {
     return (dispatch, getState) => {
         let prevGameState = getState().game.prevGameState;
@@ -202,17 +224,20 @@ const goPrevGameState = () => {
 const updateDisplay = (display) => {
     return (dispatch, getState) => {
         let currentDisplay = getState().game.display;
+        let timeout = 1000;
         if (currentDisplay.length > 0) {
             setTimeout(() => {
                 dispatch(Creators.updateDisplay(display));
+                setTimeout(() => {
+                    dispatch(Creators.updateDisplay(''));
+                }, timeout);
             }, 1000);
         } else {
             dispatch(Creators.updateDisplay(display));
+            setTimeout(() => {
+                dispatch(Creators.updateDisplay(''));
+            }, timeout);
         }
-        
-        setTimeout(() => {
-            dispatch(Creators.updateDisplay(''));
-        }, 1000);
     }
 }
 
@@ -223,22 +248,19 @@ const endOfTurn = () => {
         let updatePlayer = players[getState().game.currentPlayerIndex];
 
         if (updatePlayer.jailTurns > 0) {
-            if (doubleDice) {
+            if (doubleDice > 0) {
                 dispatch(jailEscape());
+                dispatch(Creators.resetDoubleDice());
             } else {
                 dispatch(Creators.changeGameState(gameState.END_OF_TURN, stateExitMap[gameState.END_OF_TURN]));
             }
         } else {
-            if (doubleDice >= 3) {
-                dispatch(updateDisplay("Three in a row Doubles! Moving to Jail!"));
-                dispatch(Creators.resetDoubleDice());
-                dispatch(goJail(players, updatePlayer));
-            } else if (doubleDice > 0) {
+            if (doubleDice > 0) {
                 dispatch(Creators.changeGameState(gameState.CHOOSING_ACTION, stateExitMap[gameState.CHOOSING_ACTION]));
             } else {
                 dispatch(Creators.resetDoubleDice());
                 dispatch(Creators.changeGameState(gameState.END_OF_TURN, stateExitMap[gameState.END_OF_TURN]));
-            }
+            } 
         }
     }
 }
@@ -248,15 +270,17 @@ const endOfTurn = () => {
  */
 
 const goJail = (players, updatePlayer) => {
-    return (dispatch, getState) => {
-        updatePlayer.jailTurns += 1;
-        updatePlayer.position = 10;
-        dispatch(Creators.movePlayer(players, 10, getState().game.squares[10]));
-        dispatch(Creators.changeGameState(gameState.IN_JAIL_FIRST_TURN, stateExitMap[gameState.IN_JAIL_FIRST_TURN]));
+    return (dispatch) => {
+        setTimeout(() => {
+            updatePlayer.jailTurns += 1;
+            updatePlayer.position = 10;
+            dispatch(Creators.movePlayer(players, 10));
+            dispatch(Creators.changeGameState(gameState.IN_JAIL_FIRST_TURN, stateExitMap[gameState.IN_JAIL_FIRST_TURN]));
+        }, 1000);
     }
 }
 
-const jailEscape = (cost=0) => {
+const jailEscape = (cost=0, card=false) => {
     return (dispatch, getState) => {
         dispatch(updateDisplay("You've escaped the jail!"));
         let players = getState().game.players;
@@ -265,6 +289,10 @@ const jailEscape = (cost=0) => {
 
         currentPlayer.jailTurns = 0;
         currentPlayer.money -= cost;
+        if (card) {
+            currentPlayer.jailCard -= 1;
+        }
+
         dispatch(Creators.updatePlayers(players));
         dispatch(Creators.changeGameState(gameState.CHOOSING_ACTION, stateExitMap[gameState.CHOOSING_ACTION]));
     }
@@ -276,20 +304,24 @@ const payBail = () => {
     }
 }
 
+const useJailCard = () => {
+    return (dispatch) => {
+        dispatch(jailEscape(0, true))
+    }
+}
+
 /**
  * CARD FEATURE FUNCTIONS
  */
 const drawCard = (type) => {
     return (dispatch) => {
-        let card = {
-            type: '',
-            text: ''
-        }
+        let card = {};
+
         if (type === exitCondition.DRAW_CHANCE) {
-            card.text = cardData.chance[Math.floor(Math.random() * cardData.chance.length)];
+            card = {...cardData.chance[Math.floor(Math.random() * cardData.chance.length)]};
             card.type = 'Chance';
         } else {
-            card.text = cardData.chest[Math.floor(Math.random() * cardData.chest.length)];
+            card = {...cardData.chest[Math.floor(Math.random() * cardData.chest.length)]};
             card.type = 'Community Chest';
         }
 
@@ -298,8 +330,58 @@ const drawCard = (type) => {
     }
 }
 
-const completedCard = () => {
-    return (dispatch) => {
+const completeCard = () => {
+    return (dispatch, getState) => {
+        let card = getState().game.card;
+        const players = getState().game.players;
+        let currentPlayerIndex = getState().game.currentPlayerIndex;
+        let updatePlayer = players[currentPlayerIndex];
+        let prevPosition =  updatePlayer.position;
+
+        if (card.position >= 0) {
+            if (card.position === 10) {
+                dispatch(goJail(players, updatePlayer));
+            } else {
+                updatePlayer.position = card.position;
+                dispatch(Creators.movePlayer(players, card.position));
+                if (card.go === true && card.position < prevPosition) {
+                    dispatch(getStartMoney(players, updatePlayer));
+                }
+                dispatch(checkProperty(getState().game.currentSquare, players, updatePlayer));
+            }
+        } else if (card.pay) {
+            updatePlayer.money -= card.pay;
+            dispatch(Creators.updatePlayers(players));
+        } else if (card.receive) {
+            updatePlayer.money += card.receive;
+            dispatch(Creators.updatePlayers(players));
+        } else if (card.jailCard) {
+            updatePlayer.jailCard += 1;
+            dispatch(Creators.updatePlayers(players));
+        } else if (card.house && card.hotel) {
+            let houses = 0;
+            let hotels = 0;
+            let squares = getState().game.squares;
+            let properties = getFullStreetProperties(updatePlayer, squares)[0];
+            
+            properties.forEach(property => {
+                let propertyHouses = squares[property].houses;
+                if (propertyHouses === 5) {
+                    hotels += 1;
+                } else {
+                    houses += propertyHouses;
+                }
+            });
+
+            let cost = (houses * card.house) + (hotels * card.hotel);
+            updatePlayer.money -= cost;
+            dispatch(Creators.updatePlayers(players));
+        } else if (card.back) {
+            updatePlayer.position -= card.back;
+            dispatch(Creators.movePlayer(players, updatePlayer.position));
+            dispatch(checkProperty(getState().game.currentSquare, players, updatePlayer));
+        }
+
         dispatch(Creators.updateCard({type: '', text: ''}));
     }
 }
@@ -311,6 +393,7 @@ const completedCard = () => {
 const getFullStreetProperties = (currentPlayer, squares) => {
     let playerProperties = currentPlayer.properties;
     let fullStreetProperties = [];
+    let buyHouseMenu = [];
 
     playerProperties.forEach(property => {
         if (property === 'station' || property === 'utility') {
@@ -323,24 +406,24 @@ const getFullStreetProperties = (currentPlayer, squares) => {
         let playerPropertyNumber = currentPlayer.propertyNumbers[squareType];
         let propertyDifference = playerPropertyNumber - propertyNumber;
 
-        if (propertyDifference >= 0) {
+        if (propertyDifference === 0) {
+            fullStreetProperties.push(property);
             if (square.houses < 4) {
-                fullStreetProperties.push({type: 'house', propertyPosition: property, name: square.text, cost: square.houseCost});
+                buyHouseMenu.push({type: 'house', propertyPosition: property, name: square.text, cost: square.houseCost});
             } else if (square.houses >= 4 && square.houses < 5) {
-                fullStreetProperties.push({type: 'hotel', propertyPosition: property, name: square.text, cost: square.houseCost});
+                buyHouseMenu.push({type: 'hotel', propertyPosition: property, name: square.text, cost: square.houseCost});
             }
         }
     });
 
-    return fullStreetProperties;
+    return [fullStreetProperties, buyHouseMenu];
 }
 
 const buyHouseMenu = () => {
     return (dispatch, getState) => {
         let currentPlayer = getState().game.currentPlayer;
         let squares = getState().game.squares;
-        let properties = getFullStreetProperties(currentPlayer, squares);
-        
+        let properties = getFullStreetProperties(currentPlayer, squares)[1];
         dispatch(Creators.updateBuyingHouseMenu(properties));
         dispatch(Creators.changeGameState(gameState.BUYING_HOUSE, stateExitMap[gameState.BUYING_HOUSE]));
     }
@@ -355,14 +438,13 @@ const buyHouse = (property) => {
         let squares = {...getState().game.squares};
         let current = {...squares[property]};
         current.houses += 1;
-        updatePlayer.propertyNumbers[current.subtype] += 1;
         updatePlayer.money -= current.houseCost;
         squares = Object.assign({}, squares, {
             [property]: current
         });
 
         dispatch(Creators.buy(players, squares));
-        dispatch(Creators.updateBuyingHouseMenu(getFullStreetProperties(updatePlayer, squares)));    
+        dispatch(Creators.updateBuyingHouseMenu(getFullStreetProperties(updatePlayer, squares)[1]));    
     }
 }
 
@@ -455,9 +537,10 @@ export default {
     payTax,
     drawCard,
     payRent,
-    completedCard,
+    completeCard,
     payBail,
     buyHouseMenu,
     goPrevGameState,
-    buyHouse
+    buyHouse,
+    useJailCard
 };
