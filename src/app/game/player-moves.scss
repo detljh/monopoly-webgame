@@ -26,7 +26,7 @@
     
 }
 
-#buy-house {
+.menu {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -43,18 +43,18 @@
         background-color: white;
     }
 
-    option:hover {
+    .menu-options:hover {
         border: 1px solid black;
         cursor: pointer;
     }
 
-    #header-option {
+    .header-option {
         border: 2px solid black;
         margin-bottom: 10px;
-        cursor: none;
+        cursor: default;
     }
 
-    #buy-house-buttons {
+    .menu-buttons {
         display: flex;
         justify-content: space-between;
     }

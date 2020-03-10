@@ -56,9 +56,58 @@ let chance = [{
     pay: 20
 }]
 
-let chest = [
-    "Advance to 'Go'"
-]
+let chest = [{
+    text: "Advance to 'Go'",
+    position: 0,
+    go: true
+}, {
+    text: "Go back to Old Kent Road",
+    position: 1,
+    go: false
+}, {
+    text: "Go to jail. Move directly to jail. Do not pass 'Go'. Do not collect $200",
+    position: 10,
+    go: false
+}, {
+    text: "Pay hospital $100",
+    pay: 100
+}, {
+    text: "Doctor's fee. Pay $50",
+    pay: 50
+}, {
+    text: "Pay your insurance premium $50",
+    pay: 50
+}, {
+    text: "Bank error in your favour. Collect $200",
+    receive: 200
+}, {
+    text: "Annuity matures. Collect $100",
+    receive: 100
+}, {
+    text: "You inherit $100",
+    receive: 100
+}, {
+    text: "From sale of stock you get $50",
+    receive: 50
+}, {
+    text: "Receive interest on 7% preference shares: $25",
+    receive: 25
+}, {
+    text: "Income tax refund. Collect $20",
+    receive: 20
+}, {
+    text: "You have won second prize in a beauty contest. Collect $10",
+    receive: 10
+}, {
+    text: "It is your birthday. Collect $10 from each player",
+    player: 10
+}, {
+    text: "Get out of jail free. This card may be kept until needed or sold",
+    jailCard: true
+}, {
+    text: "Pay a $10 fine or take a 'Chance'",
+    chance: 10
+}]
 
 export default {
     chance,

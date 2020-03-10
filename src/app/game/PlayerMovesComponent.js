@@ -2,29 +2,17 @@ import React from 'react';
 import Card from './CardContainer';
 import exitCondition from './utilities/exitCondition';
 import './player-moves.scss';
+import Menu from './MenuComponent';
 
 class PlayerMoversComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            property: ''
-        }
-
-        this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState({
-            property: event.target.value
-        });
     }
 
     render() {
         return (
         <div className="player-moves">
-        {
-            this.props.card.type.length > 0 ? <Card key={this.props.card.text}/>
-            :
+        {     
             [
                 this.props.exitConditions.map((condition) => 
                     [condition === exitCondition.ROLL_DICE &&
@@ -48,8 +36,14 @@ class PlayerMoversComponent extends React.Component {
                     condition === exitCondition.DRAW_CHEST &&
                     <button key={condition} onClick={() => this.props.drawCard(condition)}>Draw community chest card</button>,
 
+                    condition === exitCondition.COMPLETE_CARD &&
+                    <Card key={this.props.card.text}/>,
+
                     condition === exitCondition.BUY_HOUSE &&
                     <button key={condition} onClick={this.props.buyHouseMenu}>Buy houses</button>,
+
+                    condition === exitCondition.MORTGAGE &&
+                    <button key={condition} onClick={this.props.mortgageMenu}>Mortgage</button>,
 
                     condition === exitCondition.USE_JAIL_CARD &&
                     <button key={condition} onClick={this.props.useJailCard}>Use Jail Card</button>,
@@ -61,21 +55,10 @@ class PlayerMoversComponent extends React.Component {
                     <button key={condition} onClick={this.props.endTurn}>End turn</button>,
 
                     condition === exitCondition.BUY_HOUSE_MENU &&
-                    <div key={'buy-house-form'} id="buy-house">
-                        <select name="property" size={this.props.fullStreetProperties.length + 2} onChange={this.handleChange}>
-                            <option id="header-option" disabled>Available houses and hotels</option>
-                            {
-                                this.props.fullStreetProperties.map((option) =>
-                                    <option key={option.propertyPosition} value={option.propertyPosition}>{option.name}, {option.type}, ${option.cost}</option>
-                                )
-                            }
-                        </select>
+                    <Menu key={condition} id="buy-house" properties={this.props.menu} header="Available houses and hotels" action={this.props.buyHouse} actionText="Buy" goPrevGameState={this.props.goPrevGameState}/>,
 
-                        <div id="buy-house-buttons">
-                            <button key={'buy-house-back'} onClick={this.props.goPrevGameState}>Back</button>
-                            <button key={'buy-house-buy'} onClick={() => this.props.buyHouse(this.state.property)}>Buy</button>
-                        </div>
-                    </div>
+                    condition === exitCondition.MORTGAGE_MENU &&
+                    <Menu key={condition} id="mortgage" properties={this.props.menu} header="Available properties (85% of property cost)" action={this.props.mortgage} actionText="Mortgage" goPrevGameState={this.props.goPrevGameState} />
                     ]
                 )
             ]

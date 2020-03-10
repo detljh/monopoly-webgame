@@ -6,7 +6,7 @@ const mapStateToProps = (state) => {
     return {
         exitConditions: state.game.exitConditions,
         card: state.game.card,
-        fullStreetProperties: state.game.fullStreetProperties
+        menu: state.game.menu
     }
 }
 
@@ -44,6 +44,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         useJailCard: () => {
             dispatch(gameOperations.useJailCard());
+        },
+        mortgageMenu: () => {
+            dispatch(gameOperations.mortgageMenu());
+        },
+        mortgage: (property) => {
+            dispatch(gameOperations.mortgage(property));
         }
     }
 }

@@ -19,7 +19,7 @@ const INITIAL_STATE = {
     },
     doubleDice: 0,
     display: '',
-    fullStreetProperties: [],
+    menu: [],
     freeParking: 0
 };
 
@@ -61,7 +61,7 @@ const gameReducer = (state=INITIAL_STATE, action) => {
             return Object.assign({}, state, {
                 players: [...action.players]
             })
-        case types.BUY:
+        case types.BUY_OR_SELL:
             return Object.assign({}, state, {
                 players: [...action.players],
                 squares: action.squares
@@ -82,9 +82,9 @@ const gameReducer = (state=INITIAL_STATE, action) => {
             return Object.assign({}, state, {
                 currentDice: []
             })
-        case types.UPDATE_BUYING_HOUSE_MENU:
+        case types.UPDATE_MENU:
             return Object.assign({}, state, {
-                fullStreetProperties: action.fullStreetProperties
+                menu: action.menu
             })
         case types.UPDATE_FREE_PARKING:
             return Object.assign({}, state, {

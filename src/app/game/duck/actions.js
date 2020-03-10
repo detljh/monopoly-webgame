@@ -61,9 +61,9 @@ const updatePlayers = (players) => {
     }
 }
 
-const buy = (players, squares) => {
+const buyOrSell = (players, squares) => {
     return {
-        type: types.BUY,
+        type: types.BUY_OR_SELL,
         players: players,
         squares: squares
     }
@@ -89,10 +89,10 @@ const resetDice = () => {
     }
 }
 
-const updateBuyingHouseMenu = (fullStreetProperties) => {
+const updateMenu = (menu) => {
     return {
-        type: types.UPDATE_BUYING_HOUSE_MENU,
-        fullStreetProperties: fullStreetProperties
+        type: types.UPDATE_MENU,
+        menu: menu
     }
 }
 
@@ -112,11 +112,11 @@ export default {
     movePlayer,
     updatePlayers,
     updateCard,
-    buy,
+    buyOrSell,
     doubleDice,
     resetDoubleDice,
     updateDisplay,
     resetDice,
-    updateBuyingHouseMenu,
+    updateMenu,
     updateFreeParking
 };

@@ -10,6 +10,8 @@ const BUY_HOUSE = "BUY_HOUSE";
 const PAY_BAIL = "PAY_BAIL";
 const BUY_HOUSE_MENU = "BUY_HOUSE_MENU";
 const USE_JAIL_CARD = "USE_JAIL_CARD";
+const MORTGAGE_MENU = "MORTGAGE_MENU";
+const COMPLETE_CARD = "COMPLETE_CARD"
 
 export default {
     ROLL_DICE,
@@ -23,5 +25,7 @@ export default {
     BUY_HOUSE,
     PAY_BAIL,
     BUY_HOUSE_MENU,
-    USE_JAIL_CARD
+    USE_JAIL_CARD,
+    MORTGAGE_MENU,
+    COMPLETE_CARD
 }
