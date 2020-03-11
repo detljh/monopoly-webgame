@@ -1,14 +1,15 @@
 #game-header {
     display: flex;
     flex-direction: column;
+    align-items: center;
     left: 0;
-    background-color: grey;
+    background-color: var(--main-color);
     z-index: 10;
     height: 100%;
     width: 120px;
     position: fixed;
-    border-right: 1px solid grey;
-    box-shadow: 0 0 2px 2px grey;
+    border-right: 1px solid var(--main-color);
+    box-shadow: 0 0 2px 2px var(--main-color);
 }
 
 #game-board {
@@ -22,4 +23,86 @@
     justify-content: space-evenly;
     margin: auto;
     margin-top: 10px;
+
+    .player-info {
+        width: 110px;
+        height: 70px;
+        border: 1px solid white;
+        background-color: white;
+        box-shadow: 0 0 3px 3px white;
+        border-radius: 10px;
+    }
+    
+    .player-info-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 5px;
+    }
+    
+    .player-icon {
+        width: 10px;
+        height: 10px;
+        margin-left: auto;
+    }
+    
+    .active-player {
+        transition: 1s box-shadow ease-in-out;
+        animation-name: wiggle;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in-out;
+        
+    }
+    
+    .active-player-one {
+        box-shadow: 0 0 5px 5px var(--player-one-color);
+    }
+    
+    .active-player-two {
+        box-shadow: 0 0 5px 5px var(--player-two-color);
+    }
+    
+    .active-player-three {
+        box-shadow: 0 0 5px 5px var(--player-three-color);
+    }
+    
+    .active-player-four {
+        box-shadow: 0 0 5px 5px var(--player-four-color);
+    }
+    
+    @keyframes wiggle {
+        0% {
+            transform: rotate(0deg);
+        }
+        50% { 
+            transform: rotate(0deg); 
+        }
+        70% { 
+            transform: rotate(5deg); 
+        }
+        90% { 
+            transform: rotate(-5deg); 
+        }
+        100% { 
+            transform: rotate(0deg); 
+        }
+    }    
+}
+
+.side-bar-button {
+    padding: 10px;
+    text-align: center;
+    width: 80%;
+    cursor: pointer;
+    box-shadow: 0px 0px 2px 2px white;
+    border-radius: 10px;
+    margin: 6px;
+    transition: 0.5s box-shadow ease-in-out;
+    background-color: var(--third-color);
+    border: none;
+}
+
+.side-bar-button:hover {
+    box-shadow: 0px 0px 0px 5px var(--secondary-color);
+    transition: 0.5s box-shadow ease-in-out;
 }

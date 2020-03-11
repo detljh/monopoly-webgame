@@ -3,6 +3,7 @@
     margin: auto;
     width: 1020px;
     height: 1020px;
+    box-shadow: 0 0 20px 0 var(--board-shadow-color);
     grid-template-columns: 7em repeat(9, minmax(0, 1fr)) 7em;
     grid-template-rows: 7em repeat(9, minmax(0, 1fr)) 7em;
 
@@ -288,10 +289,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 0 20px 0 inset var(--board-shadow-color); 
 }
 
 .owned-property {
-    background-color: grey;
     opacity: 0.9;
     z-index: 5;    
 }

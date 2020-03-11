@@ -416,8 +416,6 @@ const completeCard = () => {
         } else {
             dispatch(endOfTurn());
         }
-
-        dispatch(Creators.updateCard({type: '', text: ''}));
     }
 }
 

@@ -67,7 +67,7 @@ class PlayerMovesComponent extends React.Component {
                     <Menu key={condition} id="trade_player" items={this.props.menu} header="Players" action={this.props.chooseTradeItems} actionText="Choose items from player" back={this.props.chooseTradeItems} multiple={false} />,
 
                     condition === exitCondition.TRADE_MENU_PLAYER_TWO &&
-                    <Menu key={condition} id="trade" items={this.props.menu} header="Second player items to trade with (hold CTRL to select more than one item)" action={this.props.trade} actionText="Finish trade" back={this.props.choosePlayer} multiple={true} maxMoney={this.props.tradePlayer.money} />
+                    <Menu key={condition} id="trade" items={this.props.menu} header="Second player items to trade (hold CTRL to select more than one item)" action={this.props.trade} actionText="Finish trade" back={this.props.choosePlayer} multiple={true} maxMoney={this.props.tradePlayer.money} />
                     ]
                 )
             ]

@@ -1,6 +1,5 @@
 import React from 'react';
 import './game.scss';
-import '../player/player.scss';
 import Board from './BoardContainer';
 import PlayerInfo from '../player/PlayerInfoComponent';
 
@@ -13,9 +12,9 @@ class GameComponent extends React.Component {
         return (
             <div>    
                 <div id="game-header">
-                    <button onClick={this.props.newGame}>New Game</button>
+                    <button onClick={this.props.newGame} className="side-bar-button">New Game</button>
                     <div className="player-info-bar">
-                        {this.props.players.map((element, index) => 
+                        {this.props.players.map((element) => 
                             <PlayerInfo key={element.id} name={element.name} id={element.id} currentPlayer={element.id == this.props.currentPlayer.id ? true : false} money={element.money}/>
                         )}
                     </div>

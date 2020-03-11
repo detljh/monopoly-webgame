@@ -7,42 +7,17 @@
 }
 
 #player-one {
-    background-color: red;
+    background-color: var(--player-one-color);
 }
 
 #player-two {
-    background-color: blue;
+    background-color: var(--player-two-color);
 }
 
 #player-three {
-    background-color: green;
+    background-color: var(--player-three-color);
 }
 
 #player-four {
-    background-color: yellow;
+    background-color: var(--player-four-color);
 }
-
-.player-info {
-    width: 110px;
-    height: 70px;
-    border: 1px solid black;
-    background-color: white;
-}
-
-.player-info-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 5px;
-}
-
-.player-icon {
-    width: 10px;
-    height: 10px;
-    margin-left: auto;
-}
-
-.active-player {
-    box-shadow: 0 0 3px 3px;
-}
-

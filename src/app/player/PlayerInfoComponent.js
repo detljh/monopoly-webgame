@@ -9,7 +9,7 @@ class PlayerInfoComponent extends React.Component {
     render() {
         let classes = ["player-info"];
         if (this.props.currentPlayer) {
-            classes.push("active-player");
+            classes.push("active-player", `active-${this.props.id}`);
         }
         return (
             <div className={classes.join(" ")}>
