@@ -597,7 +597,7 @@ const getTradeItems = (player, squares) => {
     return items;
 }
 
-const chooseTradeItems = (player) => {
+const chooseTradeItems = (player, money) => {
     return (dispatch, getState) => {
         let state = getState().game.gameState;
         let prevState = state;
@@ -613,9 +613,10 @@ const chooseTradeItems = (player) => {
         let currentPlayer = getState().game.currentPlayer;
 
         if (player && typeof player === "string") {
-            currentPlayer = getState().game.players[player];
+            let players = getState().game.players;
+            currentPlayer = players[player];
             newState = gameState.TRADING_PLAYER_TWO;
-            dispatch(Creators.setTradePlayer(player));
+            dispatch(Creators.setTradePlayer(players[player], player));
         }
         
         let squares = getState().game.squares;
@@ -626,7 +627,7 @@ const chooseTradeItems = (player) => {
     }
 }
 
-const choosePlayer = (items) => {
+const choosePlayer = (items, money) => {
     return (dispatch, getState) => {
         let state = getState().game.gameState;
         let prevState = state;
@@ -639,7 +640,7 @@ const choosePlayer = (items) => {
         }
         
         if (Array.isArray(items)) {
-            dispatch(Creators.updateTradeItems(items));
+            dispatch(Creators.updateTradeItems(items, money));
         }
         
         let currentPlayer = getState().game.currentPlayer;
@@ -658,12 +659,13 @@ const choosePlayer = (items) => {
     }
 }
 
-const trade = (playerTwoItems) => {
+const trade = (playerTwoItems, playerTwoMoney) => {
     return (dispatch, getState) => {
         let players = getState().game.players;
         let currentPlayerIndex = getState().game.currentPlayerIndex;
         let tradePlayerIndex = getState().game.tradePlayerIndex;
         let playerOneItems = getState().game.tradeItems;
+        let playerOneMoney = getState().game.tradeMoney;
         let playerOne = players[currentPlayerIndex];
         let playerTwo = players[tradePlayerIndex];
         let squares = {...getState().game.squares};
@@ -699,6 +701,11 @@ const trade = (playerTwoItems) => {
                 [item]: current
             });
         })
+
+        playerOne.money -= Number(playerOneMoney);
+        playerOne.money += Number(playerTwoMoney);
+        playerTwo.money -= Number(playerTwoMoney);
+        playerTwo.money += Number(playerOneMoney);
         
         dispatch(Creators.buyOrSell(players, squares));
         dispatch(goPrevGameState());

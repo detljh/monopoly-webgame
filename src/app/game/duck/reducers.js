@@ -21,7 +21,9 @@ const INITIAL_STATE = {
     display: '',
     menu: [],
     tradeItems: [],
+    tradeMoney: 0,
     tradePlayerIndex: '',
+    tradePlayer: '',
     freeParking: 0
 };
 
@@ -94,11 +96,13 @@ const gameReducer = (state=INITIAL_STATE, action) => {
             })
         case types.UPDATE_TRADE_ITEMS:
             return Object.assign({}, state, {
-                tradeItems: action.items
+                tradeItems: action.items,
+                tradeMoney: action.money
             })
         case types.SET_TRADE_PLAYER:
             return Object.assign({}, state, {
-                tradePlayerIndex: action.player
+                tradePlayerIndex: action.playerIndex,
+                tradePlayer: action.player
             })
         default:       
             return state;

@@ -104,17 +104,19 @@ const updateFreeParking = (money) => {
     }
 }
 
-const updateTradeItems = (items) => {
+const updateTradeItems = (items, money) => {
     return {
         type: types.UPDATE_TRADE_ITEMS,
-        items: items
+        items: items,
+        money: money
     }
 }
 
-const setTradePlayer = (player) => {
+const setTradePlayer = (player, playerIndex) => {
     return {
         type: types.SET_TRADE_PLAYER,
-        player: player
+        player: player,
+        playerIndex: playerIndex
     }
 }
 

@@ -5,13 +5,15 @@ class MenuComponent extends React.Component {
         super(props);
         this.state = {
             option: '',
-            options: []
+            options: [],
+            money: 0
         }
 
-        this.handleChange = this.handleChange.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
+        this.handleMoney = this.handleMoney.bind(this);
     }
 
-    handleChange(event) {
+    handleSelect(event) {
         if (this.props.multiple) {
             this.setState({
                 options: [...this.state.options, event.target.value]
@@ -24,11 +26,17 @@ class MenuComponent extends React.Component {
         
     }
 
+    handleMoney(event) {
+        this.setState({
+            money: event.target.value
+        }); 
+    }
+
     render() {
         let data = this.props.multiple ? this.state.options : this.state.option;
         return (
             <div className="menu" id={this.props.id}>
-                <select name="property" size={this.props.items.length + 2} onChange={this.handleChange} multiple={this.props.multiple}>
+                <select name="property" size={this.props.items.length + 2} onChange={this.handleSelect} multiple={this.props.multiple}>
                     <option className="header-option" disabled>{this.props.header}</option>
                     {
                         this.props.items.map((option) =>
@@ -46,10 +54,17 @@ class MenuComponent extends React.Component {
                         )
                     }
                 </select>
+                {
+                    this.props.multiple &&
+                    [
+                        <label>Money: {this.state.money}</label>,
+                        <input type="range" min="0" max={this.props.maxMoney} onChange={this.handleMoney} defaultValue="0"></input>
+                    ]
+                }
     
                 <div className="menu-buttons">
                     <button key={'menu-back'} onClick={this.props.back}>Back</button>
-                    <button key={'menu-buy'} onClick={() => this.props.action(data)}>{this.props.actionText}</button>
+                    <button key={'menu-buy'} onClick={() => this.props.action(data, this.state.money)}>{this.props.actionText}</button>
                 </div>
             </div>
         )

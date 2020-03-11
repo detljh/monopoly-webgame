@@ -6,7 +6,9 @@ const mapStateToProps = (state) => {
     return {
         exitConditions: state.game.exitConditions,
         card: state.game.card,
-        menu: state.game.menu
+        menu: state.game.menu,
+        currentPlayer: state.game.currentPlayer,
+        tradePlayer: state.game.tradePlayer
     }
 }
 
@@ -51,14 +53,14 @@ const mapDispatchToProps = (dispatch) => {
         mortgage: (property) => {
             dispatch(gameOperations.mortgage(property));
         },
-        chooseTradeItems: (player) => {
-            dispatch(gameOperations.chooseTradeItems(player));
+        chooseTradeItems: (player, money) => {
+            dispatch(gameOperations.chooseTradeItems(player, money));
         },
-        choosePlayer: (items) => {
-            dispatch(gameOperations.choosePlayer(items));
+        choosePlayer: (items, money) => {
+            dispatch(gameOperations.choosePlayer(items, money));
         },
-        trade: (items) => {
-            dispatch(gameOperations.trade(items));
+        trade: (items, money) => {
+            dispatch(gameOperations.trade(items, money));
         }
     }
 }
