@@ -4,33 +4,52 @@ class MenuComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            property: ''
+            option: '',
+            options: []
         }
 
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(event) {
-        this.setState({
-            property: event.target.value
-        });
+        if (this.props.multiple) {
+            this.setState({
+                options: [...this.state.options, event.target.value]
+            });
+        } else {
+            this.setState({
+                option: event.target.value
+            });
+        }
+        
     }
 
     render() {
+        let data = this.props.multiple ? this.state.options : this.state.option;
         return (
             <div className="menu" id={this.props.id}>
-                <select name="property" size={this.props.properties.length + 2} onChange={this.handleChange}>
+                <select name="property" size={this.props.items.length + 2} onChange={this.handleChange} multiple={this.props.multiple}>
                     <option className="header-option" disabled>{this.props.header}</option>
                     {
-                        this.props.properties.map((option) =>
-                            <option key={option.propertyPosition} className="menu-options" value={option.propertyPosition}>{option.name}, {option.type}, ${option.cost}</option>
+                        this.props.items.map((option) =>
+                            <option key={option.value} className="menu-options" value={option.value}>
+                                {option.name}
+                                {
+                                    option.type &&
+                                        `, ${option.type}`
+                                }
+                                {
+                                    option.cost &&
+                                        `, $${option.cost}`
+                                }
+                                </option>
                         )
                     }
                 </select>
     
                 <div className="menu-buttons">
-                    <button key={'menu-back'} onClick={this.props.goPrevGameState}>Back</button>
-                    <button key={'menu-buy'} onClick={() => this.props.action(this.state.property)}>{this.props.actionText}</button>
+                    <button key={'menu-back'} onClick={this.props.back}>Back</button>
+                    <button key={'menu-buy'} onClick={() => this.props.action(data)}>{this.props.actionText}</button>
                 </div>
             </div>
         )

@@ -14,7 +14,7 @@ class PlayerInfoComponent extends React.Component {
         return (
             <div className={classes.join(" ")}>
                 <div className="player-info-header">
-                    <b>Player {this.props.name}</b>
+                    <b>{this.props.name}</b>
                     <div className="player-icon" id={this.props.id}></div>
                 </div>
                 <div className="player-info-body">

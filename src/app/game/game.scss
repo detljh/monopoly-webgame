@@ -1,11 +1,25 @@
+#game-header {
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    background-color: grey;
+    z-index: 10;
+    height: 100%;
+    width: 120px;
+    position: fixed;
+    border-right: 1px solid grey;
+    box-shadow: 0 0 2px 2px grey;
+}
+
 #game-board {
-    width: 1020px;
-    height: 1020px;
-    margin: auto;
+    margin-left: 130px;
 }
 
 .player-info-bar {
+    height: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-evenly;
+    margin: auto;
+    margin-top: 10px;
 }

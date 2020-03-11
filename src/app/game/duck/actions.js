@@ -6,11 +6,12 @@ const endTurn = () => {
     }
 }
 
-const changeGameState = (gameState, exitConditions) => {
+const changeGameState = (gameState, exitConditions, prevState) => {
     return {
         type: types.CHANGE_GAME_STATE,
         gameState: gameState,
-        exitConditions: exitConditions
+        exitConditions: exitConditions,
+        prevState: prevState
     }
 }
 
@@ -103,6 +104,20 @@ const updateFreeParking = (money) => {
     }
 }
 
+const updateTradeItems = (items) => {
+    return {
+        type: types.UPDATE_TRADE_ITEMS,
+        items: items
+    }
+}
+
+const setTradePlayer = (player) => {
+    return {
+        type: types.SET_TRADE_PLAYER,
+        player: player
+    }
+}
+
 export default { 
     changeGameState,
     endTurn,
@@ -118,5 +133,7 @@ export default {
     updateDisplay,
     resetDice,
     updateMenu,
-    updateFreeParking
+    updateFreeParking,
+    updateTradeItems,
+    setTradePlayer
 };

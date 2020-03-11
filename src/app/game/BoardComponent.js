@@ -14,7 +14,7 @@ class BoardComponent extends React.Component {
                 let playersOnSquare = [];
                 this.props.players.forEach(player => {
                     if (element[0] == player.position) {
-                        playersOnSquare.push(player.name);
+                        playersOnSquare.push(player.id);
                     }
                 });
 

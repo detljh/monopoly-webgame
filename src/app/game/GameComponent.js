@@ -11,15 +11,19 @@ class GameComponent extends React.Component {
 
     render() {
         return (
-            <div>
-                <div className="player-info-bar">
-                    {this.props.players.map((element, index) => 
-                        <PlayerInfo key={element.name} name={index + 1} id={element.name} currentPlayer={element.name == this.props.currentPlayer.name ? true : false} money={element.money}/>
-                    )}
+            <div>    
+                <div id="game-header">
+                    <button onClick={this.props.newGame}>New Game</button>
+                    <div className="player-info-bar">
+                        {this.props.players.map((element, index) => 
+                            <PlayerInfo key={element.id} name={element.name} id={element.id} currentPlayer={element.id == this.props.currentPlayer.id ? true : false} money={element.money}/>
+                        )}
+                    </div>
                 </div>
-    
-                <button onClick={this.props.newGame}>New Game</button>
-                <Board />
+                
+                <div id="game-board">
+                    <Board />
+                </div>
             </div>
         );
     }   

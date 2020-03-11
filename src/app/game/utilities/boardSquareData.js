@@ -32,7 +32,7 @@ let squares = {
     24: {
         type: 'property square-top',
         subtype: 'red',
-        text: 'Trafalgar Sqaure',
+        text: 'Trafalgar Square',
         cost: 240,
         rent: [20, 40, 100, 300, 750, 925, 1100],
         houseCost: 150,

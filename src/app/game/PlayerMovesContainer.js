@@ -50,6 +50,15 @@ const mapDispatchToProps = (dispatch) => {
         },
         mortgage: (property) => {
             dispatch(gameOperations.mortgage(property));
+        },
+        chooseTradeItems: (player) => {
+            dispatch(gameOperations.chooseTradeItems(player));
+        },
+        choosePlayer: (items) => {
+            dispatch(gameOperations.choosePlayer(items));
+        },
+        trade: (items) => {
+            dispatch(gameOperations.trade(items));
         }
     }
 }
