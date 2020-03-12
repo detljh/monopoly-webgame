@@ -15,6 +15,8 @@ const HomeComponent = (props) => {
                     <Player id="player-two" action={props.addPlayer} />
                     <Player id="player-three" action={props.addPlayer} />
                     <Player id="player-four" action={props.addPlayer} />
+                    <Player id="player-five" action={props.addPlayer} />
+                    <Player id="player-six" action={props.addPlayer} />
                 </div>
 
                 <div id="current-players">

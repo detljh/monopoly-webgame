@@ -2,8 +2,10 @@
   --board-shadow-color: grey;
   --player-one-color: hsl(0, 50%, 50%);
   --player-two-color: hsl(50, 50%, 50%);
-  --player-three-color: hsl(150, 50%, 50%);
-  --player-four-color: hsl(250, 50%, 50%);
+  --player-three-color: hsl(100, 50%, 50%);
+  --player-four-color: hsl(200, 50%, 50%);
+  --player-five-color: hsl(250, 50%, 50%);
+  --player-six-color: hsl(300, 50%, 50%);
   --main-color: hsl(220, 20%, 50%);
   --secondary-color: hsl(220, 30%, 70%);
   --third-color: hsl(220, 20%, 90%);

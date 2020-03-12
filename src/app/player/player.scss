@@ -1,6 +1,6 @@
 .player {
-    width: 50px;
-    height: 50px;
+    width: 3em;
+    height: 3em;
     display: inline-block;
     margin: 10px;
     border: none;
@@ -39,4 +39,14 @@
 #player-four {
     background-color: var(--player-four-color);
     color: var(--player-four-color);
+}
+
+#player-five {
+    background-color: var(--player-five-color);
+    color: var(--player-five-color);
+}
+
+#player-six {
+    background-color: var(--player-six-color);
+    color: var(--player-six-color);
 }

@@ -70,6 +70,14 @@
     .active-player-four {
         box-shadow: 0 0 5px 5px var(--player-four-color);
     }
+
+    .active-player-five {
+        box-shadow: 0 0 5px 5px var(--player-five-color);
+    }
+
+    .active-player-six {
+        box-shadow: 0 0 5px 5px var(--player-six-color);
+    }
     
     @keyframes wiggle {
         0% {
