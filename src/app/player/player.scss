@@ -3,21 +3,40 @@
     height: 50px;
     display: inline-block;
     margin: 10px;
-    outline: none;
+    border: none;
+    transform: scale(1);
+    box-shadow: 0 0 2px 2px transparent;
+    transition: all 0.5s ease-in-out;
+    transition-property: box-shadow, transform;
+}
+
+.player-button {
+    cursor: pointer;
+}
+
+.player-button:hover, .player-button:focus {
+    box-shadow: 0 0 2px 5px;
+    transform: scale(1.048);
+    transition: all 0.5s ease-in-out;
+    transition-property: box-shadow, transform;
 }
 
 #player-one {
     background-color: var(--player-one-color);
+    color: var(--player-one-color);
 }
 
 #player-two {
     background-color: var(--player-two-color);
+    color: var(--player-two-color);
 }
 
 #player-three {
     background-color: var(--player-three-color);
+    color: var(--player-three-color);
 }
 
 #player-four {
     background-color: var(--player-four-color);
+    color: var(--player-four-color);
 }

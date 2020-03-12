@@ -18,7 +18,7 @@ class PlayerInfoComponent extends React.Component {
                     <div className="player-icon" id={this.props.id}></div>
                 </div>
                 <div className="player-info-body">
-                    <b>Money: </b> ${this.props.money}
+                    ${this.props.money}
                 </div>
             </div>
         )

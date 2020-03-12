@@ -5,14 +5,22 @@ const addPlayer = (id) => {
     return (dispatch, getState) => {
         const currentPlayers = getState().home.currentPlayers;
         if (currentPlayers.includes(id)) {
-            dispatch(Creators.removePlayer(id));
+            return;
         } else {
             dispatch(Creators.addPlayer(id));
         }
     }
 };
 
+const removePlayer = (id) => {
+    return (dispatch, getState) => {
+        const currentPlayers = getState().home.currentPlayers;
+        dispatch(Creators.removePlayer(id));
+    }
+};
+
 export default {
     addPlayer,
-    startGame
+    startGame,
+    removePlayer
 };

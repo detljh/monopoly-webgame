@@ -26,8 +26,13 @@ const stateExitMap = {
     [gameState.CARD]: [exitCondition.COMPLETE_CARD, exitCondition.MORTGAGE, exitCondition.TRADE]
 };
 
-const startGame = (players) => {
+const startGame = (players, ownProps) => {
     return (dispatch) => {
+        if (players.length < 2) {
+            ownProps.history.push('/');
+            return;
+        }
+
         players = players.map((player, index) => {
             return {
                 id: player,
@@ -53,6 +58,8 @@ const startGame = (players) => {
                 jailCard: 0
             } 
         });
+
+        ownProps.history.push('/game');
         dispatch(Creators.startGame(players));
         dispatch(updateDisplay("Player 1's turn"));
     }
@@ -61,7 +68,6 @@ const startGame = (players) => {
 /**
  * ESSENTIAL PLAYER MOVE FUNCTIONS
  */
-
 
 const newGame = (ownProps) => {
     return (dispatch) => {

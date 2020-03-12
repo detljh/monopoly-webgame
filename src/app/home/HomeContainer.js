@@ -9,13 +9,16 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         addPlayer: (id) => {
             dispatch(homeOperations.addPlayer(id));
         },
+        removePlayer: (id) => {
+            dispatch(homeOperations.removePlayer(id));
+        },
         startGame: (players) => {
-            dispatch(gameOperations.startGame(players));
+            dispatch(gameOperations.startGame(players, ownProps));
         }
     }
 }

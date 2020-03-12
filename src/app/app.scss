@@ -1,0 +1,19 @@
+.main-buttons {
+    padding: 10px;
+    text-align: center;
+    width: 80%;
+    cursor: pointer;
+    box-shadow: 0px 0px 2px 2px white;
+    border-radius: 10px;
+    margin: 6px;
+    transition: 0.5s box-shadow ease-in-out;
+    background-color: var(--third-color);
+    border: none;
+    font-weight: bold;
+    color: var(--main-color);
+}
+
+.main-buttons:hover {
+    box-shadow: 0px 0px 0px 5px var(--secondary-color);
+    transition: 0.5s box-shadow ease-in-out;
+}

@@ -3,7 +3,7 @@ import './player.scss';
 
 const PlayerComponent = (props) => {
     return (
-        <button className="player" id={props.id} onClick={() => props.addPlayer(props.id)}></button>
+        <button className="player player-button" id={props.id} onClick={() => props.action(props.id)}></button>
     );
 }
 
