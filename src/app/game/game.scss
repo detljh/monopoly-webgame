@@ -90,3 +90,24 @@
     }    
 }
 
+.in-jail {
+    opacity: 0.4; 
+}
+
+.in-jail::before {
+    content: "\f502";
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    margin: auto;
+    text-align: center;
+    font-size: 50px;
+    padding: 10px;
+    padding-left: 25px;
+}
+
