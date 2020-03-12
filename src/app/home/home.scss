@@ -74,7 +74,7 @@
     box-shadow: 0 0 2px 5px white;
     border-radius: 10px;
     background-color: white;
-    color: var(--main-color);
+    color: var(--text-color);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -82,7 +82,7 @@
 
     h2 {
         border-radius: 20px;
-        box-shadow: 0 0 3px 2px inset var(--secondary-color);
+        box-shadow: 0 0 0px 2px var(--secondary-color);
         width: 90%;
         padding: 5px;
         font-size: 1.4em;

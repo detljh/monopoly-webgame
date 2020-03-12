@@ -6,8 +6,6 @@ const SquareComponent = (props) => {
             {
                 props.square.owned &&
                 <div className={`${props.square.type} owned-property`} id={props.square.playerOwned}>
-                    <p>OWNED BY {props.square.owned}</p> 
-                    
                     {
                         props.square.houses >= 0 &&
                         (props.square.houses < 5 ? <p>Houses: {props.square.houses}</p>

@@ -217,7 +217,7 @@ const checkProperty = (currentSquare, players, updatePlayer) => {
                     }
                 } else {
                     let state = gameState.ON_FREE_PROPERTY;
-                    let exitConditions = stateExitMap[state];
+                    let exitConditions = [...stateExitMap[state]];
                     let doubleDice = getState().game.doubleDice;
                     if (doubleDice > 0) {
                         // pop last move (end turn)
@@ -368,7 +368,9 @@ const completeCard = () => {
                 if (card.go === true && card.position < prevPosition) {
                     dispatch(getStartMoney(players, updatePlayer));
                 }
-                dispatch(checkProperty(getState().game.currentSquare, players, updatePlayer));
+                setTimeout(() => {
+                    dispatch(checkProperty(getState().game.currentSquare, players, updatePlayer));
+                }, 1000);
             }
         } else if (card.pay) {
             updatePlayer.money -= card.pay;

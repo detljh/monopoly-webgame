@@ -7,6 +7,7 @@
   --main-color: hsl(220, 20%, 50%);
   --secondary-color: hsl(220, 30%, 70%);
   --third-color: hsl(220, 20%, 90%);
+  --text-color: hsl(220, 20%, 30%);
 }
 
 html, body, #root, .App {
