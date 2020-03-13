@@ -18,6 +18,34 @@
     #square-0 {
         grid-column: 11 / 12;
         grid-row: 11 / 12;
+        
+
+        .corner {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            transform: rotate(315deg);
+            padding: 4px;
+
+            .square-name {
+                font-size: 0.7em;   
+            }
+    
+            #start-icon {
+                color: hsl(0, 100%, 50%);
+                font-weight: bold;
+                font-size: 2.3em;
+                margin: 0;
+            }
+    
+            .square-cost {
+                display: none;
+            }
+        }
+        
     }
 
     #square-1 {
@@ -68,6 +96,24 @@
     #square-10 {
         grid-column: 1 / 2;
         grid-row: 11 / 12;
+        display: grid;
+        grid-template-columns: repeat(3, fr);
+        grid-template-rows: repeat(3, fr);
+
+        .corner {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            transform: rotate(45deg);
+
+            p {
+                font-size: 0.8em;
+                font-weight: bold;
+            }
+        }
     }
 
     #square-11 {
@@ -118,6 +164,22 @@
     #square-20 {
         grid-column: 1 / 2;
         grid-row: 1 / 2;
+
+        .corner {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            transform: rotate(135deg);
+            padding: 10px;
+
+            p {
+                font-size: 0.8em;
+                font-weight: bold;
+            }
+        }
     }
 
     #square-21 {
@@ -168,6 +230,30 @@
     #square-30 {
         grid-column: 11 / 12;
         grid-row: 1 / 2;
+        justify-content: center;
+
+        .corner {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            transform: rotate(-135deg);
+
+            p {
+                font-size: 0.8em;
+                font-weight: bold;
+            }        
+
+            .square-cost {
+                display: none;
+            }
+
+            .square-name {
+                margin: 5px;
+            }
+        }
     }
 
     #square-31 {
@@ -216,28 +302,63 @@
     }
 
     .square-name {
-        overflow: hidden;
         font-size: 0.6em;
         text-align: center;
         margin: auto;
-        padding: 2px;
     }
     
     .square-cost {
         font-size: 0.6em;
+        margin: 5px;
+    }
+
+    .square-icon {
+        font-size: 3em; 
     }
     
+    #chest-icon {
+        color: hsl(190, 100%, 30%);
+    }
+
+    #chance-icon {
+        color: hsl(190, 90%, 50%);
+    }
+
+    #water-icon {
+        color: hsl(190, 100%, 90%);
+    }
+
+    #electric-icon {
+        color: hsl(50, 100%, 60%);
+    }
+
+    #go-jail-icon {
+        color: hsl(0, 78%, 12%);
+    }
+
+    #free-park-icon {
+        color: hsl(0, 100%, 50%);
+    }
+
     .square-top {
         flex-direction: column;
     
         p {
+            padding: 0 2px;
+            transform: rotate(180deg);
+        }
+
+        .square-icon {
             transform: rotate(180deg);
         }
     }
     
-    
     .square-bottom {
         flex-direction: column-reverse;
+
+        p {
+            padding: 0 2px;
+        }
     }
     
     .square-right {
@@ -246,44 +367,32 @@
         p {
             writing-mode: vertical-rl;
             transform: rotate(180deg);
+            padding: 2px 0;
+        }
+
+        .square-icon {
+            transform: rotate(270deg);
+            padding: 0 5px;
         }
     }
     
-    .square-left p {
-        writing-mode: vertical-rl;
-    }
-}
+    .square-left {
+        p {
+            writing-mode: vertical-rl;
+            padding: 2px 0;
+        }
 
-#player-on-square-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    position: absolute;
-    z-index: 100;
-    flex-wrap: wrap;
-
-    .player-on-square {
-        margin: 5px;
-        z-index: 100;
-        box-shadow: 0 0 2px 2px black;
-        width: 15px;
-        height: 15px;
+        .square-icon {
+            transform: rotate(90deg);
+            padding: 0 5px;
+        }
     }
 }
 
 .special {
     display: flex;
     align-items: center;
-    justify-content: center;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.corner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -298,7 +407,7 @@
     align-items: center;
     justify-content: center;
     background-color: white;
-
+    
     #middle-options {
         position: relative;
         display: flex;
@@ -319,18 +428,10 @@
     z-index: 5;  
 }
 
-.owned-text {
-    color: black;
-    margin: auto;
-    z-index: 10;
-    position: relative;
-    text-align: center;
-}
-
 .property {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -394,3 +495,27 @@
     }
 }
 
+.owned-text {
+    color: black;
+    margin: auto;
+    z-index: 10;
+    position: relative;
+    text-align: center;
+}
+
+#player-on-square-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    position: absolute;
+    z-index: 100;
+    flex-wrap: wrap;
+
+    .player-on-square {
+        margin: 5px;
+        z-index: 100;
+        box-shadow: 0 0 2px 2px black;
+        width: 15px;
+        height: 15px;
+    }
+}

@@ -114,7 +114,7 @@ const playerTurn = (dice1, dice2) => {
         let updatePlayer = players[getState().game.currentPlayerIndex];
         let prevPosition = updatePlayer.position;
         let currentPosition = (prevPosition + dice1 + dice2) % NUMBER_POSITIONS;
-        //let currentPosition = 7;
+        //let currentPosition = 4;
         updatePlayer.position = currentPosition
         let currentSquare = getState().game.squares[currentPosition];
         dispatch(Creators.movePlayer(players, currentPosition));

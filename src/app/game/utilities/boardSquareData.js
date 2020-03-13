@@ -1,8 +1,8 @@
 let squares = {
     20: {
-        type: 'corner square-top',
+        type: 'corner',
         subtype: 'free-park',
-        text: 'Free Parking',
+        text: 'FREE PARKING',
         cost: 0
     }, 
     21: {
@@ -80,7 +80,7 @@ let squares = {
         houses: 0
     }, 
     30: {
-        type: 'corner square-top',
+        type: 'corner',
         subtype: 'go-jail',
         text: 'GO TO JAIL',
         cost: 0,
@@ -236,7 +236,7 @@ let squares = {
         houses: 0
     }, 
     10: {
-        type: 'corner square-bottom',
+        type: 'corner',
         subtype: 'jail',
         text: 'IN JAIL/JUST VISITING',
         cost: 50,
@@ -312,9 +312,9 @@ let squares = {
         houses: 0
     }, 
     0: {
-        type: 'corner square-bottom',
+        type: 'corner',
         subtype: 'start',
-        text: 'COLLECT $200 SALARY AS YOU PASS GO',
+        text: 'COLLECT $200 SALARY AS YOU PASS',
         cost: 200
     }
 }
