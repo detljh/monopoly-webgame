@@ -1,14 +1,17 @@
 #board {
     display: grid;
+    padding: 0 1px;
     margin: auto;
     width: 950px;
     height: 950px;
     box-shadow: 0 0 20px 0 var(--board-shadow-color);
     grid-template-columns: 6.5em repeat(9, minmax(0, 1fr)) 6.5em;
     grid-template-rows: 6.5em repeat(9, minmax(0, 1fr)) 6.5em;
+    grid-gap: 1px;
 
     .square {
         position: relative;
+        background-color: white;
         border: 1px solid black;
     }
 
@@ -294,6 +297,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: white;
 
     #middle-options {
         position: relative;
