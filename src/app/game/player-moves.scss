@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    overflow: hidden;
 
     .card {
         width: 400px;
@@ -20,10 +19,20 @@
 
     button {
         cursor: pointer;
-        padding: 10px;
+        width: 100%;
     }
 
-    
+    #end-turn-button {
+        background-color: var(--end-turn-color);
+    }
+
+    #roll-dice-button {
+        background-color: var(--roll-dice-color);
+    }
+
+    .essential-buttons {
+        background-color: var(--essential-buttons-color);
+    }
 }
 
 .menu {

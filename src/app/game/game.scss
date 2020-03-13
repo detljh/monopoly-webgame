@@ -26,8 +26,8 @@
     color: var(--text-color);
 
     .player-info {
-        width: 110px;
-        height: 70px;
+        width: 100px;
+        height: 60px;
         border: 1px solid white;
         background-color: white;
         box-shadow: 0 0 3px 3px white;
@@ -46,7 +46,7 @@
         height: 10px;
         margin-left: auto;
     }
-    
+
     .active-player {
         transition: 1s box-shadow ease-in-out;
         animation-name: wiggle;
@@ -70,33 +70,33 @@
     .active-player-four {
         box-shadow: 0 0 5px 5px var(--player-four-color);
     }
-
+    
     .active-player-five {
         box-shadow: 0 0 5px 5px var(--player-five-color);
     }
-
+    
     .active-player-six {
         box-shadow: 0 0 5px 5px var(--player-six-color);
     }
-    
-    @keyframes wiggle {
-        0% {
-            transform: rotate(0deg);
-        }
-        50% { 
-            transform: rotate(0deg); 
-        }
-        70% { 
-            transform: rotate(5deg); 
-        }
-        90% { 
-            transform: rotate(-5deg); 
-        }
-        100% { 
-            transform: rotate(0deg); 
-        }
-    }    
 }
+
+@keyframes wiggle {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% { 
+        transform: rotate(0deg); 
+    }
+    70% { 
+        transform: rotate(5deg); 
+    }
+    90% { 
+        transform: rotate(-5deg); 
+    }
+    100% { 
+        transform: rotate(0deg); 
+    }
+}    
 
 .in-jail {
     opacity: 0.4; 
@@ -119,3 +119,21 @@
     padding-left: 25px;
 }
 
+@media (max-height: 620px) {
+    .player-info-bar {
+        margin-top: 5px;
+
+        .player-info {
+            height: 15px;
+            font-size: 0.7em;
+            display: flex;
+            align-items: center;
+
+            .player-icon {
+                margin-left: 5px;
+                width: 6px;
+                height: 6px;
+            }
+        }
+    }
+}

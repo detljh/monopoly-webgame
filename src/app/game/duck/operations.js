@@ -62,6 +62,7 @@ const startGame = (players, ownProps) => {
         ownProps.history.push('/game');
         dispatch(Creators.startGame(players));
         dispatch(updateDisplay("Player 1's turn"));
+        dispatch(Creators.changeGameState(gameState.CHOOSING_ACTION, stateExitMap[gameState.CHOOSING_ACTION], gameState.CHOOSING_ACTION));
     }
 } 
 
@@ -113,7 +114,7 @@ const playerTurn = (dice1, dice2) => {
         let updatePlayer = players[getState().game.currentPlayerIndex];
         let prevPosition = updatePlayer.position;
         let currentPosition = (prevPosition + dice1 + dice2) % NUMBER_POSITIONS;
-        //let currentPosition = 3;
+        //let currentPosition = 7;
         updatePlayer.position = currentPosition
         let currentSquare = getState().game.squares[currentPosition];
         dispatch(Creators.movePlayer(players, currentPosition));
@@ -268,6 +269,7 @@ const endOfTurn = () => {
                 dispatch(jailEscape());
                 dispatch(Creators.resetDoubleDice());
             } else {
+                dispatch(updateDisplay("Failed to escape"));
                 dispatch(Creators.changeGameState(gameState.END_OF_TURN, stateExitMap[gameState.END_OF_TURN], getState().game.gameState));
             }
         } else {
@@ -368,9 +370,7 @@ const completeCard = () => {
                 if (card.go === true && card.position < prevPosition) {
                     dispatch(getStartMoney(players, updatePlayer));
                 }
-                setTimeout(() => {
-                    dispatch(checkProperty(getState().game.currentSquare, players, updatePlayer));
-                }, 1000);
+                dispatch(checkProperty(getState().game.currentSquare, players, updatePlayer));
             }
         } else if (card.pay) {
             updatePlayer.money -= card.pay;
@@ -796,7 +796,8 @@ const payRent = () => {
         } 
 
         if (fromPlayer.money - rent < 0) {
-            dispatch(updateDisplay("Not enough money! Mortgage some properties!"));
+            let difference = Math.abs(fromPlayer.money - rent);
+            dispatch(updateDisplay(`Not enough money! Need $${difference} more`));
             return;
         }
         

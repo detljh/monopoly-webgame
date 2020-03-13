@@ -7,7 +7,7 @@ const INITIAL_STATE = {
     squares: squares,
     gameState: gameState.CHOOSING_ACTION,
     prevGameState: gameState.CHOOSING_ACTION,
-    exitConditions: [exitCondition.ROLL_DICE],
+    exitConditions: [],
     currentPlayerIndex: 0,
     players: [],
     currentPlayer: '',
@@ -57,7 +57,7 @@ const gameReducer = (state=INITIAL_STATE, action) => {
             })
         case types.MOVE_PLAYER:
             return Object.assign({}, state, {
-                players: action.players,
+                players: [...action.players],
                 currentPosition: action.currentPosition,
                 currentSquare: state.squares[action.currentPosition]
             });

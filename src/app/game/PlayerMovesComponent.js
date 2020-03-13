@@ -16,43 +16,43 @@ class PlayerMovesComponent extends React.Component {
             [
                 this.props.exitConditions.map((condition) => 
                     [condition === exitCondition.ROLL_DICE &&
-                    <button key={condition} onClick={this.props.rollDice}>Roll Dice</button>, 
+                    <button key={condition} className="main-buttons " id="roll-dice-button" onClick={this.props.rollDice}>Roll Dice</button>, 
 
                     condition === exitCondition.TRADE &&
-                    <button key={condition} onClick={() => this.props.chooseTradeItems(undefined)}>Trade</button>, 
+                    <button key={condition} className="main-buttons essential-buttons" id="trade-button" onClick={() => this.props.chooseTradeItems(undefined)}>Trade</button>, 
                     
                     condition === exitCondition.BUY_PROPERTY && 
-                    <button key={condition} onClick={this.props.buyProperty}>Buy</button>,
+                    <button key={condition} className="main-buttons" onClick={this.props.buyProperty}>Buy Property</button>,
 
                     condition === exitCondition.PAY_RENT &&
-                    <button key={condition} onClick={this.props.payRent}>Pay Rent</button>,
+                    <button key={condition} className="main-buttons" onClick={this.props.payRent}>Pay Rent</button>,
 
                     condition === exitCondition.PAY_TAX &&
-                    <button key={condition} onClick={this.props.payTax}>Pay Tax</button>,
+                    <button key={condition} className="main-buttons" onClick={this.props.payTax}>Pay Tax</button>,
 
                     condition === exitCondition.DRAW_CHANCE &&
-                    <button key={condition} onClick={() => this.props.drawCard(condition)}>Draw chance card</button>,
+                    <button key={condition} className="main-buttons" onClick={() => this.props.drawCard(condition)}>Draw Chance Card</button>,
 
                     condition === exitCondition.DRAW_CHEST &&
-                    <button key={condition} onClick={() => this.props.drawCard(condition)}>Draw community chest card</button>,
+                    <button key={condition} className="main-buttons" onClick={() => this.props.drawCard(condition)}>Draw Community Chest Card</button>,
 
                     condition === exitCondition.COMPLETE_CARD &&
                     <Card key={this.props.card.text}/>,
 
                     condition === exitCondition.BUY_HOUSE &&
-                    <button key={condition} onClick={this.props.buyHouseMenu}>Buy houses</button>,
+                    <button key={condition} className="main-buttons essential-buttons" id="buy-house-button" onClick={this.props.buyHouseMenu}>Buy House/Hotel</button>,
 
                     condition === exitCondition.MORTGAGE &&
-                    <button key={condition} onClick={this.props.mortgageMenu}>Mortgage</button>,
+                    <button key={condition} className="main-buttons essential-buttons" id="mortgage-button" onClick={this.props.mortgageMenu}>Mortgage</button>,
 
                     condition === exitCondition.USE_JAIL_CARD &&
-                    <button key={condition} onClick={this.props.useJailCard}>Use Jail Card</button>,
+                    <button key={condition} className="main-buttons" onClick={this.props.useJailCard}>Use Jail Card</button>,
 
                     condition === exitCondition.PAY_BAIL &&
-                    <button key={condition} onClick={this.props.payBail}>PAY BAIL</button>,
+                    <button key={condition} className="main-buttons" onClick={this.props.payBail}>Pay Bail</button>,
 
                     condition === exitCondition.END_TURN &&
-                    <button key={condition} onClick={this.props.endTurn}>End turn</button>,
+                    <button key={condition} className="main-buttons" id="end-turn-button" onClick={this.props.endTurn}>End Turn</button>,
 
                     condition === exitCondition.BUY_HOUSE_MENU &&
                     <Menu key={condition} id="buy-house" items={this.props.menu} header="Available houses and hotels" action={this.props.buyHouse} actionText="Buy" back={this.props.goPrevGameState} multiple={false} />,

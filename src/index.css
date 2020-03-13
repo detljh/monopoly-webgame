@@ -10,6 +10,9 @@
   --secondary-color: hsl(220, 30%, 70%);
   --third-color: hsl(220, 20%, 90%);
   --text-color: hsl(220, 20%, 30%);
+  --end-turn-color: hsl(0, 30%, 70%);
+  --roll-dice-color: hsl(100, 30%, 70%);
+  --essential-buttons-color: hsl(50, 30%, 70%);
 }
 
 html, body, #root, .App {

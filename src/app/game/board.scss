@@ -1,11 +1,11 @@
 #board {
     display: grid;
     margin: auto;
-    width: 1020px;
-    height: 1020px;
+    width: 950px;
+    height: 950px;
     box-shadow: 0 0 20px 0 var(--board-shadow-color);
-    grid-template-columns: 7em repeat(9, minmax(0, 1fr)) 7em;
-    grid-template-rows: 7em repeat(9, minmax(0, 1fr)) 7em;
+    grid-template-columns: 6.5em repeat(9, minmax(0, 1fr)) 6.5em;
+    grid-template-rows: 6.5em repeat(9, minmax(0, 1fr)) 6.5em;
 
     .square {
         position: relative;
@@ -214,13 +214,14 @@
 
     .square-name {
         overflow: hidden;
-        font-size: 0.7em;
+        font-size: 0.6em;
         text-align: center;
         margin: auto;
+        padding: 2px;
     }
     
     .square-cost {
-        font-size: 0.7em;
+        font-size: 0.6em;
     }
     
     .square-top {
@@ -288,11 +289,25 @@
 #middle {
     grid-column: 2 / 11;
     grid-row: 2 / 11;
+    box-shadow: 0 0 20px 0 inset var(--board-shadow-color);
+    height: 100%;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 20px 0 inset var(--board-shadow-color); 
+
+    #middle-options {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 3px solid var(--main-color);
+        box-shadow: 0 0 20px 0 var(--secondary-color);
+        border-radius: 30px;
+        width: 50%;
+        margin: auto;
+        padding: 10px;
+    }
 }
 
 .owned-property {

@@ -36,7 +36,7 @@ class MenuComponent extends React.Component {
         let data = this.props.multiple ? this.state.options : this.state.option;
         return (
             <div className="menu" id={this.props.id}>
-                <select name="property" size={this.props.items.length + 2} onChange={this.handleSelect} multiple={this.props.multiple}>
+                <select size={this.props.items.length + 2} onChange={this.handleSelect} multiple={this.props.multiple}>
                     <option className="header-option" disabled>{this.props.header}</option>
                     {
                         this.props.items.map((option) =>

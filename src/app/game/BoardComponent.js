@@ -25,7 +25,9 @@ class BoardComponent extends React.Component {
  
                 return <Square key={element[0]} id={element[0]} playersOnSquare={playersOnSquare} square={element[1]} freeParking={freeParking}/>
             } else {
-                return (<div key="middle" id={element[0]}>
+                return (
+                <div key="middle" id={element[0]}>
+                    <div id="middle-options">
                     {
                         this.props.currentDice.length > 0 &&
                             [
@@ -41,7 +43,8 @@ class BoardComponent extends React.Component {
 
                         <PlayerMoves />
                     }
-                    </div>  
+                    </div>   
+                </div>  
                 )}
         });
 
