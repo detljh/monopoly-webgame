@@ -45,11 +45,15 @@ const SquareComponent = (props) => {
 
                 <p className="square-name">{props.square.text}</p>
                 {props.square.subtype === 'start' && <p id="start-icon">GO</p>}
-                <div className={props.square.subtype}>
-                        {props.square.owned && (props.square.houses >= 0 &&
-                        (props.square.houses < 5 ? <p className="owned-text">Houses: {props.square.houses}</p>
-                        : <p className="owned-text">Hotel</p>))}
-                </div>
+
+                {
+                    props.square.type.includes("property") &&      
+                    <div className={`street ${props.square.subtype}-color`}>
+                            {props.square.owned && (props.square.houses >= 0 &&
+                            (props.square.houses < 5 ? <p className="owned-text">Houses: {props.square.houses}</p>
+                            : <p className="owned-text">Hotel</p>))}
+                    </div>
+                }
             </div>
         </div>
     );

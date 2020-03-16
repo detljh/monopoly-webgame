@@ -61,13 +61,13 @@ class PlayerMovesComponent extends React.Component {
                     <Menu key={condition} id="mortgage" items={this.props.menu} header="Available properties (85% of property cost)" action={this.props.mortgage} actionText="Mortgage" back={this.props.goPrevGameState} multiple={false} />,
 
                     condition === exitCondition.TRADE_MENU &&
-                    <Menu key={condition} id="trade" items={this.props.menu} header="First player items to trade (hold CTRL to select more than one item)" action={this.props.choosePlayer} actionText="Choose player to trade with" back={this.props.goPrevGameState} multiple={true} maxMoney={this.props.currentPlayer.money} />,
+                    <Menu key={condition} id="trade" items={this.props.menu} header="Your items to trade" action={this.props.choosePlayer} actionText="Choose player to trade with" back={this.props.goPrevGameState} multiple={true} maxMoney={this.props.currentPlayer.money} />,
 
                     condition === exitCondition.CHOOSE_PLAYER_MENU &&
                     <Menu key={condition} id="trade_player" items={this.props.menu} header="Players" action={this.props.chooseTradeItems} actionText="Choose items from player" back={this.props.chooseTradeItems} multiple={false} />,
 
                     condition === exitCondition.TRADE_MENU_PLAYER_TWO &&
-                    <Menu key={condition} id="trade" items={this.props.menu} header="Second player items to trade (hold CTRL to select more than one item)" action={this.props.trade} actionText="Finish trade" back={this.props.choosePlayer} multiple={true} maxMoney={this.props.tradePlayer.money} />
+                    <Menu key={condition} id="trade" items={this.props.menu} header="Opponent's items to trade" action={this.props.trade} actionText="Finish trade" back={this.props.choosePlayer} multiple={true} maxMoney={this.props.tradePlayer.money} />
                     ]
                 )
             ]

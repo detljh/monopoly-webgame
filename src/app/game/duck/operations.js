@@ -473,9 +473,9 @@ const getFullStreetProperties = (currentPlayer, squares) => {
         if (propertyDifference === 0) {
             fullStreetProperties.push(property);
             if (square.houses < 4) {
-                buyHouseMenu.push({type: 'house', value: property, name: square.text, cost: square.houseCost});
+                buyHouseMenu.push({type: 'house', value: property, name: square.text, cost: square.houseCost, color: square.subtype});
             } else if (square.houses >= 4 && square.houses < 5) {
-                buyHouseMenu.push({type: 'hotel', value: property, name: square.text, cost: square.houseCost});
+                buyHouseMenu.push({type: 'hotel', value: property, name: square.text, cost: square.houseCost, color: square.subtype});
             }
         }
     });
@@ -545,20 +545,20 @@ const getMortgageMenu = (currentPlayer, squares) => {
         if (fullStreet.includes(property)) {
             if (square.houses < 5 && square.houses > 0) {
                 cost = Math.floor(square.houseCost * MORTGAGE_RATE);
-                mortgageMenu.push({type: 'house', value: property, name: square.text, cost: cost})
+                mortgageMenu.push({type: 'house', value: property, name: square.text, cost: cost, color: square.subtype})
                 return;
             } else if (square.houses === 5) {
                 cost = Math.floor(square.houseCost * MORTGAGE_RATE);
-                mortgageMenu.push({type: 'hotel', value: property, name: square.text, cost: cost})
+                mortgageMenu.push({type: 'hotel', value: property, name: square.text, cost: cost, color: square.subtype})
                 return;
             }
 
             let street = getStreet(square.subtype, fullStreet, squares);
             if (street.every(p => squares[p].houses === 0)) {
-                mortgageMenu.push({type: 'property', value: property, name: square.text, cost: cost})
+                mortgageMenu.push({type: 'property', value: property, name: square.text, cost: cost, color: square.subtype})
             }
         } else {
-            mortgageMenu.push({type: 'property', value: property, name: square.text, cost: cost})
+            mortgageMenu.push({type: 'property', value: property, name: square.text, cost: cost, color: square.subtype})
         }
     });
     return mortgageMenu;
@@ -620,7 +620,7 @@ const getTradeItems = (player, squares) => {
         }
 
         let type = square.type.includes("property") ? "property" : square.subtype;
-        items.push({type: type, value: property, name: square.text});
+        items.push({type: type, value: property, name: square.text, color: square.subtype});
     });
 
     return items;
@@ -679,6 +679,7 @@ const choosePlayer = (items, money) => {
                 value: index,
                 id: player.id,
                 name: player.name,
+                color: "default"
             }
         });
         players = players.filter(player => player.id !== currentPlayer.id);

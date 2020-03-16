@@ -15,18 +15,35 @@ class MenuComponent extends React.Component {
 
     handleSelect(event) {
         if (this.props.multiple) {
-            this.setState({
-                options: [...this.state.options, event.target.value]
-            });
+            if (event.target.checked) {
+                this.setState({
+                    options: [...this.state.options, event.target.value]
+                });
+            } else {
+                let options = [...this.state.options];
+                options.splice(this.state.options.indexOf(event.target.value), 1);
+                this.setState({
+                    options: options
+                });
+            }
         } else {
-            this.setState({
-                option: event.target.value
-            });
+            if (event.target.checked) {
+                this.setState({
+                    option: event.target.value
+                });
+            } else {
+                this.setState({
+                    option: ''
+                });
+            }
         }
-        
     }
 
     handleMoney(event) {
+        let money = event.target.value;
+        if (money > this.props.maxMoney || money < 0){
+            return;
+        }
         this.setState({
             money: event.target.value
         }); 
@@ -34,37 +51,43 @@ class MenuComponent extends React.Component {
 
     render() {
         let data = this.props.multiple ? this.state.options : this.state.option;
+        let options = this.props.items.map((option) => {
+            let type = this.props.multiple ? "checkbox" : "radio";
+            return [
+                <input type={type} name="option" id={option.value} key={option.value} className="menu-options" onClick={this.handleSelect} value={option.value} />,
+                <label for={option.value} className={`option-label ${option.color}-color`}>
+                    
+                    {option.name}
+                    {
+                        option.type &&
+                            `, ${option.type}`
+                    }
+                    {
+                        option.cost &&
+                            `, $${option.cost}`
+                    }
+                </label>
+            ]
+        });
         return (
             <div className="menu" id={this.props.id}>
-                <select size={this.props.items.length + 2} onChange={this.handleSelect} multiple={this.props.multiple}>
-                    <option className="header-option" disabled>{this.props.header}</option>
-                    {
-                        this.props.items.map((option) =>
-                            <option key={option.value} className="menu-options" value={option.value}>
-                                {option.name}
-                                {
-                                    option.type &&
-                                        `, ${option.type}`
-                                }
-                                {
-                                    option.cost &&
-                                        `, $${option.cost}`
-                                }
-                                </option>
-                        )
-                    }
-                </select>
+                <div id="options">
+                    <div className="header-option">{this.props.header}</div>
+                    {options}
+                </div>
+
                 {
                     this.props.multiple &&
                     [
-                        <label>Money: {this.state.money}</label>,
-                        <input type="range" min="0" max={this.props.maxMoney} onChange={this.handleMoney} defaultValue="0"></input>
+                        <div className="header-option">Money</div>,
+                        <input type="range" id="money-slider" min="0" max={this.props.maxMoney} onChange={this.handleMoney} defaultValue="0" value={this.state.money}></input>,
+                        <input type="number" id="money-input" onChange={this.handleMoney} value={this.state.money}></input>
                     ]
                 }
     
                 <div className="menu-buttons">
-                    <button key={'menu-back'} onClick={this.props.back}>Back</button>
-                    <button key={'menu-buy'} onClick={() => this.props.action(data, this.state.money)}>{this.props.actionText}</button>
+                    <button key={'menu-back'} className="main-buttons" onClick={this.props.back}>Back</button>
+                    <button key={'menu-buy'} className="main-buttons" onClick={() => this.props.action(data, this.state.money)}>{this.props.actionText}</button>
                 </div>
             </div>
         )

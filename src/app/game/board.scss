@@ -381,6 +381,12 @@
         .square-icon {
             transform: rotate(180deg);
         }
+
+        .street {
+            height: 25%;
+            width: 100%;
+            border-top: 1px solid black;
+        }
     }
     
     .square-bottom {
@@ -388,6 +394,12 @@
 
         p {
             padding: 0 2px;
+        }
+
+        .street {
+            width: 100%;
+            height: 25%;
+            border-bottom: 1px solid black;
         }
     }
     
@@ -404,6 +416,12 @@
             transform: rotate(270deg);
             padding: 0 5px;
         }
+
+        .street {
+            width: 25%;
+            height: 100%;
+            border-right: 1px solid black;
+        }
     }
     
     .square-left {
@@ -415,6 +433,12 @@
         .square-icon {
             transform: rotate(90deg);
             padding: 0 5px;
+        }
+
+        .street {
+            width: 25%;
+            height: 100%;
+            border-left: 1px solid black;
         }
     }
 }
@@ -446,9 +470,8 @@
         border: 3px solid var(--main-color);
         box-shadow: 0 0 20px 0 var(--secondary-color);
         border-radius: 30px;
-        width: 50%;
         margin: auto;
-        padding: 10px;
+        padding: 50px;
     }
 }
 
@@ -460,58 +483,36 @@
     height: 100%;
 
     .red {
-        flex-basis: 25%;
-        background-color: red;
         height: 25%;
         width: 100%;
         border-top: 1px solid black;
     }
     
-    .orange {
-        flex-basis: 25%;
-        background-color: orange;
-        width: 25%;
-        height: 100%;
-        border-left: 1px solid black;
-    }
     
-    .green {
-        background-color: green;
-        width: 25%;
-        height: 100%;
-        border-right: 1px solid black;
-    }
+    
+    
     
     .yellow {
-        background-color: yellow;
         width: 100%;
         height: 25%;
         border-top: 1px solid black;
     }
     
     .purple {
-        background-color: purple;
         width: 25%;
         height: 100%;
         border-left: 1px solid black;
     }
     
     .blue {
-        background-color: blue;
         width: 25%;
         height: 100%;
         border-right: 1px solid black;
     }
     
-    .lightBlue {
-        background-color: lightblue;
-        width: 100%;
-        height: 25%;
-        border-bottom: 1px solid black;
-    }
+    
     
     .brown {
-        background-color: brown;
         width: 100%;
         height: 25%;
         border-bottom: 1px solid black;

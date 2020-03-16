@@ -2,6 +2,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    
+    button {
+        width: 150px;
+    }
 
     .card {
         width: 400px;
@@ -11,15 +16,33 @@
         padding: 5px;
         margin: 10px;
         z-index: 10;
-    
+        display: flex;
+        flex-direction: column;
+
+        #card-icon {
+            justify-self: center;
+            align-self: center;
+            position: absolute;
+            font-size: 200px;
+            z-index: -10;
+            opacity: 0.1;
+            color: blue;
+        }
+        
+        button {
+            display: inline-block;
+            width: auto;
+        }
+
+        .card-buttons {
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: auto;
+        }
+
         h3 {
             text-align: center;
         }
-    }
-
-    button {
-        cursor: pointer;
-        width: 100%;
     }
 
     #end-turn-button {
@@ -40,31 +63,101 @@
     flex-direction: column;
     height: 100%;
 
-    select {
+    #options {
         height: 100%;
         overflow-y: hidden;
         background-color: white;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
     }
 
-    option {
-        border: 1px solid blue;
+    .option-label {
+        box-shadow: 0 0 3px 1px inset white;
         padding: 10px;
-        background-color: white;
-    }
-
-    .menu-options:hover {
-        border: 1px solid black;
         cursor: pointer;
     }
 
+    .station-color, .utility-color, .default-color {
+        background-color: var(--third-color);
+    }
+
+    .option-label:hover {
+        box-shadow: 0 0 0 2px inset var(--secondary-color);
+    }
+
+    #options input {
+       display: none;
+    }
+
+    input:checked + label {
+        background-color: var(--secondary-color);
+    }
+
     .header-option {
-        border: 2px solid black;
+        border: 1px solid var(--main-color);
         margin-bottom: 10px;
-        cursor: default;
+        padding: 5px;
+        text-align: center;
+        font-weight: bold;
     }
 
     .menu-buttons {
         display: flex;
         justify-content: space-between;
+        margin-top: 5px;
+    }
+
+    #money-input {
+        padding: 3px;
+        width: 70px;
+        margin-left: auto;
+    }
+
+    #money-slider {
+        cursor: pointer;
+        -webkit-appearance: none;
+        width: 100%;
+        background: transparent;
+        margin: 10px 0;
+    }
+
+    #money-slider:focus {
+        outline: none;
+    }
+
+    #money-slider::-ms-track {
+        width: 100%;
+        background: transparent; 
+        border-color: transparent;
+        color: transparent;
+    }
+
+    #money-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+    }
+
+    #money-slider::-webkit-slider-runnable-track {
+        background-color: var(--third-color);
+        height: 5px;
+        
+    }
+
+    #money-slider:focus::-webkit-slider-runnable-track {
+        background-color: var(--secondary-color);        
+    }
+
+    #money-slider::-webkit-slider-thumb {
+        border-radius: 50%;
+        height: 15px;
+        width: 15px;
+        background-color: var(--main-color);
+        transition: 0.2s box-shadow;
+        margin-top: -5px;
+    }
+
+    #money-slider:hover::-webkit-slider-thumb {
+        box-shadow: 0 0 0 2px var(--main-color);
+        transition: 0.2s box-shadow;
     }
 }
