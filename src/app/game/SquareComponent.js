@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArchive, faQuestion, faTrain, faLightbulb, faTint, faCoins, faLandmark, faCarSide, faUserLock } from '@fortawesome/free-solid-svg-icons';
+import { faArchive, faQuestion, faTrain, faLightbulb, faTint, faCoins, faLandmark, faCarSide, faUserLock, faHome, faHotel } from '@fortawesome/free-solid-svg-icons';
 
 const SquareComponent = (props) => {
     return (
@@ -13,9 +13,13 @@ const SquareComponent = (props) => {
 
             <div id="player-on-square-container">
                 {
-                    props.playersOnSquare.map(player => 
-                        <div key={player} className="player-on-square player-icon" id={player}></div>
-                    )
+                    props.playersOnSquare.map(player => {
+                        let classes = ["player-on-square", "player-icon"];
+                        if (player === props.currentPlayer.id) {
+                            classes.push("active-player-board");
+                        }
+                        return <div key={player} className={classes.join(" ")} id={player}></div>
+                    })
                 }
             </div>
 
@@ -50,8 +54,10 @@ const SquareComponent = (props) => {
                     props.square.type.includes("property") &&      
                     <div className={`street ${props.square.subtype}-color`}>
                             {props.square.owned && (props.square.houses >= 0 &&
-                            (props.square.houses < 5 ? <p className="owned-text">Houses: {props.square.houses}</p>
-                            : <p className="owned-text">Hotel</p>))}
+                            (props.square.houses < 5 ? 
+                                [...Array(props.square.houses).keys()].map(house => 
+                                     <FontAwesomeIcon className="house" icon={faHome} />)
+                            : <FontAwesomeIcon className="house" id="hotel" icon={faHotel} />))}
                     </div>
                 }
             </div>

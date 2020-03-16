@@ -11,7 +11,8 @@ const mapStateToProps = (state) => {
         display: state.game.display,
         freeParking: state.game.freeParking,
         gameState: state.game.gameState,
-        winners: state.game.winners
+        winners: state.game.winners,
+        currentPlayer: state.game.currentPlayer
     }
 }
 

@@ -7,9 +7,13 @@ const CardComponent = (props) => {
         <div className="card">
             {props.card.type === "Community Chest" && <FontAwesomeIcon id="card-icon" icon={faArchive} />}
             {props.card.type === "Chance" && <FontAwesomeIcon id="card-icon" icon={faQuestion} />}
-            <h3>{props.card.type}</h3>
-            <p>{props.card.text}</p>
-            
+            <div id="card-header">
+                <h3>{props.card.type}</h3>
+            </div>
+
+            <div id="card-body">
+                <p>{props.card.text}</p>
+                
                 <div className="card-buttons">
                 {props.card.button ? 
                     [
@@ -19,7 +23,7 @@ const CardComponent = (props) => {
                 :  <button className="main-buttons" onClick={props.completeCard}>OK</button>
                 }
                 </div>
-            
+            </div>
         </div>
     )
 }

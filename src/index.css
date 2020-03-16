@@ -12,7 +12,10 @@
   --text-color: hsl(220, 20%, 30%);
   --end-turn-color: hsl(0, 30%, 70%);
   --roll-dice-color: hsl(100, 30%, 70%);
+  --give-up-color: hsl(0, 100%, 20%);
   --essential-buttons-color: hsl(50, 30%, 70%);
+  --hotel-color: hsl(0, 100%, 50%);
+  --house-color: white
 }
 
 html, body, #root, .App {

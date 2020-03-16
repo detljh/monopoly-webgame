@@ -3,10 +3,30 @@ import './board.scss';
 import Square from './SquareComponent';
 import PlayerMoves from './PlayerMovesContainer';
 import gameState from './utilities/gameState';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDiceOne, faDiceTwo, faDiceThree, faDiceFour, faDiceFive, faDiceSix } from '@fortawesome/free-solid-svg-icons';
 
 class BoardComponent extends React.Component {
     constructor(props) {
         super(props);
+
+        this.getDiceIcon = this.getDiceIcon.bind(this);
+    }
+
+    getDiceIcon(number) {
+        if (number == 1) {
+            return <FontAwesomeIcon className="dice-icon" icon={faDiceOne}></FontAwesomeIcon>;
+        } else if (number == 2) {
+            return <FontAwesomeIcon className="dice-icon" icon={faDiceTwo}></FontAwesomeIcon>;
+        } else if (number == 3) {
+            return <FontAwesomeIcon className="dice-icon" icon={faDiceThree}></FontAwesomeIcon>;
+        } else if (number == 4) {
+            return <FontAwesomeIcon className="dice-icon" icon={faDiceFour}></FontAwesomeIcon>;
+        } else if (number == 5) {
+            return <FontAwesomeIcon className="dice-icon" icon={faDiceFive}></FontAwesomeIcon>;
+        } else if (number == 6) {
+            return <FontAwesomeIcon className="dice-icon" icon={faDiceSix}></FontAwesomeIcon>;
+        }
     }
 
     render() {
@@ -34,7 +54,7 @@ class BoardComponent extends React.Component {
                     freeParking = this.props.freeParking;
                 }
  
-                return <Square key={element[0]} id={element[0]} playersOnSquare={playersOnSquare} square={element[1]} freeParking={freeParking}/>
+                return <Square key={element[0]} id={element[0]} playersOnSquare={playersOnSquare} currentPlayer={this.props.currentPlayer} square={element[1]} freeParking={freeParking}/>
             } else {
                 return (
                 <div key="middle" id={element[0]}>
@@ -53,12 +73,16 @@ class BoardComponent extends React.Component {
                         : 
                         [
                             this.props.currentDice.length > 0 &&
-                                [
-                                    <p key="dice-1"><b>Dice 1:</b> {this.props.currentDice[0]}</p>,
-                                    <p key="dice-2"><b>Dice 2:</b> {this.props.currentDice[1]}</p>
-                                ],
-                        
-
+                                <div id="dice-container">
+                                    <div className="dice" id="dice-1" key="dice-1">
+                                        {this.getDiceIcon(this.props.currentDice[0])}
+                                        <b>{this.props.currentDice[0]}</b>
+                                    </div>
+                                    <div className="dice" id="dice-1" key="dice-2">
+                                        {this.getDiceIcon(this.props.currentDice[1])}
+                                        <b>{this.props.currentDice[1]}</b>
+                                    </div>
+                                </div>,
                         
                             this.props.display.length > 0 ? <h2>{this.props.display}</h2>
 

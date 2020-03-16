@@ -11,9 +11,8 @@
     .card {
         width: 400px;
         height: 200px;
-        border: 1px solid black;
+        border: 2px solid black;
         background-color: white;
-        padding: 5px;
         margin: 10px;
         z-index: 10;
         display: flex;
@@ -28,21 +27,34 @@
             opacity: 0.1;
             color: blue;
         }
-        
-        button {
-            display: inline-block;
-            width: auto;
+
+        #card-header {
+            background-color: var(--third-color);
+            border-bottom: 2px solid black;
+            
+            h3 {
+                text-align: center;
+                margin: 10px;
+            }
         }
 
-        .card-buttons {
+        #card-body {
+            padding: 10px;
             display: flex;
-            justify-content: space-evenly;
-            margin-top: auto;
-        }
+            flex-direction: column; 
+            height: 100%;
 
-        h3 {
-            text-align: center;
-        }
+            button {
+                display: inline-block;
+                width: auto;
+            }
+    
+            .card-buttons {
+                display: flex;
+                justify-content: space-evenly;
+                margin-top: auto;
+            }
+        }  
     }
 
     #end-turn-button {
@@ -91,7 +103,7 @@
     }
 
     input:checked + label {
-        background-color: var(--secondary-color);
+        background-color: var(--text-color);
     }
 
     .header-option {

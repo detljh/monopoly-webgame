@@ -17,6 +17,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         endGame: () => {
             dispatch(gameOperations.endGame());
+        },
+        giveUp: () => {
+            dispatch(gameOperations.giveUp());
         }
     }
 }

@@ -89,6 +89,12 @@ const endGame = () => {
     }
 }
 
+const giveUp = () => {
+    return (dispatch, getState) => {
+
+    }
+}
+
 /**
  * ESSENTIAL PLAYER MOVE FUNCTIONS
  */
@@ -852,5 +858,6 @@ export default {
     chooseTradeItems,
     choosePlayer,
     trade,
-    endGame
+    endGame,
+    giveUp
 };
