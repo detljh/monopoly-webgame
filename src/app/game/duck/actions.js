@@ -28,6 +28,12 @@ const newGame = () => {
     }
 }
 
+const giveUp = () => {
+    return {
+        type: types.GIVE_UP
+    }
+}
+
 const rollDice = (dice) => {
     return {
         type: types.ROLL_DICE,
@@ -145,5 +151,6 @@ export default {
     updateFreeParking,
     updateTradeItems,
     setTradePlayer,
-    endGame
+    endGame,
+    giveUp
 };

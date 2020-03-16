@@ -84,7 +84,7 @@ class BoardComponent extends React.Component {
                                     </div>
                                 </div>,
                         
-                            this.props.display.length > 0 ? <h2>{this.props.display}</h2>
+                            this.props.display.length > 0 ? <h2 id="display">{this.props.display}</h2>
 
                             : 
 

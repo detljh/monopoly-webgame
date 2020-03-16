@@ -56,6 +56,10 @@ const gameReducer = (state=INITIAL_STATE, action) => {
                 currentPlayerIndex: (state.currentPlayerIndex + 1) % state.players.length,
                 currentPlayer: state.players[(state.currentPlayerIndex + 1) % state.players.length],
             })
+        case types.GIVE_UP:
+            return Object.assign({}, state, {
+                currentPlayer: state.players[(state.currentPlayerIndex) % state.players.length],
+            })
         case types.ROLL_DICE:
             return Object.assign({}, state, {
                 currentDice: [...action.dice],

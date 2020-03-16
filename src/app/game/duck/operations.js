@@ -91,7 +91,33 @@ const endGame = () => {
 
 const giveUp = () => {
     return (dispatch, getState) => {
+        let currentPlayer = getState().game.currentPlayer;
+        let players = [...getState().game.players];
+        let currentPlayerIndex = getState().game.currentPlayerIndex;
+        players.splice(currentPlayerIndex, 1);
+        if (players.length === 1) {
+            dispatch(Creators.updatePlayers(players));
+            dispatch(endGame());
+            return;
+        }
 
+        let squares = getState().game.squares;
+
+        currentPlayer.properties.forEach(property => {
+            let current = {...squares[property]};
+            current.owned = false;
+
+            squares = Object.assign({}, squares, {
+                [property]: current
+            });
+        })
+
+        dispatch(Creators.buyOrSell(players, squares));
+
+        dispatch(Creators.giveUp());
+        dispatch(updateDisplay(`${currentPlayer.name} has given up! Properties being freed`));
+        currentPlayer = getState().game.currentPlayer;
+        dispatch(updateDisplay(`${currentPlayer.name}'s turn`));
     }
 }
 
