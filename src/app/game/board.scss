@@ -13,6 +13,9 @@
         position: relative;
         background-color: white;
         border: 1px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     #square-0 {
@@ -28,7 +31,8 @@
             justify-content: center;
             align-items: center;
             transform: rotate(315deg);
-            padding: 4px;
+            margin-top: 10px;
+            margin-left: 10px;
 
             .square-name {
                 font-size: 0.7em;   
@@ -96,22 +100,47 @@
     #square-10 {
         grid-column: 1 / 2;
         grid-row: 11 / 12;
-        display: grid;
-        grid-template-columns: repeat(3, fr);
-        grid-template-rows: repeat(3, fr);
+        
 
         .corner {
-            display: flex;
-            flex-direction: column;
             width: 100%;
             height: 100%;
-            justify-content: center;
-            align-items: center;
-            transform: rotate(45deg);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+
+            #jail-square {
+                grid-column: 2 / 4;
+                grid-row: 1 / 3;
+                border-left: 1px solid black;
+                border-bottom: 1px solid black;
+                background-color: orange;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #just {
+                grid-column: 1 / 2;
+                grid-row: 1 / 3;
+                transform: rotate(90deg);
+                display: flex;
+            }
+
+            #visiting {
+                grid-column: 1 / 4;
+                grid-row: 3 / 4;
+                display: flex;
+            }
 
             p {
                 font-size: 0.8em;
                 font-weight: bold;
+                margin: auto;
+            }
+
+            .square-cost, .square-name {
+                display: none;
             }
         }
     }
@@ -173,7 +202,8 @@
             justify-content: center;
             align-items: center;
             transform: rotate(135deg);
-            padding: 10px;
+            margin-left: 20px;
+            margin-top: 20px;
 
             p {
                 font-size: 0.8em;
@@ -393,7 +423,6 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    position: absolute;
     width: 100%;
     height: 100%;
 }
@@ -432,7 +461,6 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    position: absolute;
     width: 100%;
     height: 100%;
 
@@ -510,7 +538,9 @@
     position: absolute;
     z-index: 100;
     flex-wrap: wrap;
+    
 
+    
     .player-on-square {
         margin: 5px;
         z-index: 100;

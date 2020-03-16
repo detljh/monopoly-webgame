@@ -14,6 +14,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         newGame: () => {
             dispatch(gameOperations.newGame(ownProps));
+        },
+        endGame: () => {
+            dispatch();
         }
     }
 }

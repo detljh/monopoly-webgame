@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArchive, faQuestion, faTrain, faLightbulb, faTint, faCoins, faLandmark, faCarSide } from '@fortawesome/free-solid-svg-icons';
+import { faArchive, faQuestion, faTrain, faLightbulb, faTint, faCoins, faLandmark, faCarSide, faUserLock } from '@fortawesome/free-solid-svg-icons';
 
 const SquareComponent = (props) => {
     return (
@@ -10,14 +10,17 @@ const SquareComponent = (props) => {
                 <div className={`${props.square.type} owned-property`} id={props.square.playerOwned}>      
                 </div> 
             }
+
+            <div id="player-on-square-container">
+                {
+                    props.playersOnSquare.map(player => 
+                        <div key={player} className="player-on-square player-icon" id={player}></div>
+                    )
+                }
+            </div>
+
             <div className={props.square.type}>
-                <div id="player-on-square-container">
-                    {
-                        props.playersOnSquare.map(player => 
-                            <div key={player} className="player-on-square player-icon" id={player}></div>
-                        )
-                    }
-                </div>
+                
 
                 {
                     props.freeParking > -1 ? <p className="square-cost">{props.freeParking}</p> 
@@ -31,6 +34,14 @@ const SquareComponent = (props) => {
                 {props.square.subtype === 'go-jail' && <FontAwesomeIcon className="square-icon" id="go-jail-icon" icon={faLandmark} />}
                 {props.square.text.includes("Electric") && <FontAwesomeIcon className="square-icon" id="electric-icon" icon={faLightbulb} />}
                 {props.square.text.includes("Water") && <FontAwesomeIcon className="square-icon" id="water-icon" icon={faTint} />}
+                {
+                    props.square.subtype === 'jail' && 
+                    [
+                        <div id="jail-square"><FontAwesomeIcon className="square-icon" id="jail-icon" icon={faUserLock}></FontAwesomeIcon></div>,
+                        <div id="just"><p>JUST</p></div>,
+                        <div id="visiting"><p>VISITING</p></div>
+                    ]
+                }
 
                 <p className="square-name">{props.square.text}</p>
                 {props.square.subtype === 'start' && <p id="start-icon">GO</p>}
