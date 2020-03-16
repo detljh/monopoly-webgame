@@ -15,6 +15,7 @@ const IN_JAIL_BAIL_TURN_CARD = "IN_JAIL_BAIL_TURN_CARD";
 const BUYING_HOUSE = "BUYING_HOUSE";
 const MORTGAGING = "MORTGAGING";
 const CARD = "CARD";
+const END_GAME = "END_GAME";
 
 export default {
     CHOOSING_ACTION,
@@ -33,5 +34,6 @@ export default {
     IN_JAIL_BAIL_TURN_CARD,
     BUYING_HOUSE,
     MORTGAGING,
-    CARD
+    CARD,
+    END_GAME
 }

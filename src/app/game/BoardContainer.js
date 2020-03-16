@@ -9,15 +9,11 @@ const mapStateToProps = (state) => {
         currentDice: state.game.currentDice,
         card: state.game.card,
         display: state.game.display,
-        freeParking: state.game.freeParking
+        freeParking: state.game.freeParking,
+        gameState: state.game.gameState,
+        winners: state.game.winners
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        
-    }
-}
-
-const BoardContainer = connect(mapStateToProps, mapDispatchToProps)(BoardComponent);
+const BoardContainer = connect(mapStateToProps, null)(BoardComponent);
 export default BoardContainer;

@@ -452,11 +452,6 @@
     }
 }
 
-.owned-property {
-    opacity: 0.8;
-    z-index: 5;  
-}
-
 .property {
     display: flex;
     align-items: center;
@@ -523,6 +518,12 @@
     }
 }
 
+.owned-property {
+    position: absolute;
+    opacity: 0.8;
+    z-index: 5;  
+}
+
 .owned-text {
     color: black;
     margin: auto;
@@ -538,8 +539,6 @@
     position: absolute;
     z-index: 100;
     flex-wrap: wrap;
-    
-
     
     .player-on-square {
         margin: 5px;

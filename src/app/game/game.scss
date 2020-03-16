@@ -16,6 +16,24 @@
     margin-left: 130px;
 }
 
+.winner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .winner-name {
+        margin: 5px;
+        
+    }
+}
+
+.player-icon {
+    width: 10px;
+    height: 10px;
+    margin-left: auto;
+    display: inline-block;
+}
+
 .player-info-bar {
     height: 100%;
     display: flex;
@@ -39,12 +57,6 @@
         flex-direction: row;
         align-items: center;
         padding: 5px;
-    }
-    
-    .player-icon {
-        width: 10px;
-        height: 10px;
-        margin-left: auto;
     }
 
     .active-player {

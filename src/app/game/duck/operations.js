@@ -23,7 +23,8 @@ const stateExitMap = {
     [gameState.IN_JAIL_BAIL_TURN_CARD]: [exitCondition.ROLL_DICE, exitCondition.USE_JAIL_CARD, exitCondition.PAY_BAIL, exitCondition.MORTGAGE, exitCondition.TRADE],
     [gameState.BUYING_HOUSE]: [exitCondition.BUY_HOUSE_MENU],
     [gameState.MORTGAGING]: [exitCondition.MORTGAGE_MENU],
-    [gameState.CARD]: [exitCondition.COMPLETE_CARD, exitCondition.MORTGAGE, exitCondition.TRADE]
+    [gameState.CARD]: [exitCondition.COMPLETE_CARD, exitCondition.MORTGAGE, exitCondition.TRADE],
+    [gameState.END_GAME]: [exitCondition.END_GAME]
 };
 
 const startGame = (players, ownProps) => {
@@ -64,7 +65,29 @@ const startGame = (players, ownProps) => {
         dispatch(updateDisplay("Player 1's turn"));
         dispatch(Creators.changeGameState(gameState.CHOOSING_ACTION, stateExitMap[gameState.CHOOSING_ACTION], gameState.CHOOSING_ACTION));
     }
-} 
+}
+
+const endGame = () => {
+    return (dispatch, getState) => {
+        let players = getState().game.players;
+
+        let maxMoney = players[0].money; 
+        let winners = [];
+        players.forEach(player => {
+            if (player.money > maxMoney) {
+                winners = [];
+                maxMoney = player.money;
+            }
+
+            if (player.money >= maxMoney) {
+                winners.push(player);
+            }
+        });
+
+        dispatch(Creators.endGame(winners));
+        dispatch(Creators.changeGameState(gameState.END_GAME, stateExitMap[gameState.END_GAME]));
+    }
+}
 
 /**
  * ESSENTIAL PLAYER MOVE FUNCTIONS
@@ -827,5 +850,6 @@ export default {
     mortgage,
     chooseTradeItems,
     choosePlayer,
-    trade
+    trade,
+    endGame
 };

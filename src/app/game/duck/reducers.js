@@ -23,11 +23,17 @@ const INITIAL_STATE = {
     tradeMoney: 0,
     tradePlayerIndex: '',
     tradePlayer: '',
-    freeParking: 0
+    freeParking: 0,
+    winners: []
 };
 
 const gameReducer = (state=INITIAL_STATE, action) => {
     switch (action.type) {
+        case types.END_GAME:
+            return Object.assign({}, state, {
+                currentDice: [],
+                winners: [...action.winners]
+            })
         case types.START_GAME:
             return Object.assign({}, state, {
                 currentPlayer: action.players[state.currentPlayerIndex],

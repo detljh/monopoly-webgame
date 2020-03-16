@@ -120,6 +120,13 @@ const setTradePlayer = (player, playerIndex) => {
     }
 }
 
+const endGame = (winners) => {
+    return {
+        type: types.END_GAME,
+        winners: winners
+    }
+}
+
 export default { 
     changeGameState,
     endTurn,
@@ -137,5 +144,6 @@ export default {
     updateMenu,
     updateFreeParking,
     updateTradeItems,
-    setTradePlayer
+    setTradePlayer,
+    endGame
 };
