@@ -30,7 +30,6 @@ const stateExitMap = {
 const startGame = (players, ownProps) => {
     return (dispatch) => {
         if (players.length < 2) {
-            ownProps.history.push('/');
             return;
         }
 
