@@ -4,7 +4,7 @@ import './home.scss';
 
 const HomeComponent = (props) => {
     return (
-        <div id="homepage">
+        <div id="home-page" className="transition-item">
             <div id="page-title">
                 <h1>Monopoly</h1>
             </div>

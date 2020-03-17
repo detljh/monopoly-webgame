@@ -43,7 +43,7 @@ const startGame = (players, ownProps) => {
                 position: 0,
                 jailTurns: 0,
                 // change to 0 in production
-                rounds: 1,
+                rounds: 0,
                 propertyNumbers: {
                     station: 0,
                     utility: 0,
@@ -62,8 +62,10 @@ const startGame = (players, ownProps) => {
 
         ownProps.history.push('/game');
         dispatch(Creators.startGame(players));
-        dispatch(updateDisplay("Player 1's turn"));
-        dispatch(Creators.changeGameState(gameState.CHOOSING_ACTION, stateExitMap[gameState.CHOOSING_ACTION], gameState.CHOOSING_ACTION));
+        setTimeout(() => {
+            dispatch(updateDisplay("Player 1's turn"));
+            dispatch(Creators.changeGameState(gameState.CHOOSING_ACTION, stateExitMap[gameState.CHOOSING_ACTION], gameState.CHOOSING_ACTION));
+        }, 600);
     }
 }
 

@@ -12,7 +12,7 @@ class GameComponent extends React.Component {
     render() {
         let disabled = this.props.gameState === gameState.END_GAME ? true : false;
         return (
-            <div>    
+            <div id="game-page" className="transition-item">    
                 <div id="game-header">
                     <button onClick={this.props.newGame} className="main-buttons">New Game</button>
                     <button onClick={this.props.endGame} className="main-buttons" disabled={disabled}>End Game</button>
