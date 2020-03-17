@@ -170,7 +170,7 @@ const playerTurn = (dice1, dice2) => {
         let updatePlayer = players[getState().game.currentPlayerIndex];
         let prevPosition = updatePlayer.position;
         let currentPosition = (prevPosition + dice1 + dice2) % NUMBER_POSITIONS;
-        //let currentPosition = 4;
+        //let currentPosition = 2;
         updatePlayer.position = currentPosition
         let currentSquare = getState().game.squares[currentPosition];
         dispatch(Creators.movePlayer(players, currentPosition));
@@ -430,6 +430,8 @@ const completeCard = () => {
             }
         } else if (card.pay) {
             updatePlayer.money -= card.pay;
+            let freeParking = getState().game.freeParking + card.pay;
+            dispatch(Creators.updateFreeParking(freeParking));
             dispatch(Creators.updatePlayers(players));
             dispatch(endOfTurn());
         } else if (card.receive) {
@@ -475,6 +477,8 @@ const completeCard = () => {
             dispatch(endOfTurn());
         } else if (card.chance >= 0) {
             updatePlayer.money -= card.chance;
+            let freeParking = getState().game.freeParking + card.chance;
+            dispatch(Creators.updateFreeParking(freeParking));
             dispatch(Creators.updatePlayers(players));
             dispatch(endOfTurn());
         } else {
