@@ -30,7 +30,6 @@ const HomeComponent = (props) => {
                         )}  
                     </div>
                 </div>
-                <br></br>
                 
                 <button className="main-buttons" id="start-game" onClick={() => props.startGame(props.currentPlayers)}>Start Game</button>
             </div>

@@ -5,11 +5,19 @@ import PlayerMoves from './PlayerMovesContainer';
 import gameState from './utilities/gameState';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiceOne, faDiceTwo, faDiceThree, faDiceFour, faDiceFive, faDiceSix } from '@fortawesome/free-solid-svg-icons';
+import SquareDetails from './SquareDetailsComponent';
 
 class BoardComponent extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isHovered: false,
+            square: {},
+            x: 0,
+            y: 0
+        }
 
+        this.updateHover = this.updateHover.bind(this);
         this.getDiceIcon = this.getDiceIcon.bind(this);
     }
 
@@ -27,6 +35,15 @@ class BoardComponent extends React.Component {
         } else if (number == 6) {
             return <FontAwesomeIcon className="dice-icon" icon={faDiceSix}></FontAwesomeIcon>;
         }
+    }
+
+    updateHover(event, value, square) {
+        this.setState({
+            isHovered: value,
+            square: square,
+            x: event.pageX,
+            y: event.pageY
+        });
     }
 
     render() {
@@ -54,9 +71,9 @@ class BoardComponent extends React.Component {
                     freeParking = this.props.freeParking;
                 }
  
-                return <Square key={element[0]} id={element[0]} playersOnSquare={playersOnSquare} currentPlayer={this.props.currentPlayer} square={element[1]} freeParking={freeParking}/>
+                return <Square updateHover={this.updateHover} key={element[0]} id={element[0]} playersOnSquare={playersOnSquare} currentPlayer={this.props.currentPlayer} square={element[1]} freeParking={freeParking}/>
             } else {
-                return (
+                return (                    
                 <div key="middle" id={element[0]}>
                     <div id="middle-options">
                     {
@@ -85,9 +102,7 @@ class BoardComponent extends React.Component {
                                 </div>,
                         
                             this.props.display.length > 0 ? <h2 id="display">{this.props.display}</h2>
-
                             : 
-
                             <PlayerMoves />
                         ]
                         }
@@ -98,6 +113,7 @@ class BoardComponent extends React.Component {
 
         return (
             <div key="board" id="board">
+                {(this.state.isHovered && (this.state.square.type.includes("property") || ["station", "utility"].some(e => this.state.square.subtype.includes(e)))) && <SquareDetails square={this.state.square} x={this.state.x} y={this.state.y} />}
                 {board}
             </div>
         );
