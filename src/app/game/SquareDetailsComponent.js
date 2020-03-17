@@ -10,7 +10,7 @@ class SquareDetailsComponent extends React.Component {
     render() {
         let container = {
             width: '170px',
-            height: '220px',
+            height: '240px',
             backgroundColor: 'white',
             border: '1px solid black',
             position: 'absolute',

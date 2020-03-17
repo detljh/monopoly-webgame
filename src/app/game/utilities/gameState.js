@@ -16,6 +16,7 @@ const BUYING_HOUSE = "BUYING_HOUSE";
 const MORTGAGING = "MORTGAGING";
 const CARD = "CARD";
 const END_GAME = "END_GAME";
+const IN_DEBT = "IN_DEBT";
 
 export default {
     CHOOSING_ACTION,
@@ -35,5 +36,6 @@ export default {
     BUYING_HOUSE,
     MORTGAGING,
     CARD,
-    END_GAME
+    END_GAME,
+    IN_DEBT
 }

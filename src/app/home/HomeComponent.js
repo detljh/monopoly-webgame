@@ -6,8 +6,11 @@ const HomeComponent = (props) => {
     return (
         <div id="home-page" className="transition-item">
             <div id="page-title">
+                <div id="before-title"></div>
                 <h1>Monopoly</h1>
+                <div id="after-title"></div>
             </div>
+
             <div id="home">
                 <h2 id="sub-title">Choose your players</h2>
                 <div>

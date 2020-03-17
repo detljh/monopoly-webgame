@@ -24,7 +24,8 @@ const stateExitMap = {
     [gameState.BUYING_HOUSE]: [exitCondition.BUY_HOUSE_MENU],
     [gameState.MORTGAGING]: [exitCondition.MORTGAGE_MENU],
     [gameState.CARD]: [exitCondition.COMPLETE_CARD, exitCondition.MORTGAGE, exitCondition.TRADE],
-    [gameState.END_GAME]: [exitCondition.END_GAME]
+    [gameState.END_GAME]: [exitCondition.END_GAME],
+    [gameState.IN_DEBT]: [exitCondition.ROLL_DICE, exitCondition.TRADE, exitCondition.MORTGAGE]
 };
 
 const startGame = (players, ownProps) => {
@@ -42,7 +43,7 @@ const startGame = (players, ownProps) => {
                 position: 0,
                 jailTurns: 0,
                 // change to 0 in production
-                rounds: 0,
+                rounds: 1,
                 propertyNumbers: {
                     station: 0,
                     utility: 0,
@@ -114,11 +115,12 @@ const giveUp = () => {
         })
 
         dispatch(Creators.buyOrSell(players, squares));
-
         dispatch(Creators.giveUp());
         dispatch(updateDisplay(`${currentPlayer.name} has given up! Properties being freed`));
         currentPlayer = getState().game.currentPlayer;
         dispatch(updateDisplay(`${currentPlayer.name}'s turn`));
+        dispatch(Creators.resetDice());
+        dispatch(Creators.changeGameState(gameState.CHOOSING_ACTION, stateExitMap[gameState.CHOOSING_ACTION], getState().game.gameState));
     }
 }
 
@@ -135,31 +137,36 @@ const newGame = (ownProps) => {
 
 const rollDice = () => {
     return (dispatch, getState) => {
-        const dice1 = Math.floor(Math.random() * 6) + 1;
-        const dice2 = Math.floor(Math.random() * 6) + 1;
-        // const dice1 = 1
-        // const dice2 = 1
-        dispatch(Creators.rollDice([dice1, dice2]));
-        dispatch(Creators.changeGameState(gameState.ROLLING_DICE, stateExitMap[gameState.ROLLING_DICE], getState().game.gameState));
-
         let currentPlayer = getState().game.currentPlayer;
-        if (dice1 == dice2) {
-                dispatch(Creators.doubleDice());
-                dispatch(updateDisplay("Doubles!"));
+        if (currentPlayer.money < 0) {
+            dispatch(updateDisplay('You are in debt! Mortgage or trade to pay it back!'));
+            dispatch(Creators.changeGameState(gameState.IN_DEBT, stateExitMap[gameState.IN_DEBT], getState().game.gameState));
         } else {
-            dispatch(Creators.resetDoubleDice());
-        }
+            const dice1 = Math.floor(Math.random() * 6) + 1;
+            const dice2 = Math.floor(Math.random() * 6) + 1;
+            // const dice1 = 1
+            // const dice2 = 1
+            dispatch(Creators.rollDice([dice1, dice2]));
+            dispatch(Creators.changeGameState(gameState.ROLLING_DICE, stateExitMap[gameState.ROLLING_DICE], getState().game.gameState));
 
-        let doubleDice = getState().game.doubleDice;
+            if (dice1 == dice2) {
+                    dispatch(Creators.doubleDice());
+                    dispatch(updateDisplay("Doubles!"));
+            } else {
+                dispatch(Creators.resetDoubleDice());
+            }
 
-        if (doubleDice >= 3) {
-            dispatch(updateDisplay("Three in a row Doubles! Moving to Jail!"));
-            dispatch(Creators.resetDoubleDice());
-            dispatch(goJail(getState().game.players, currentPlayer));
-        } else if (currentPlayer.jailTurns == 0) {
-            dispatch(playerTurn(dice1, dice2));
-        } else {
-            dispatch(endOfTurn());
+            let doubleDice = getState().game.doubleDice;
+
+            if (doubleDice >= 3) {
+                dispatch(updateDisplay("Three in a row Doubles! Moving to Jail!"));
+                dispatch(Creators.resetDoubleDice());
+                dispatch(goJail(getState().game.players, currentPlayer));
+            } else if (currentPlayer.jailTurns == 0) {
+                dispatch(playerTurn(dice1, dice2));
+            } else {
+                dispatch(endOfTurn());
+            }
         }
     }
 }
@@ -169,8 +176,8 @@ const playerTurn = (dice1, dice2) => {
         const players = getState().game.players;
         let updatePlayer = players[getState().game.currentPlayerIndex];
         let prevPosition = updatePlayer.position;
-        let currentPosition = (prevPosition + dice1 + dice2) % NUMBER_POSITIONS;
-        //let currentPosition = 2;
+        //let currentPosition = (prevPosition + dice1 + dice2) % NUMBER_POSITIONS;
+        let currentPosition = 5;
         updatePlayer.position = currentPosition
         let currentSquare = getState().game.squares[currentPosition];
         dispatch(Creators.movePlayer(players, currentPosition));
@@ -356,17 +363,22 @@ const goJail = (players, updatePlayer) => {
 
 const jailEscape = (cost=0, card=false) => {
     return (dispatch, getState) => {
-        dispatch(updateDisplay("You've escaped the jail!"));
         let players = getState().game.players;
         let currentPlayerIndex = getState().game.currentPlayerIndex;
         let currentPlayer = players[currentPlayerIndex];
 
-        currentPlayer.jailTurns = 0;
         currentPlayer.money -= cost;
+        if (currentPlayer.money  - card.pay < 0) {
+            dispatch(updateDisplay("Not enough money!"));
+            return;
+        }
+
+        currentPlayer.jailTurns = 0;
         if (card) {
             currentPlayer.jailCard -= 1;
         }
 
+        dispatch(updateDisplay("You've escaped the jail!"));
         dispatch(Creators.updatePlayers(players));
         dispatch(Creators.changeGameState(gameState.CHOOSING_ACTION, stateExitMap[gameState.CHOOSING_ACTION], getState().game.gameState));
     }
@@ -429,6 +441,10 @@ const completeCard = () => {
                 dispatch(checkProperty(getState().game.currentSquare, players, updatePlayer));
             }
         } else if (card.pay) {
+            if (updatePlayer.money  - card.pay < 0) {
+                dispatch(updateDisplay("Not enough money!"));
+                return;
+            }
             updatePlayer.money -= card.pay;
             let freeParking = getState().game.freeParking + card.pay;
             dispatch(Creators.updateFreeParking(freeParking));
@@ -660,6 +676,11 @@ const getTradeItems = (player, squares) => {
         items.push({type: type, value: property, name: square.text, color: square.subtype});
     });
 
+    for (let i = 0; i < player.jailCard; i++) {
+        
+        items.push({type: 'Card', value: 'card', name: 'Jail Card', color: 'default'});
+    }
+
     return items;
 }
 
@@ -738,6 +759,12 @@ const trade = (playerTwoItems, playerTwoMoney) => {
         let squares = {...getState().game.squares};
 
         playerOneItems.forEach(item => {
+            if (item === 'card') {
+                playerOne.jailCard -= 1;
+                playerTwo.jailCard += 1;
+                return;
+            }
+
             item = Number(item);
             let current = {...squares[item]};
             current.owned = playerTwo.name;
@@ -754,6 +781,12 @@ const trade = (playerTwoItems, playerTwoMoney) => {
         });
 
         playerTwoItems.forEach(item => {
+            if (item === 'card') {
+                playerTwo.jailCard -= 1;
+                playerOne.jailCard += 1;
+                return;
+            }
+
             item = Number(item);
             let current = {...squares[item]};
             current.owned = playerOne.name;

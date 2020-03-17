@@ -7,9 +7,13 @@
     width: 100%;
     left: 0;
     top: 0;
-    height: 100%;
+    min-height: 100%;
     overflow: auto;
     color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     transition: transform 0.7s;
 
     &.transition-appear {
@@ -33,31 +37,37 @@
     font-size: 1.1em;
 }
 
-#page-title h1 {
-    font-size: 2.5em;
-    text-align: center;
-    text-shadow: 0px 0px 3px white;
+#page-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    h1 {
+        font-size: 2.5em;
+        text-align: center;
+        text-shadow: 0px 0px 3px white;
+        margin-bottom: 10px; 
+    }
+    
+    #before-title {
+        margin: 28px 20px 0px 0px;
+        height: 4px;
+        background-color: white;
+        width: 15%;
+        box-shadow: 0 0 2px 1px white;
+    }
+    
+    #after-title {
+        margin: 28px 0px 0px 20px;
+        height: 4px;
+        background-color: white;
+        width: 15%;
+        box-shadow: 0 0 2px 1px white;
+    }
 }
 
-#page-title h1:before {
-    content: '';
-    display: inline-block;
-    margin: 0 20px 8px 0;
-    height: 4px;
-    background-color: white;
-    width: 15%;
-    box-shadow: 0 0 2px 1px white;
-}
 
-#page-title h1:after {
-    content: '';
-    display: inline-block;
-    margin: 0px 0px 8px 20px;
-    height: 4px;
-    background-color: white;
-    width: 15%;
-    box-shadow: 0 0 2px 1px white;
-}
 
 #current-players {
     width: 100%;
