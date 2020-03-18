@@ -1,5 +1,5 @@
 .transition-wrapper {
-    height: 100%;
+    min-height: 100vh;
     position: relative;
     z-index: 1;
 
@@ -15,7 +15,7 @@
     background-color: var(--main-color);
     left: 0;
     top: 0;
-    min-height: 100%;
+    min-height: 100vh;
     overflow: auto;
     color: white;
     display: flex;
