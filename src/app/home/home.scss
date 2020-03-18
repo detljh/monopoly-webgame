@@ -1,10 +1,18 @@
 .transition-wrapper {
     height: 100%;
+    position: relative;
+    z-index: 1;
+
+    .transition-item {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+      }
 }
 
 #home-page {
     background-color: var(--main-color);
-    width: 100%;
     left: 0;
     top: 0;
     min-height: 100%;
@@ -15,22 +23,22 @@
     justify-content: center;
     align-items: center;
     transition: transform 0.7s;
+ 
+  &.transition-appear {
+    transform: translate3d(-100%, 0, 0);
+  }
+ 
+  &.transition-appear.transition-appear-active {
+    transform: translate3d(0, 0, 0);
+  }
 
-    &.transition-appear {
-        transform: translate3d(-93%, 0, 0);
-    }
-     
-    &.transition-appear.transition-appear-active {
-        transform: translate3d(0, 0, 0);
-    }
-    
-    &.transition-leave {
-        transform: translate3d(0, 0, 0);
-    }
-    
-    &.transition-leave.transition-leave-active {
-        transform: translate3d(-93%, 0, 0);
-    }
+  &.transition-leave {
+    transform: translate3d(0, 0, 0);
+  }
+ 
+  &.transition-leave.transition-leave-active {
+    transform: translate3d(-100%, 0, 0);
+  }
 }
 
 #start-game {

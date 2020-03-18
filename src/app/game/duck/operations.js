@@ -43,7 +43,7 @@ const startGame = (players, ownProps) => {
                 position: 0,
                 jailTurns: 0,
                 // change to 0 in production
-                rounds: 1,
+                rounds: 0,
                 propertyNumbers: {
                     station: 0,
                     utility: 0,
@@ -176,8 +176,8 @@ const playerTurn = (dice1, dice2) => {
         const players = getState().game.players;
         let updatePlayer = players[getState().game.currentPlayerIndex];
         let prevPosition = updatePlayer.position;
-        //let currentPosition = (prevPosition + dice1 + dice2) % NUMBER_POSITIONS;
-        let currentPosition = 5;
+        let currentPosition = (prevPosition + dice1 + dice2) % NUMBER_POSITIONS;
+        //let currentPosition = 5;
         updatePlayer.position = currentPosition
         let currentSquare = getState().game.squares[currentPosition];
         dispatch(Creators.movePlayer(players, currentPosition));
