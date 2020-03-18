@@ -1,6 +1,5 @@
 import BoardComponent from './BoardComponent';
 import { connect } from 'react-redux';
-import { gameOperations } from './duck';
 
 const mapStateToProps = (state) => {
     return {

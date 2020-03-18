@@ -13,7 +13,7 @@ const homeReducer = (state=INITIAL_STATE, action) => {
             });
         case types.REMOVE_PLAYER:
             return Object.assign({}, state, {
-                currentPlayers: state.currentPlayers.filter(player => player != action.player)
+                currentPlayers: state.currentPlayers.filter(player => player !== action.player)
             })
         case types.START_GAME:
             return Object.assign({}, state, {

@@ -26,9 +26,9 @@ const HomeComponent = (props) => {
                     <h2>Current Players</h2>
                     <div className="current-player-container">
                         {props.currentPlayers.map((element, index) =>
-                            <div className="current-player">
+                            <div key={element} className="current-player">
                                 <span className="player-name">Player {index+1}</span>
-                                <Player key={index} className="player" id={element} action={props.removePlayer} />
+                                <Player className="player" id={element} action={props.removePlayer} />
                             </div>
                         )}  
                     </div>

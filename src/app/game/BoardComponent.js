@@ -22,17 +22,17 @@ class BoardComponent extends React.Component {
     }
 
     getDiceIcon(number) {
-        if (number == 1) {
+        if (number === 1) {
             return <FontAwesomeIcon className="dice-icon" icon={faDiceOne}></FontAwesomeIcon>;
-        } else if (number == 2) {
+        } else if (number === 2) {
             return <FontAwesomeIcon className="dice-icon" icon={faDiceTwo}></FontAwesomeIcon>;
-        } else if (number == 3) {
+        } else if (number === 3) {
             return <FontAwesomeIcon className="dice-icon" icon={faDiceThree}></FontAwesomeIcon>;
-        } else if (number == 4) {
+        } else if (number === 4) {
             return <FontAwesomeIcon className="dice-icon" icon={faDiceFour}></FontAwesomeIcon>;
-        } else if (number == 5) {
+        } else if (number === 5) {
             return <FontAwesomeIcon className="dice-icon" icon={faDiceFive}></FontAwesomeIcon>;
-        } else if (number == 6) {
+        } else if (number === 6) {
             return <FontAwesomeIcon className="dice-icon" icon={faDiceSix}></FontAwesomeIcon>;
         }
     }
@@ -58,10 +58,10 @@ class BoardComponent extends React.Component {
         }
 
         let board = Object.entries(this.props.squares).map((element) => {
-            if (element[1].type != 'middle') {
+            if (element[1].type !== 'middle') {
                 let playersOnSquare = [];
                 this.props.players.forEach(player => {
-                    if (element[0] == player.position) {
+                    if (Number(element[0]) === Number(player.position)) {
                         playersOnSquare.push(player.id);
                     }
                 });
@@ -79,9 +79,9 @@ class BoardComponent extends React.Component {
                     {
                         this.props.gameState === gameState.END_GAME ? 
                             [
-                                <p>{winnerText}</p>,
+                                <p key={`winText`}>{winnerText}</p>,
                                 this.props.winners.map(winner => 
-                                    <div className="winner">
+                                    <div key={winner.id} className="winner">
                                         <div className="winner-name">{winner.name}</div>
                                         <div className="player-icon" id={winner.id}></div>
                                     </div>
@@ -90,7 +90,7 @@ class BoardComponent extends React.Component {
                         : 
                         [
                             this.props.currentDice.length > 0 &&
-                                <div id="dice-container">
+                                <div key={`dice_container`} id="dice-container">
                                     <div className="dice" id="dice-1" key="dice-1">
                                         {this.getDiceIcon(this.props.currentDice[0])}
                                         <b>{this.props.currentDice[0]}</b>
@@ -101,9 +101,9 @@ class BoardComponent extends React.Component {
                                     </div>
                                 </div>,
                         
-                            this.props.display.length > 0 ? <h2 id="display">{this.props.display}</h2>
+                            this.props.display.length > 0 ? <h2 key={`display`} id="display">{this.props.display}</h2>
                             : 
-                            <PlayerMoves />
+                            <PlayerMoves key={`player_moves`} />
                         ]
                         }
                     </div>   

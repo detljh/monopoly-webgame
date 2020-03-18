@@ -79,9 +79,9 @@ class MenuComponent extends React.Component {
                 {
                     this.props.multiple &&
                     [
-                        <div className="header-option">Money</div>,
-                        <input type="range" id="money-slider" min="0" max={this.props.maxMoney} onChange={this.handleMoney} defaultValue="0" value={this.state.money}></input>,
-                        <input type="number" id="money-input" onChange={this.handleMoney} value={this.state.money}></input>
+                        <div key={`money_header`} className="header-option">Money</div>,
+                        <input key={`money_slider`} type="range" id="money-slider" min="0" max={this.props.maxMoney} onChange={this.handleMoney} value={this.state.money}></input>,
+                        <input key={`money_number`} type="number" id="money-input" onChange={this.handleMoney} value={this.state.money}></input>
                     ]
                 }
     

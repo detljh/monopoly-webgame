@@ -3,10 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrain, faLightbulb, faTint } from '@fortawesome/free-solid-svg-icons';
 
 class SquareDetailsComponent extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         let container = {
             width: '170px',
@@ -77,35 +73,34 @@ class SquareDetailsComponent extends React.Component {
                     {
                         (this.props.square.type.includes("property") || this.props.square.subtype.includes("station")) && this.props.square.rent.map((rent, index, array) => 
                             this.props.square.type.includes("property") ?
-                                <div style={detail}> 
+                                <div key={`${this.props.square.text}_rent${index}`} style={detail}> 
                                     <span style={text}>{index === 0 ? 'Rent' : index === 1 ? 'Rent with colour set' : index === array.length - 1 ? 'Rent with hotel' : `Rent with ${index - 1} house`}</span>
                                     <span style={text}>${rent}</span>
                                 </div>
                             : 
-                                <div style={detail}> 
+                                <div key={`${this.props.square.text}_rent${index}`} style={detail}> 
                                     <span style={text}>{index === 0 ? 'RENT' : `If ${index + 1} railroads are owned`}</span>
                                     <span style={text}>${rent}</span>
                                 </div>
                         )
                     }
-
+                    {this.props.square.type.includes("property") && <hr></hr>}
                     {
                         this.props.square.type.includes("property") &&  
-                            [<hr></hr>,
-                            <div style={detail}> 
+                            [<div key={`${this.props.square.text}_houseCost`} style={detail}> 
                                 <span style={text}>Houses cost</span>
                                 <span style={text}>${this.props.square.houseCost} each</span>
                             </div>,
-                            <div style={detail}> 
+                            <div key={`${this.props.square.text}_hotelCost`} style={detail}> 
                                 <span style={text}>Hotels cost</span>
                                 <span style={text}>${this.props.square.houseCost} each</span>
                             </div>,
-                            <div style={detail}><span style={smallText}>(plus 4 houses)</span></div>]
+                            <div key={`${this.props.square.text}_smallText`} style={detail}><span style={smallText}>(plus 4 houses)</span></div>]
                     }
                     {
                         this.props.square.subtype.includes("utility") &&  
-                            [<p style={utlityText}>If one Utility is owned, rent is 4 times amount shown on dice.</p>,
-                            <p style={utlityText}>If both Utilities are owned, rent is 10 times amount shown on dice.</p>]
+                            [<p key={`utility_text1`} style={utlityText}>If one Utility is owned, rent is 4 times amount shown on dice.</p>,
+                            <p key={`utility_text2`} style={utlityText}>If both Utilities are owned, rent is 10 times amount shown on dice.</p>]
                     }
                 </div>
             </div>

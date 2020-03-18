@@ -13,8 +13,7 @@ const addPlayer = (id) => {
 };
 
 const removePlayer = (id) => {
-    return (dispatch, getState) => {
-        const currentPlayers = getState().home.currentPlayers;
+    return (dispatch) => {
         dispatch(Creators.removePlayer(id));
     }
 };

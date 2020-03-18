@@ -5,10 +5,6 @@ import './player-moves.scss';
 import Menu from './MenuComponent';
 
 class PlayerMovesComponent extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
         <div className="player-moves">

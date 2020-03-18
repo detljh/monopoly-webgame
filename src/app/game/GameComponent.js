@@ -5,10 +5,6 @@ import PlayerInfo from '../player/PlayerInfoComponent';
 import gameState from './utilities/gameState';
 
 class GameComponent extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         let disabled = this.props.gameState === gameState.END_GAME ? true : false;
         return (
@@ -19,7 +15,7 @@ class GameComponent extends React.Component {
                     <button className={`main-buttons disabled-${disabled}`} id="give-up-button" onClick={this.props.giveUp} disabled={disabled}>Give Up</button>
                     <div className="player-info-bar">
                         {this.props.players.map((element) => 
-                            <PlayerInfo key={element.id} player={element} currentPlayer={element.id == this.props.currentPlayer.id ? true : false} money={element.money}/>
+                            <PlayerInfo key={element.id} player={element} currentPlayer={element.id === this.props.currentPlayer.id ? true : false} money={element.money}/>
                         )}
                     </div>
                 </div>

@@ -149,7 +149,7 @@ const rollDice = () => {
             dispatch(Creators.rollDice([dice1, dice2]));
             dispatch(Creators.changeGameState(gameState.ROLLING_DICE, stateExitMap[gameState.ROLLING_DICE], getState().game.gameState));
 
-            if (dice1 == dice2) {
+            if (dice1 === dice2) {
                     dispatch(Creators.doubleDice());
                     dispatch(updateDisplay("Doubles!"));
             } else {
@@ -162,7 +162,7 @@ const rollDice = () => {
                 dispatch(updateDisplay("Three in a row Doubles! Moving to Jail!"));
                 dispatch(Creators.resetDoubleDice());
                 dispatch(goJail(getState().game.players, currentPlayer));
-            } else if (currentPlayer.jailTurns == 0) {
+            } else if (currentPlayer.jailTurns === 0) {
                 dispatch(playerTurn(dice1, dice2));
             } else {
                 dispatch(endOfTurn());
@@ -270,7 +270,7 @@ const checkProperty = (currentSquare, players, updatePlayer) => {
             } else {
                 if (currentSquare.owned) {
                     let owner = players[currentSquare.ownedIndex];
-                    if (owner.id == updatePlayer.id) {
+                    if (owner.id === updatePlayer.id) {
                         dispatch(endOfTurn());
                     } else {
                         if (owner.jailTurns > 0) {
@@ -876,11 +876,11 @@ const payRent = () => {
 
         let rentStage = 0;
         let rent = 0;
-        if (subType == 'utility') {
+        if (subType === 'utility') {
             rentStage = toPlayer.propertyNumbers[subType] - 1;
             let currentDice = getState().game.currentDice;
             rent = currentSquare.rent[rentStage] * (currentDice[0] + currentDice[1]);
-        } else if (subType == 'station') {
+        } else if (subType === 'station') {
             rentStage = toPlayer.propertyNumbers[subType] - 1;
             rent = currentSquare.rent[rentStage];
         } else {
