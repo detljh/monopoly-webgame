@@ -28,6 +28,7 @@
     background-color: var(--main-color);
     z-index: 10;
     height: 100vh;
+    min-height: 350px;
     width: 120px;
     position: fixed;
     border-right: 1px solid var(--main-color);
