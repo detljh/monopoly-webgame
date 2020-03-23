@@ -56,7 +56,7 @@ const SquareComponent = (props) => {
                             {props.square.owned && (props.square.houses >= 0 &&
                             (props.square.houses < 5 ? 
                                 [...Array(props.square.houses).keys()].map(house => 
-                                        <FontAwesomeIcon className="house" icon={faHome} />)
+                                        <FontAwesomeIcon key={house} className="house" icon={faHome} />)
                             : <FontAwesomeIcon className="house" id="hotel" icon={faHotel} />))}
                     </div>
                 }

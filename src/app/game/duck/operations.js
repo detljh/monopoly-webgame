@@ -173,7 +173,7 @@ const rollDice = () => {
 
 const playerTurn = (dice1, dice2) => {
     return (dispatch, getState) => {
-        const players = getState().game.players;
+        const players = [...getState().game.players];
         let updatePlayer = players[getState().game.currentPlayerIndex];
         let prevPosition = updatePlayer.position;
         let currentPosition = (prevPosition + dice1 + dice2) % NUMBER_POSITIONS;
@@ -265,11 +265,11 @@ const checkProperty = (currentSquare, players, updatePlayer) => {
         } else if (currentSquare.subtype === 'jail' || currentSquare.subtype === 'start') {
             dispatch(endOfTurn());
         } else {
-            if (updatePlayer.rounds < 1) {
+            if (updatePlayer.rounds < 1 && !currentSquare.owned) {
                 dispatch(endOfTurn());
             } else {
                 if (currentSquare.owned) {
-                    let owner = players[currentSquare.ownedIndex];
+                    let owner = players.filter(player => player.id === currentSquare.playerOwned)[0];
                     if (owner.id === updatePlayer.id) {
                         dispatch(endOfTurn());
                     } else {
@@ -367,20 +367,19 @@ const jailEscape = (cost=0, card=false) => {
         let currentPlayerIndex = getState().game.currentPlayerIndex;
         let currentPlayer = players[currentPlayerIndex];
 
-        currentPlayer.money -= cost;
-        if (currentPlayer.money  - card.pay < 0) {
+        if (currentPlayer.money - cost < 0) {
             dispatch(updateDisplay("Not enough money!"));
-            return;
+        } else {
+            currentPlayer.money -= cost;
+            currentPlayer.jailTurns = 0;
+            if (card) {
+                currentPlayer.jailCard -= 1;
+            }
+    
+            dispatch(updateDisplay("You've escaped the jail!"));
+            dispatch(Creators.updatePlayers(players));
+            dispatch(Creators.changeGameState(gameState.CHOOSING_ACTION, stateExitMap[gameState.CHOOSING_ACTION], getState().game.gameState));
         }
-
-        currentPlayer.jailTurns = 0;
-        if (card) {
-            currentPlayer.jailCard -= 1;
-        }
-
-        dispatch(updateDisplay("You've escaped the jail!"));
-        dispatch(Creators.updatePlayers(players));
-        dispatch(Creators.changeGameState(gameState.CHOOSING_ACTION, stateExitMap[gameState.CHOOSING_ACTION], getState().game.gameState));
     }
 }
 
@@ -443,13 +442,13 @@ const completeCard = () => {
         } else if (card.pay) {
             if (updatePlayer.money  - card.pay < 0) {
                 dispatch(updateDisplay("Not enough money!"));
-                return;
+            } else {
+                updatePlayer.money -= card.pay;
+                let freeParking = getState().game.freeParking + card.pay;
+                dispatch(Creators.updateFreeParking(freeParking));
+                dispatch(Creators.updatePlayers(players));
+                dispatch(endOfTurn());
             }
-            updatePlayer.money -= card.pay;
-            let freeParking = getState().game.freeParking + card.pay;
-            dispatch(Creators.updateFreeParking(freeParking));
-            dispatch(Creators.updatePlayers(players));
-            dispatch(endOfTurn());
         } else if (card.receive) {
             updatePlayer.money += card.receive;
             dispatch(Creators.updatePlayers(players));
@@ -492,11 +491,15 @@ const completeCard = () => {
             dispatch(Creators.updatePlayers(players));
             dispatch(endOfTurn());
         } else if (card.chance >= 0) {
-            updatePlayer.money -= card.chance;
-            let freeParking = getState().game.freeParking + card.chance;
-            dispatch(Creators.updateFreeParking(freeParking));
-            dispatch(Creators.updatePlayers(players));
-            dispatch(endOfTurn());
+            if (updatePlayer.money  - card.chance < 0) {
+                dispatch(updateDisplay("Not enough money!"));
+            } else {
+                updatePlayer.money -= card.chance;
+                let freeParking = getState().game.freeParking + card.chance;
+                dispatch(Creators.updateFreeParking(freeParking));
+                dispatch(Creators.updatePlayers(players));
+                dispatch(endOfTurn());
+            }
         } else {
             dispatch(endOfTurn());
         }
@@ -560,17 +563,16 @@ const buyHouse = (property) => {
         let current = {...squares[property]};
         if (updatePlayer.money  - current.houseCost < 0) {
             dispatch(updateDisplay("Not enough money!"));
-            return;
+        } else {
+            current.houses += 1;
+            updatePlayer.money -= current.houseCost;
+            squares = Object.assign({}, squares, {
+                [property]: current
+            });
+
+            dispatch(Creators.buyOrSell(players, squares));
+            dispatch(Creators.updateMenu(getFullStreetProperties(updatePlayer, squares)[1]));    
         }
-
-        current.houses += 1;
-        updatePlayer.money -= current.houseCost;
-        squares = Object.assign({}, squares, {
-            [property]: current
-        });
-
-        dispatch(Creators.buyOrSell(players, squares));
-        dispatch(Creators.updateMenu(getFullStreetProperties(updatePlayer, squares)[1]));    
     }
 }
 
@@ -582,7 +584,7 @@ const getStreet = (subtype, properties, squares) => {
     let street = [];
     properties.forEach(property => {
         let square = squares[property];
-        if (square.subtype === subtype) {
+        if (square.subtype === subtype && square.type.includes("property")) {
             street.push(property);
         }
     });
@@ -611,6 +613,8 @@ const getMortgageMenu = (currentPlayer, squares) => {
                 mortgageMenu.push({type: 'property', value: property, name: square.text, cost: cost, color: square.subtype})
             }
         } else {
+            
+
             mortgageMenu.push({type: 'property', value: property, name: square.text, cost: cost, color: square.subtype})
         }
     });
@@ -622,7 +626,6 @@ const mortgageMenu = () => {
         let currentPlayer = getState().game.currentPlayer;
         let squares = getState().game.squares;
         let mortgageMenu = getMortgageMenu(currentPlayer, squares);
-
         dispatch(Creators.updateMenu(mortgageMenu));
         dispatch(Creators.changeGameState(gameState.MORTGAGING, stateExitMap[gameState.MORTGAGING], getState().game.gameState));
     }
@@ -646,7 +649,7 @@ const mortgage = (property) => {
         } else {
             current.owned = false;
             updatePlayer.money += Math.floor(current.cost * MORTGAGE_RATE);
-            updatePlayer.properties.splice(updatePlayer.properties.indexOf(property), 1);
+            updatePlayer.properties.splice(updatePlayer.properties.indexOf(Number(property)), 1);
             updatePlayer.propertyNumbers[current.subtype] -= 1;
         }
         
@@ -768,11 +771,10 @@ const trade = (playerTwoItems, playerTwoMoney) => {
             item = Number(item);
             let current = {...squares[item]};
             current.owned = playerTwo.name;
-            current.ownedIndex = tradePlayerIndex;
             current.playerOwned = playerTwo.id;
             playerTwo.propertyNumbers[current.subtype] += 1; 
             playerOne.propertyNumbers[current.subtype] -= 1;
-            playerTwo.properties.push(Number(item));
+            playerTwo.properties.push(item);
             playerOne.properties.splice(playerOne.properties.indexOf(item), 1);
 
             squares = Object.assign({}, squares, {
@@ -790,7 +792,6 @@ const trade = (playerTwoItems, playerTwoMoney) => {
             item = Number(item);
             let current = {...squares[item]};
             current.owned = playerOne.name;
-            current.ownedIndex = currentPlayerIndex;
             current.playerOwned = playerOne.id;
             playerTwo.propertyNumbers[current.subtype] -= 1; 
             playerOne.propertyNumbers[current.subtype] += 1;
@@ -826,26 +827,24 @@ const buyProperty = () => {
 
         if (updatePlayer.money - cost < 0) {
             dispatch(updateDisplay('Not enough money!'));
-            return;
+        } else {
+            updatePlayer.money -= cost;
+            let currentPosition = getState().game.currentPosition;
+            updatePlayer.properties.push(currentPosition);
+    
+            
+            let squares = {...getState().game.squares};
+            let current = {...squares[currentPosition]};
+            current.owned = updatePlayer.name;
+            current.playerOwned = updatePlayer.id;
+            updatePlayer.propertyNumbers[currentSquare.subtype] += 1;
+            squares = Object.assign({}, squares, {
+                [currentPosition]: current
+            });
+            
+            dispatch(Creators.buyOrSell(players, squares));
+            dispatch(endOfTurn());
         }
-
-        updatePlayer.money -= cost;
-        let currentPosition = getState().game.currentPosition;
-        updatePlayer.properties.push(currentPosition);
-
-        
-        let squares = {...getState().game.squares};
-        let current = {...squares[currentPosition]};
-        current.owned = updatePlayer.name;
-        current.ownedIndex = currentPlayerIndex;
-        current.playerOwned = updatePlayer.id;
-        updatePlayer.propertyNumbers[currentSquare.subtype] += 1;
-        squares = Object.assign({}, squares, {
-            [currentPosition]: current
-        });
-        
-        dispatch(Creators.buyOrSell(players, squares));
-        dispatch(endOfTurn());
     }
 }
 
@@ -858,11 +857,12 @@ const payTax = () => {
         if (updatePlayer.money - cost < 0) {
             dispatch(updateDisplay("Not enough money! Mortgage some properties!"));
             return;
+        } else {
+            updatePlayer.money -= cost;
+            dispatch(Creators.updatePlayers(players));  
+            dispatch(Creators.updateFreeParking(freeParking));
+            dispatch(endOfTurn());
         }
-        updatePlayer.money -= cost;
-        dispatch(Creators.updatePlayers(players));  
-        dispatch(Creators.updateFreeParking(freeParking));
-        dispatch(endOfTurn());
     }
 }
 
@@ -871,9 +871,9 @@ const payRent = () => {
         const players = getState().game.players;
         let currentSquare = getState().game.currentSquare;
         let fromPlayer = players[getState().game.currentPlayerIndex];
-        let toPlayer = players[currentSquare.ownedIndex];
+        let toPlayer = players.filter(player => player.id === currentSquare.playerOwned)[0];
         let subType = currentSquare.subtype;
-
+        
         let rentStage = 0;
         let rent = 0;
         if (subType === 'utility') {
@@ -886,19 +886,18 @@ const payRent = () => {
         } else {
             rentStage = toPlayer.propertyNumbers[subType] - propertyInfo[subType] + 1;
             rentStage = rentStage < 0 ? 0 : rentStage + currentSquare.houses;
-            rent = currentSquare.rent[rentStage];
+            rent = Number(currentSquare.rent[rentStage]);
         } 
 
         if (fromPlayer.money - rent < 0) {
             let difference = Math.abs(fromPlayer.money - rent);
             dispatch(updateDisplay(`Not enough money! Need $${difference} more`));
-            return;
+        } else {
+            fromPlayer.money -= rent;
+            toPlayer.money += rent;
+            dispatch(Creators.updatePlayers(players));  
+            dispatch(endOfTurn());
         }
-        
-        fromPlayer.money -= rent;
-        toPlayer.money += rent;
-        dispatch(Creators.updatePlayers(players));  
-        dispatch(endOfTurn());
     }
 }
 

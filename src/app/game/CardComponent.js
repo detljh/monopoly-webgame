@@ -17,8 +17,8 @@ const CardComponent = (props) => {
                 <div className="card-buttons">
                 {props.card.button ? 
                     [
-                        <button className="main-buttons" onClick={props.completeCard}>{props.card.button}</button>,
-                        <button className="main-buttons" onClick={props.drawChance}>{props.card.drawChance}</button>
+                        <button key={"ok_button"} className="main-buttons" onClick={props.completeCard}>{props.card.button}</button>,
+                        <button key={"chance_button"} className="main-buttons" onClick={props.drawChance}>{props.card.drawChance}</button>
                     ]
                 :  <button className="main-buttons" onClick={props.completeCard}>OK</button>
                 }

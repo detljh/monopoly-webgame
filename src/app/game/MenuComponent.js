@@ -55,7 +55,7 @@ class MenuComponent extends React.Component {
             let type = this.props.multiple ? "checkbox" : "radio";
             return [
                 <input type={type} name="option" id={option.value} key={option.value} className="menu-options" onClick={this.handleSelect} value={option.value} />,
-                <label for={option.value} className={`option-label ${option.color}-color`}>
+                <label key={`${option.value}_label`} htmlFor={option.value} className={`option-label ${option.color}-color`}>
                     
                     {option.name}
                     {
@@ -71,7 +71,7 @@ class MenuComponent extends React.Component {
         });
         return (
             <div className="menu" id={this.props.id}>
-                <div id="options">
+                <div key={"menu_options"} id="options">
                     <div className="header-option">{this.props.header}</div>
                     {options}
                 </div>
